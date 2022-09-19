@@ -4,8 +4,8 @@ import { Transaction } from "./transaction.js";
 import { PSD } from "./async-context/asyncContext.js";
 
 export interface IValue<T> {
-  get(tx?: Transaction): T;
-  set(data: T, tx?: Transaction): void;
+  get(): T;
+  set(data: T): void;
 
   __commit(data: T): void;
 }

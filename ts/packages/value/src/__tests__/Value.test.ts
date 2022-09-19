@@ -142,3 +142,19 @@ test("An aborted tx", async () => {
   // failed transactions on async functions leave no trace
   expect(shared.get().x).toBe(1);
 });
+
+test("effects of a tx are not observable until that tx is committed", async () => {
+  const initial = { x: 1 };
+  const shared = value(initial);
+
+  const handle = tx(async () => {
+    shared.set({ x: 2 });
+    await new Promise((resolved) => setTimeout(resolved, 0));
+  });
+
+  expect(shared.get().x).toBe(1);
+
+  await handle;
+
+  expect(shared.get().x).toBe(2);
+});
