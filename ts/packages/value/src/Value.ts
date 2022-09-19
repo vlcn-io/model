@@ -88,7 +88,7 @@ export class Value<T> implements IValue<T> {
   // rollback(data: T, tx: Transaction): void {}
 }
 
-export function value<T>(data: T) {
+export function value<T>(data: T): IValue<T> {
   return new Value(data, memory.nextVersion());
 }
 
