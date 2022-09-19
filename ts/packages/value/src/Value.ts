@@ -1,6 +1,7 @@
 import { History } from "./History.js";
 import { MemoryVersion, memory } from "./memory.js";
 import { Transaction } from "./transaction.js";
+import { PSD } from "./async-context/asyncContext.js";
 
 export interface IValue<T> {
   get(tx?: Transaction): T;
@@ -23,7 +24,10 @@ export class Value<T> implements IValue<T> {
    * @param tx
    * @returns
    */
-  get(tx?: Transaction): T {
+  get(): T {
+    // TODO:
+    // @ts-ignore
+    const tx = PSD.tx;
     if (!tx) {
       return this.data;
     }
@@ -56,7 +60,9 @@ export class Value<T> implements IValue<T> {
    * @param tx
    * @returns
    */
-  set(data: T, tx?: Transaction): void {
+  set(data: T): void {
+    // @ts-ignore
+    const tx = PSD.tx;
     if (!tx) {
       this.__commit(data);
       return;
@@ -69,7 +75,7 @@ export class Value<T> implements IValue<T> {
    * Commit the change. Should only be called by
    * transaction logic and not end users.
    */
-  __commit(data: T, tx?: Transaction): void {
+  __commit(data: T): void {
     this.history.maybeAdd(this.data, this.memVers);
     this.data = data;
     this.memVers = memory.nextVersion();
