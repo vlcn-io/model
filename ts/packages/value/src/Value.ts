@@ -1,7 +1,6 @@
-export type Transaction = {
-  readonly touched: Map<IValue<any>, any>;
-  readonly memoryVersion: MemoryVersion;
-};
+import { History } from "./History.js";
+import { MemoryVersion, memory } from "./memory.js";
+import { Transaction } from "./transaction.js";
 
 export interface IValue<T> {
   get(tx?: Transaction): T;
@@ -10,19 +9,12 @@ export interface IValue<T> {
   __commit(data: T): void;
 }
 
-let memoryVersion: MemoryVersion = Number.MIN_SAFE_INTEGER;
-type MemoryVersion = number;
-
-function nextVersion(): MemoryVersion {
-  return ++memoryVersion;
-}
-
 /**
  * Value is the primitive building block to creating ACI memory. Value can hold anything.
  * If you put complex types into value those types should be immutable.
  */
 export class Value<T> implements IValue<T> {
-  public readonly symbol = Symbol();
+  private history: History<T> = new History();
   constructor(private data: T, private memVers: MemoryVersion) {}
 
   /**
@@ -41,8 +33,18 @@ export class Value<T> implements IValue<T> {
     }
 
     // Now check based on memory version.
+    if (this.memVers <= tx.memoryVersion) {
+      // data is the latest data for this value.
+      // if the latest data for the value is not newer than when
+      // the transaction started then the transaction can receive it.
+      return this.data;
+    }
 
-    return this.data;
+    // if the latest data is newer than the transaction then someone wrote
+    // the value while the transaction was running.
+    // To preserve tx isolation we must go back into history to
+    // return the value that was set when the current tx started
+    return this.history.at(tx.memoryVersion);
   }
 
   /**
@@ -67,9 +69,10 @@ export class Value<T> implements IValue<T> {
    * Commit the change. Should only be called by
    * transaction logic and not end users.
    */
-  __commit(data: T): void {
+  __commit(data: T, tx?: Transaction): void {
+    this.history.maybeAdd(this.data, this.memVers);
     this.data = data;
-    this.memVers = nextVersion();
+    this.memVers = memory.nextVersion();
   }
 
   /**
@@ -80,14 +83,7 @@ export class Value<T> implements IValue<T> {
 }
 
 export function value<T>(data: T) {
-  return new Value(data, nextVersion());
-}
-
-export function transaction(): Transaction {
-  return {
-    memoryVersion,
-    touched: new Map(),
-  };
+  return new Value(data, memory.nextVersion());
 }
 
 // TODO: read up on how sqlite provides guarantees:
