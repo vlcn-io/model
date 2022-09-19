@@ -90,7 +90,14 @@ export class Value<T> implements IValue<T> {
 }
 
 export function value<T>(data: T): IValue<T> {
-  return new Value(data, memory.nextVersion());
+  const ret = new Value(data, memory.nextVersion());
+  // @ts-ignore
+  const tx = PSD.tx;
+  if (tx) {
+    tx.touched.set(ret, data);
+  }
+
+  return ret;
 }
 
 // TODO: read up on how sqlite provides guarantees:
