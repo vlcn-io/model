@@ -16,7 +16,7 @@ importers:
       turbo: 1.4.7
       typescript: 4.8.3
 
-  packages/model:
+  packages/value:
     specifiers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
@@ -24,10 +24,8 @@ importers:
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
-      zone.js: ^0.11.8
     dependencies:
       typescript: 4.8.3
-      zone.js: 0.11.8
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -4463,10 +4461,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /tslib/2.4.0:
-    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: false
-
   /tty-table/4.1.6:
     resolution: {integrity: sha512-kRj5CBzOrakV4VRRY5kUWbNYvo/FpOsz65DzI5op9P+cHov3+IqPbo1JE1ZnQGkHdZgNFDsrEjrfqqy/Ply9fw==}
     engines: {node: '>=8.0.0'}
@@ -4851,9 +4845,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /zone.js/0.11.8:
-    resolution: {integrity: sha512-82bctBg2hKcEJ21humWIkXRlLBBmrc3nN7DFh5LGGhcyycO2S7FN8NmdvlcKaGFDNVL4/9kFLmwmInTavdJERA==}
-    dependencies:
-      tslib: 2.4.0
-    dev: false
