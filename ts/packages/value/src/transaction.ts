@@ -32,8 +32,9 @@ export function tx<T>(fn: () => T): T {
           commit(tx);
           return result;
         },
-        (_reason: any) => {
+        (reason: any) => {
           inflight.splice(inflight.indexOf(tx), 1);
+          throw reason;
         }
       );
     } else {
