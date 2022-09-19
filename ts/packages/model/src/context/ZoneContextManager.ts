@@ -43,7 +43,7 @@ interface Context {
   deleteValue(key: symbol): Context;
 }
 
-class BaseContext implements Context {
+export class BaseContext implements Context {
   private _currentContext!: Map<symbol, unknown>;
 
   /**
