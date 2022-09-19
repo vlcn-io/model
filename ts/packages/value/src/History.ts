@@ -13,7 +13,7 @@ export class History<T> {
   at(memVers: MemoryVersion): T {
     for (let i = this.nodes.length - 1; i > -1; --i) {
       const node = this.nodes[i];
-      if (node.memVers < memVers) {
+      if (node.memVers <= memVers) {
         return node.data;
       }
     }
@@ -23,10 +23,9 @@ export class History<T> {
 
   maybeAdd(data: T, memoryVersion: MemoryVersion): void {
     if (inflight.length === 0) {
-      if (this.nodes.length > 0) {
-        this.nodes = [];
-      }
-
+      this.drop();
+      // if no tx is in flight we have no need to record history of values.
+      // history of values is only retained for tx isolation.
       return;
     }
 
@@ -34,25 +33,11 @@ export class History<T> {
       memVers: memoryVersion,
       data,
     });
-
-    if (this.nodes.length > 3) {
-      this.prune();
-    }
   }
 
-  private prune() {
-    const oldestInflightVers = inflight[0].memoryVersion;
-
-    let i = this.nodes.length - 1;
-    for (; i > -1; --i) {
-      const node = this.nodes[i];
-      if (node.memVers < oldestInflightVers) {
-        break;
-      }
-    }
-
-    if (i !== -1) {
-      this.nodes = this.nodes.slice(i);
+  public drop() {
+    if (this.nodes.length > 0) {
+      this.nodes = [];
     }
   }
 }

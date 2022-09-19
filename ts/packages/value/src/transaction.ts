@@ -9,7 +9,7 @@ export type Transaction = {
   readonly memoryVersion: MemoryVersion;
 };
 
-function transaction(): Transaction {
+export function transaction(): Transaction {
   return {
     memoryVersion: memory.version,
     touched: new Map(),

@@ -41,6 +41,7 @@ export class Value<T> implements IValue<T> {
       // data is the latest data for this value.
       // if the latest data for the value is not newer than when
       // the transaction started then the transaction can receive it.
+      this.history.drop();
       return this.data;
     }
 
