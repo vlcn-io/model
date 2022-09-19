@@ -20,15 +20,29 @@ export function tx<T>(fn: () => T): T {
   const tx = transaction();
   inflight.push(tx);
   try {
-    const ret = newScope(fn, {
+    let ret = newScope(fn, {
       tx,
     });
 
-    // removal from inflight before committing is itentional
-    // so history knows to or not to add the change.
-    // commit is atomic so this is ok.
-    inflight.splice(inflight.indexOf(tx), 1);
-    commit(tx);
+    // if ret is a promise we must then it.
+    if (typeof ret?.then === "function") {
+      ret = ret.then(
+        (result: any) => {
+          inflight.splice(inflight.indexOf(tx), 1);
+          commit(tx);
+          return result;
+        },
+        (_reason: any) => {
+          inflight.splice(inflight.indexOf(tx), 1);
+        }
+      );
+    } else {
+      // removal from inflight before committing is intentional
+      // so history knows to or not to add the change.
+      // commit is atomic so this is ok.
+      inflight.splice(inflight.indexOf(tx), 1);
+      commit(tx);
+    }
 
     return ret;
   } catch (e) {
