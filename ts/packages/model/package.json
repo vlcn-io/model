@@ -1,16 +1,16 @@
 {
-  "name": "@aphrodite.sh/value",
+  "name": "@aphrodite.sh/model",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/aphrodite-sh/acid-memory.git",
-    "directory": "ts/packages/value"
+    "directory": "ts/packages/model"
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "@aphrodite.sh/context-provider": "workspace:*"
+    "@aphrodite.sh/value": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
