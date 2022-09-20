@@ -22,11 +22,11 @@ export class Model<T extends {}> implements IModel<T> {
     this.value.observe(this.#onValueChanged);
   }
 
-  get _data(): T {
+  get data(): T {
     return this.value.get();
   }
 
-  #onValueChanged(data: T) {
+  #onValueChanged = (data: T) => {
     const lastData = this.#lastData;
     this.#lastData = data;
 
@@ -40,7 +40,7 @@ export class Model<T extends {}> implements IModel<T> {
     }
 
     this.#notify(toNotify);
-  }
+  };
 
   #gatherKeyedNotifications(
     toNotify: Set<() => void>,
