@@ -7,19 +7,87 @@ export interface IModel<T extends {} = {}> {
 }
 
 export class Model<T extends {}> implements IModel<T> {
-  #value: ObservableValue<T>;
+  protected value: ObservableValue<T>;
+  #lastData: T;
 
-  // make these weak references?
+  // TODO: make these weak references?
   #subscriptions: Set<() => void> = new Set();
   #keyedSubscriptions: Map<keyof T, Set<() => void>> = new Map();
 
   constructor(data: T) {
-    this.#value = new ObservableValue(data);
+    const frozen = Object.freeze(data);
+    this.value = new ObservableValue(frozen);
+    this.#lastData = frozen;
+
+    this.value.observe(this.#onValueChanged);
+  }
+
+  get _data(): T {
+    return this.value.get();
+  }
+
+  #onValueChanged(data: T) {
+    const lastData = this.#lastData;
+    this.#lastData = data;
+
+    if (this.#keyedSubscriptions.size === 0 && this.#subscriptions.size === 0) {
+      return;
+    }
+
+    const toNotify = new Set<() => void>(this.#subscriptions);
+    if (this.#keyedSubscriptions.size > 0) {
+      this.#gatherKeyedNotifications(toNotify, lastData, data);
+    }
+
+    this.#notify(toNotify);
+  }
+
+  #gatherKeyedNotifications(
+    toNotify: Set<() => void>,
+    lastData: T,
+    newData: T
+  ) {
+    let unchangedKeys = new Set();
+    if (newData != null) {
+      (Object.entries(newData) as [keyof Partial<T>, any][]).forEach(
+        (entry) => {
+          if (lastData[entry[0]] === entry[1]) {
+            unchangedKeys.add(entry[0]);
+          }
+        }
+      );
+    }
+
+    const changedKeys =
+      unchangedKeys.size === 0
+        ? typedKeys(newData)
+        : typedKeys(newData).filter((k) => !unchangedKeys.has(k));
+
+    for (const key of changedKeys) {
+      const subs = this.#keyedSubscriptions.get(key);
+      if (subs) {
+        for (const c of subs) {
+          toNotify.add(c);
+        }
+      }
+    }
+  }
+
+  #notify(toNotify: Set<() => void>) {
+    for (const cb of toNotify) {
+      // We notify in a try/catch since the failure of one observer should not preclude others
+      // from observing the change.
+      try {
+        cb();
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 
   update(updates: Partial<T>): void {
-    this.#value.set({
-      ...this.#value.get(),
+    this.value.set({
+      ...this.value.get(),
       ...updates,
     });
   }
@@ -43,4 +111,9 @@ export class Model<T extends {}> implements IModel<T> {
     return () =>
       keys.forEach((k) => this.#keyedSubscriptions.get(k)?.delete(c));
   }
+}
+
+function typedKeys<T>(o: T): (keyof T)[] {
+  // @ts-ignore
+  return Object.keys(o);
 }

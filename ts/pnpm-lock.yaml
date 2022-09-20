@@ -53,6 +53,27 @@ importers:
       fast-check: 3.1.3
       jest: 29.0.3
 
+  packages/relational-model:
+    specifiers:
+      '@aphrodite.sh/model': workspace:*
+      '@babel/core': ^7.18.13
+      '@babel/preset-env': ^7.18.10
+      '@types/jest': ^28.1.8
+      fast-check: ^3.1.2
+      jest: ^29.0.1
+      nanoid: ^4.0.0
+      typescript: ^4.8.2
+    dependencies:
+      '@aphrodite.sh/model': link:../model
+      nanoid: 4.0.0
+      typescript: 4.8.3
+    devDependencies:
+      '@babel/core': 7.19.1
+      '@babel/preset-env': 7.19.1_@babel+core@7.19.1
+      '@types/jest': 28.1.8
+      fast-check: 3.1.3
+      jest: 29.0.3
+
   packages/value:
     specifiers:
       '@aphrodite.sh/context-provider': workspace:*

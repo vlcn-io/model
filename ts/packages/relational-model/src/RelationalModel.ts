@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
-import { Model } from "./Model.js";
+import { Model } from "@aphrodite.sh/model";
 
-type Key = string | number;
+export type Key = string | number;
 
 export abstract class RelationalModel<T extends { id: Key }> extends Model<T> {
   constructor(data: T | Omit<T, "id">) {
@@ -17,6 +17,10 @@ export abstract class RelationalModel<T extends { id: Key }> extends Model<T> {
   }
 
   abstract readonly collection: string;
+
+  get id(): Key {
+    return this.value.get().id;
+  }
 }
 
 /**
