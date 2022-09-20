@@ -1,13 +1,14 @@
 import { History } from "./History.js";
 import { MemoryVersion, memory } from "./memory.js";
-import { Transaction } from "./transaction.js";
 import { PSD } from "./async-context/asyncContext.js";
+import { Transaction } from "./transaction.js";
 
 export interface IValue<T> {
   get(): T;
   set(data: T): void;
 
   __commit(data: T): void;
+  __transactionComplete(): void;
 }
 
 /**
@@ -56,7 +57,7 @@ export class Value<T> implements IValue<T> {
    * Sets the value. If a transaction is not provided the value
    * is set and committed. If a transaction is provided, the value is only
    * set from the perspective of that transaction. Once the transaction
-   * is committed the value will be visible to all transactions.
+   * is committed the value will be visible outside the transaction.
    * @param data
    * @param tx
    * @returns
@@ -66,6 +67,7 @@ export class Value<T> implements IValue<T> {
     const tx = PSD.tx;
     if (!tx) {
       this.__commit(data);
+      this.__transactionComplete();
       return;
     }
 
@@ -81,6 +83,8 @@ export class Value<T> implements IValue<T> {
     this.data = data;
     this.memVers = memory.nextVersion();
   }
+
+  __transactionComplete(): void {}
 
   /**
    * Since transaction mutations are written to the transaction object and not to the value prior to commit,

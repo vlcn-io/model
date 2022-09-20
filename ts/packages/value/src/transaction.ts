@@ -47,7 +47,11 @@ export function tx<T>(fn: () => T): T {
 
     return ret;
   } catch (e) {
-    inflight.splice(inflight.indexOf(tx), 1);
+    const idx = inflight.indexOf(tx);
+    if (idx != -1) {
+      inflight.splice(idx, 1);
+    }
+
     throw e;
   }
 }
@@ -55,5 +59,9 @@ export function tx<T>(fn: () => T): T {
 function commit(tx: Transaction) {
   for (const [value, data] of tx.touched.entries()) {
     value.__commit(data);
+  }
+
+  for (const value of tx.touched.values()) {
+    value.__transactionComplete();
   }
 }
