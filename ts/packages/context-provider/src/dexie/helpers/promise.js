@@ -729,7 +729,7 @@ var zoneEchoes = 0; // zoneEchoes is a must in order to persist zones between na
 var totalEchoes = 0; // ID counter for micro-tasks. Used to detect possible native await in our Promise.prototype.then.
 
 var zone_id_counter = 0;
-export function newScope(fn, props, a1, a2) {
+export function newScope(fn, props) {
   var parent = PSD,
     psd = Object.create(parent);
   psd.parent = parent;
@@ -766,7 +766,7 @@ export function newScope(fn, props, a1, a2) {
   psd.finalize = function () {
     --this.parent.ref || this.parent.finalize();
   };
-  var rv = usePSD(psd, fn, a1, a2);
+  var rv = usePSD(psd, fn);
   if (psd.ref === 0) psd.finalize();
   return rv;
 }
@@ -902,11 +902,11 @@ function snapShot() {
     : {};
 }
 
-export function usePSD(psd, fn, a1, a2, a3) {
+export function usePSD(psd, fn) {
   var outerScope = PSD;
   try {
     switchToZone(psd, true);
-    return fn(a1, a2, a3);
+    return fn();
   } finally {
     switchToZone(outerScope, false);
   }

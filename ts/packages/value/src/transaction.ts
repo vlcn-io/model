@@ -1,4 +1,4 @@
-import { newScope } from "./async-context/asyncContext.js";
+import { newScope } from "@aphrodite.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { IValue } from "./Value.js";
 
@@ -61,7 +61,7 @@ function commit(tx: Transaction) {
     value.__commit(data);
   }
 
-  for (const value of tx.touched.values()) {
+  for (const value of tx.touched.keys()) {
     value.__transactionComplete();
   }
 }
