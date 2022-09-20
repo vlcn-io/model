@@ -16,7 +16,8 @@ export interface IValue<T> {
  */
 export class Value<T> implements IValue<T> {
   private history: History<T> = new History();
-  constructor(private data: T, private memVers: MemoryVersion) {}
+  private memVers = memory.nextVersion();
+  constructor(private data: T) {}
 
   /**
    * Reads the current value. If a transaction is provided this method will return
@@ -93,7 +94,7 @@ export class Value<T> implements IValue<T> {
 }
 
 export function value<T>(data: T): IValue<T> {
-  const ret = new Value(data, memory.nextVersion());
+  const ret = new Value(data);
   // @ts-ignore
   const tx = PSD.tx;
   if (tx) {
