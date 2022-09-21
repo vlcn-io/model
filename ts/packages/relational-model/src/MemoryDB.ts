@@ -1,8 +1,8 @@
-import { Key, RelationalModel } from "./RelationalModel.js";
+import { Key, Row } from "./Row.js";
 
 export type MemoryReadQuery = {
   type: "read";
-  collection: string;
+  tableName: string;
   // undefined --> all
   // [] --> none
   // [id, ...]  --> specific ids
@@ -12,8 +12,8 @@ export type MemoryReadQuery = {
 export type MemoryWriteQuery = {
   type: "write";
   op: "delete" | "upsert";
-  collection: string;
-  models: RelationalModel<any>[];
+  tableName: string;
+  rows: Row<any>[];
 };
 
 export type MemoryQuery = MemoryReadQuery | MemoryWriteQuery;
@@ -22,41 +22,41 @@ export type MemoryQuery = MemoryReadQuery | MemoryWriteQuery;
  * Holds all in-memory nodes in-memory.
  */
 export default class MemoryDB {
-  private collections: Map<string, { [key: Key]: any }> = new Map();
+  private tables: Map<string, { [key: Key]: any }> = new Map();
 
   async read(q: MemoryReadQuery): Promise<any[]> {
-    const collection = this.collections.get(q.collection);
-    if (collection == null) {
+    const table = this.tables.get(q.tableName);
+    if (table == null) {
       return [];
     }
 
     if (q.roots == null) {
-      return Object.values(collection);
+      return Object.values(table);
     }
 
-    return q.roots.map((r) => collection[r]);
+    return q.roots.map((r) => table[r]);
   }
 
   async write(q: MemoryWriteQuery): Promise<void> {
-    const c = this.collections.get(q.collection);
-    let collection: { [key: Key]: any };
+    const c = this.tables.get(q.tableName);
+    let table: { [key: Key]: any };
     // To make the type checker happy
     if (c == null) {
-      collection = {};
-      this.collections.set(q.collection, collection);
+      table = {};
+      this.tables.set(q.tableName, table);
     } else {
-      collection = c;
+      table = c;
     }
 
     switch (q.op) {
       case "delete":
-        q.models.forEach((m) => delete collection[m.id]);
+        q.rows.forEach((m) => delete table[m.id]);
       case "upsert":
-        q.models.forEach((m) => (collection[m.id] = m));
+        q.rows.forEach((m) => (table[m.id] = m));
     }
   }
 
   dispose(): void {
-    this.collections = new Map();
+    this.tables = new Map();
   }
 }

@@ -3,7 +3,7 @@ import { Model } from "@aphrodite.sh/model";
 
 export type Key = string | number;
 
-export abstract class RelationalModel<T extends { id: Key }> extends Model<T> {
+export abstract class Row<T extends { id: Key }> extends Model<T> {
   constructor(data: T | Omit<T, "id">) {
     if (!("id" in data)) {
       // @ts-ignore
@@ -16,7 +16,7 @@ export abstract class RelationalModel<T extends { id: Key }> extends Model<T> {
     }
   }
 
-  abstract readonly collection: string;
+  abstract readonly tableName: string;
 
   get id(): Key {
     return this.value.get().id;
