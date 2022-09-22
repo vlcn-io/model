@@ -23,16 +23,23 @@ export abstract class PersistedModel<
     return this.value.get().id;
   }
 
-  delete() {}
+  delete() {
+    // issue delete operation to persist layer
+    // but we need to fold this into the current tx
+  }
 
   /*
   static create<D, M extends IModel<D>>(ctor: (data: D) => M) {
     // registers with persist tracker... well... post commit it does.
     // so we need to listen for __transactionComplete
+
+    // on tx complete of a create should issue a create operation to persist layer
   }
 
   static hydrate<D, M extends IModel<D>>(ctor: (data: D) => M) {
-
+    // no need to do anything on tx complete of a hydrate
   }
+
+  // on tx complete of an update would issue an update operation to persist layer
   */
 }
