@@ -34,6 +34,7 @@ class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
   }
 }
 
+// take mem version as optional...? for re-hydrate case?
 export function observableValue<T>(data: T): [IObservableValue<T>, boolean] {
   const ret = new ObservableValue(data);
 
