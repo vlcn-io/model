@@ -11,7 +11,8 @@
   "dependencies": {
     "@aphrodite.sh/model": "workspace:*",
     "@aphrodite.sh/id": "workspace:*",
-    "@aphrodite.sh/util": "workspace:*"
+    "@aphrodite.sh/util": "workspace:*",
+    "@aphrodite.sh/value": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

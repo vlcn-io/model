@@ -14,20 +14,32 @@ export class Model<T extends {}> implements IModel<T> {
   #subscriptions: Set<() => void> = new Set();
   #keyedSubscriptions: Map<keyof T, Set<() => void>> = new Map();
 
+  protected disposers: (() => void)[] = [];
+
   constructor(data: T) {
     const frozen = Object.freeze(data);
     let txComplete = false;
     [this.value, txComplete] = observableValue(frozen);
     this.#lastData = frozen;
 
-    this.value.onTransactionComplete(this.#onValueChanged);
+    this.disposers.push(
+      this.value.onTransactionComplete(this.#onTransactionComplete)
+    );
+
+    if (txComplete) {
+      this.onTransactionComplete();
+    }
   }
 
   get data(): T {
     return this.value.get();
   }
 
-  #onValueChanged = (data: T) => {
+  protected onTransactionComplete() {}
+
+  #onTransactionComplete = (data: T) => {
+    this.onTransactionComplete();
+
     const lastData = this.#lastData;
     this.#lastData = data;
 

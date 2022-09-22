@@ -15,12 +15,22 @@ export abstract class PersistedModel<
     } else {
       super(data);
     }
+
+    // TODO: we need to override value construction so we can use `PersistedValue` and indicate the source
+    // or creation.
   }
 
   abstract readonly typeName: string;
 
   get id(): ID_of<T> {
     return this.value.get().id;
+  }
+
+  protected onTransactionComplete() {
+    // pass off to persist tracker.
+    // how do we know the kind of event?
+    // well... tx events should not fire for hydrates?
+    // so push concept of hydrate into value?
   }
 
   delete() {

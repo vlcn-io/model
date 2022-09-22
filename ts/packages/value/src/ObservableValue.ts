@@ -11,7 +11,7 @@ export interface IObservableValue<T> extends IValue<T> {
   onTransactionComplete(fn: (v: T) => void): Disposer;
 }
 
-class ObservableValue<T> extends Value<T> {
+class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
   #observers: Set<(v: T) => void> = new Set();
 
   onTransactionComplete(fn: OnTxComplete<T>): Disposer {
