@@ -12,3 +12,5 @@ const hexReg = /^[0-9A-Fa-f]+$/;
 export function isHex(h: string) {
   return hexReg.exec(h) != null;
 }
+
+export function noop() {}

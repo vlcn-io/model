@@ -112,6 +112,7 @@ importers:
   packages/value:
     specifiers:
       '@aphrodite.sh/context-provider': workspace:*
+      '@aphrodite.sh/util': workspace:*
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
@@ -120,6 +121,7 @@ importers:
       typescript: ^4.8.2
     dependencies:
       '@aphrodite.sh/context-provider': link:../context-provider
+      '@aphrodite.sh/util': link:../util
       typescript: 4.8.3
     devDependencies:
       '@babel/core': 7.19.1

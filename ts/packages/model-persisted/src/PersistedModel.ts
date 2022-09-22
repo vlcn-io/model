@@ -24,4 +24,15 @@ export abstract class PersistedModel<
   }
 
   delete() {}
+
+  /*
+  static create<D, M extends IModel<D>>(ctor: (data: D) => M) {
+    // registers with persist tracker... well... post commit it does.
+    // so we need to listen for __transactionComplete
+  }
+
+  static hydrate<D, M extends IModel<D>>(ctor: (data: D) => M) {
+
+  }
+  */
 }

@@ -1,4 +1,4 @@
-import { ObservableValue } from "@aphrodite.sh/value";
+import { observableValue, IObservableValue } from "@aphrodite.sh/value";
 
 export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;
@@ -7,7 +7,7 @@ export interface IModel<T extends {} = {}> {
 }
 
 export class Model<T extends {}> implements IModel<T> {
-  protected value: ObservableValue<T>;
+  protected value: IObservableValue<T>;
   #lastData: T;
 
   // TODO: make these weak references?
@@ -16,10 +16,11 @@ export class Model<T extends {}> implements IModel<T> {
 
   constructor(data: T) {
     const frozen = Object.freeze(data);
-    this.value = new ObservableValue(frozen);
+    let txComplete = false;
+    [this.value, txComplete] = observableValue(frozen);
     this.#lastData = frozen;
 
-    this.value.observe(this.#onValueChanged);
+    this.value.onTransactionComplete(this.#onValueChanged);
   }
 
   get data(): T {

@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "@aphrodite.sh/context-provider": "workspace:*"
+    "@aphrodite.sh/context-provider": "workspace:*",
+    "@aphrodite.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

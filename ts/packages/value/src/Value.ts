@@ -99,6 +99,8 @@ export function value<T>(data: T): IValue<T> {
   const tx = PSD.tx;
   if (tx) {
     tx.touched.set(ret, data);
+  } else {
+    ret.__transactionComplete();
   }
 
   return ret;
