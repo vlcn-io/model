@@ -1,29 +1,4 @@
-import { nanoid } from "nanoid";
-import { Model } from "@aphrodite.sh/model";
-
-export type Key = string | number;
-
-export abstract class Row<T extends { id: Key }> extends Model<T> {
-  constructor(data: T | Omit<T, "id">) {
-    if (!("id" in data)) {
-      // @ts-ignore
-      super({
-        id: nanoid(),
-        ...data,
-      });
-    } else {
-      super(data);
-    }
-  }
-
-  abstract readonly tableName: string;
-
-  get id(): Key {
-    return this.value.get().id;
-  }
-
-  delete() {}
-}
+export default class Table {}
 
 /**
  * Tables need an operation based implementation?

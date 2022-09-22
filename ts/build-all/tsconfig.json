@@ -1,0 +1,28 @@
+{
+  "extends": "../tsconfig-lib.json",
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "rootDir": "./src"
+  },
+  "include": ["./src/"],
+  "references": [
+    {
+      "path": "../packages/context-provider"
+    },
+    {
+      "path": "../packages/id"
+    },
+    {
+      "path": "../packages/model"
+    },
+    {
+      "path": "../packages/model-persisted"
+    },
+    {
+      "path": "../packages/util"
+    },
+    {
+      "path": "../packages/value"
+    }
+  ]
+}

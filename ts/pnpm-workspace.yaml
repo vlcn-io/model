@@ -1,4 +1,7 @@
 packages:
-  - packages/value
   - packages/context-provider
+  - packages/id
   - packages/model
+  - packages/model-persisted
+  - packages/util
+  - packages/value
