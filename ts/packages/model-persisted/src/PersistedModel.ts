@@ -1,6 +1,14 @@
 import { Model } from "@vulcan.sh/model";
 import { ID_of, newId } from "@vulcan.sh/id";
 import { config } from "./config.js";
+import {
+  Event,
+  hydratePersistedValue_UNSAFE,
+  IObservableValue,
+  newPersistedValue_UNSAFE,
+} from "@vulcan.sh/value";
+
+type Cause = "create" | "hydrate" | "sync";
 
 export abstract class PersistedModel<
   T extends { id: ID_of<T> }
@@ -8,7 +16,7 @@ export abstract class PersistedModel<
   abstract readonly dbName: string;
   abstract readonly typeName: string;
 
-  constructor(data: T | Omit<T, "id">) {
+  constructor(data: T | Omit<T, "id">, private cause: Cause) {
     if (!("id" in data)) {
       // @ts-ignore
       super({
@@ -18,28 +26,31 @@ export abstract class PersistedModel<
     } else {
       super(data);
     }
-
-    // TODO: we need to override value construction so we can use `PersistedValue` and indicate the source
-    // of creation.
   }
 
   get id(): ID_of<T> {
     return this.value.get().id;
   }
 
-  protected onTransactionComplete() {
-    // pass off to persist tracker.
-    // how do we know the kind of event?
-    // well... tx events should not fire for hydrates?
-    // so push concept of hydrate into value?
+  protected constructValue(frozen: T): [IObservableValue<T>, boolean] {
+    if (this.cause === "create") {
+      return newPersistedValue_UNSAFE(frozen);
+    }
+
+    return [hydratePersistedValue_UNSAFE(frozen), false];
   }
 
+  protected onTransactionComplete(e: Event) {}
+
   delete() {
+    // TODO: notify cache
     // issue delete operation to persist layer
     // but we need to fold this into the current tx
   }
 
   /*
+  // TODO: notify cache w/ cause
+
   static create<D, M extends IModel<D>>(ctor: (data: D) => M) {
     // registers with persist tracker... well... post commit it does.
     // so we need to listen for __transactionComplete

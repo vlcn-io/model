@@ -1,4 +1,4 @@
-import { observableValue, IObservableValue } from "@vulcan.sh/value";
+import { observableValue, IObservableValue, Event } from "@vulcan.sh/value";
 
 export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;
@@ -19,7 +19,7 @@ export class Model<T extends {}> implements IModel<T> {
   constructor(data: T) {
     const frozen = Object.freeze(data);
     let txComplete = false;
-    [this.value, txComplete] = observableValue(frozen);
+    [this.value, txComplete] = this.constructValue(frozen);
     this.#lastData = frozen;
 
     this.disposers.push(
@@ -27,7 +27,7 @@ export class Model<T extends {}> implements IModel<T> {
     );
 
     if (txComplete) {
-      this.onTransactionComplete();
+      this.onTransactionComplete("create");
     }
   }
 
@@ -35,10 +35,13 @@ export class Model<T extends {}> implements IModel<T> {
     return this.value.get();
   }
 
-  protected onTransactionComplete() {}
+  protected constructValue(frozen: T): [IObservableValue<T>, boolean] {
+    return observableValue(frozen);
+  }
+  protected onTransactionComplete(e: Event) {}
 
-  #onTransactionComplete = (data: T) => {
-    this.onTransactionComplete();
+  #onTransactionComplete = (data: T, e: Event) => {
+    this.onTransactionComplete(e);
 
     const lastData = this.#lastData;
     this.#lastData = data;
@@ -99,10 +102,13 @@ export class Model<T extends {}> implements IModel<T> {
   }
 
   update(updates: Partial<T>): void {
-    this.value.set({
-      ...this.value.get(),
-      ...updates,
-    });
+    // TODO: check for no-op?
+    this.value.set(
+      Object.freeze({
+        ...this.value.get(),
+        ...updates,
+      })
+    );
   }
 
   subscribe(c: () => void): () => void {

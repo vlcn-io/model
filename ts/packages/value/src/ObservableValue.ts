@@ -6,11 +6,11 @@ import { Event, IValue, Value } from "./Value.js";
 import { PSD } from "@vulcan.sh/context-provider";
 import { Transaction } from "./transaction.js";
 
-type OnTxComplete<T> = (v: T) => void;
+type OnTxComplete<T> = (v: T, e: Event) => void;
 type Disposer = () => void;
 
 export interface IObservableValue<T> extends IValue<T> {
-  onTransactionComplete(fn: (v: T) => void): Disposer;
+  onTransactionComplete(fn: OnTxComplete<T>): Disposer;
   // TODO: add an `onValueChange` that filters events if the value was set to the same value?
 }
 
@@ -18,7 +18,7 @@ export class ObservableValue<T>
   extends Value<T>
   implements IObservableValue<T>
 {
-  #observers: Set<(v: T) => void> = new Set();
+  #observers: Set<(v: T, e: Event) => void> = new Set();
 
   onTransactionComplete(fn: OnTxComplete<T>): Disposer {
     this.#observers.add(fn);
@@ -26,13 +26,13 @@ export class ObservableValue<T>
   }
 
   __transactionComplete(e: Event) {
-    this.#notifyObservers();
+    this.#notifyObservers(e);
   }
 
-  #notifyObservers() {
+  #notifyObservers(e: Event) {
     for (const o of this.#observers) {
       try {
-        o(this.get());
+        o(this.get(), e);
       } catch (e) {
         console.error(e);
       }

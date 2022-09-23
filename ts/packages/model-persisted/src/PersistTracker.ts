@@ -13,18 +13,84 @@
  * Post-facto relational lets people encode edges directly via pointer.
  */
 
+import { invariant } from "@vulcan.sh/util";
 import { PersistedModel } from "./PersistedModel";
 
+type ModelSet = Set<PersistedModel<any>>;
 class PersistTracker {
   #pendingCreates = new Set<PersistedModel<any>>();
   #pendingUpdates = new Set<PersistedModel<any>>();
   #pendingDeletes = new Set<PersistedModel<any>>();
 
+  #hasPendingMicroTask = false;
+
   constructor() {}
 
-  addCreate() {}
-  addUpdate() {}
-  addDelete() {}
+  addCreate(m: PersistedModel<any>) {
+    this.#pendingCreates.add(m);
+
+    invariant(
+      !this.#pendingDeletes.has(m),
+      "Created something after it was requested to be deleted."
+    );
+
+    this.#maybeQueueMicroTask();
+  }
+
+  addUpdate(m: PersistedModel<any>) {
+    if (this.#pendingCreates.has(m)) {
+      // create event will capture update data too -- in current implementation
+      return;
+    }
+
+    invariant(
+      !this.#pendingDeletes.has(m),
+      "Updating something after it was requested to be deleted"
+    );
+
+    this.#pendingUpdates.add(m);
+    this.#maybeQueueMicroTask();
+  }
+
+  addDelete(m: PersistedModel<any>) {
+    this.#pendingDeletes.add(m);
+
+    this.#pendingCreates.delete(m);
+    this.#pendingUpdates.delete(m);
+
+    this.#maybeQueueMicroTask();
+  }
+
+  /**
+   * If no micro task is pending, enqueues one to save off all pending creates/update/deletes
+   */
+  #maybeQueueMicroTask() {
+    if (this.#hasPendingMicroTask) {
+      return;
+    }
+
+    queueMicrotask(() => {
+      this.#hasPendingMicroTask = false;
+
+      const [pendingCreates, pendingUpdates, pendingDeletes] = [
+        this.#pendingCreates,
+        this.#pendingUpdates,
+        this.#pendingDeletes,
+      ];
+      this.#pendingCreates = new Set();
+      this.#pendingUpdates = new Set();
+      this.#pendingDeletes = new Set();
+
+      this.#notifyBackends(pendingCreates, pendingUpdates, pendingDeletes);
+    });
+    this.#hasPendingMicroTask = true;
+  }
+
+  #notifyBackends(
+    pendingCreates: ModelSet,
+    pendingUpdates: ModelSet,
+    pendingDeletes: ModelSet
+  ) {}
 }
 
 export const persistTracker = new PersistTracker();
