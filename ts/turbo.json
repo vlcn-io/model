@@ -1,0 +1,18 @@
+{
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "build": {
+      "dependsOn": [],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": []
+    },
+    "clean": {
+      "dependsOn": []
+    },
+    "deep-clean": {
+      "dependsOn": []
+    }
+  }
+}
