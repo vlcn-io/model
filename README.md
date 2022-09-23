@@ -13,4 +13,4 @@ Other culprits are:
 - asking the developer to remember to await their writes if they want to do an immediate read-after-write
 - ddl? maybe? This is probably a necessary complexity and unlocks future simplicity
 
-The current most interesting part of vulcan is here: https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/value/README.md
+The current most interesting part of vulcan [is transactional memory](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/value/README.md).
