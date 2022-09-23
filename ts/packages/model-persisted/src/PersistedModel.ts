@@ -5,6 +5,9 @@ import { config } from "./config.js";
 export abstract class PersistedModel<
   T extends { id: ID_of<T> }
 > extends Model<T> {
+  abstract readonly dbName: string;
+  abstract readonly typeName: string;
+
   constructor(data: T | Omit<T, "id">) {
     if (!("id" in data)) {
       // @ts-ignore
@@ -17,10 +20,8 @@ export abstract class PersistedModel<
     }
 
     // TODO: we need to override value construction so we can use `PersistedValue` and indicate the source
-    // or creation.
+    // of creation.
   }
-
-  abstract readonly typeName: string;
 
   get id(): ID_of<T> {
     return this.value.get().id;

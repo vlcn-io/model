@@ -1,5 +1,5 @@
 import { History } from "./History.js";
-import { memory } from "./memory.js";
+import { memory, MemoryVersion } from "./memory.js";
 import { PSD } from "@vulcan.sh/context-provider";
 import { Transaction } from "./transaction.js";
 
@@ -19,8 +19,10 @@ export interface IValue<T> {
  */
 export class Value<T> implements IValue<T> {
   private history: History<T> = new History();
-  private memVers = memory.nextVersion();
-  constructor(private data: T) {}
+  private memVers: MemoryVersion;
+  constructor(private data: T, memVers?: MemoryVersion) {
+    this.memVers = memVers === undefined ? memory.nextVersion() : memVers;
+  }
 
   /**
    * Reads the current value. If a transaction is provided this method will return

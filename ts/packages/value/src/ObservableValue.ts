@@ -14,7 +14,10 @@ export interface IObservableValue<T> extends IValue<T> {
   // TODO: add an `onValueChange` that filters events if the value was set to the same value?
 }
 
-class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
+export class ObservableValue<T>
+  extends Value<T>
+  implements IObservableValue<T>
+{
   #observers: Set<(v: T) => void> = new Set();
 
   onTransactionComplete(fn: OnTxComplete<T>): Disposer {
