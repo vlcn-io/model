@@ -2,7 +2,10 @@
 
 Hephaestus is too hard to say and spell [hence the name Vulcan](https://en.wikipedia.org/wiki/Hephaestus#:~:text=Hephaestus%27s%20Roman%20counterpart%20is%20Vulcan).
 
-`aphrodite.sh` apis are cumbersome in a few areas. The main culprits being a reliance on the concept of "changesets" (fixed here via [transactional memory](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/value/README.md)), requiring a "context" parameter to be passed to all function calls (potentially fixed via [context-provider](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/context-provider) or more likely just a config object), and encouraging "named" mutations (removed from next build of aphrodite).
+`aphrodite.sh` apis are cumbersome in a few areas. The main culprits:
+- a reliance on the concept of "changesets" (fixed here via [transactional memory](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/value/README.md))
+- requiring a "context" parameter to be passed to all function calls (potentially fixed via [context-provider](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/context-provider) or more likely just a config object)
+- encouraging "named" mutations (removed from next build of aphrodite).
 
 Other culprits are:
 
