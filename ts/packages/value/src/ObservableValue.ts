@@ -10,6 +10,7 @@ type Disposer = () => void;
 
 export interface IObservableValue<T> extends IValue<T> {
   onTransactionComplete(fn: (v: T) => void): Disposer;
+  // TODO: add an `onValueChange` that filters events if the value was set to the same value?
 }
 
 class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
