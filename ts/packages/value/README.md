@@ -10,7 +10,7 @@ This very much mimicks the feature of a database transaction:
 - can be committed atomically (setting a pointer to the new state tree)
 - has no impact if exceptions happen, thus preventing inconsistent state during errors
 
-Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. And more so when you need to compute what parts of the tree changed in order to notify interested parties.
+Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. It gets harder again when you need to compute what parts of the tree changed in order to notify interested parties.
 
 ![https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png](https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png)
 
@@ -106,6 +106,7 @@ shared2.onTransactionComplete((v) => {
 });
 
 // setting outside a transaction immediately commits. Observers will be trigger by each of these statements.
+console.log("outside tx -- commit and notify immediately on set");
 shared1.set(101);
 shared2.set(201);
 
@@ -113,13 +114,26 @@ shared2.set(201);
 // nobody will be notified until the tx completes -- allowing us to get all state into a consistent
 // state before leaking that state to the outside world.
 tx(() => {
+  console.log("inside tx -- no notifications about intermediate state changes");
   shared1.set(102);
   shared2.set(202);
 
   shared1.set(shared2.get() + shared1.get()); // 102 + 202 = 304 = shared1
   shared2.set(shared1.get() * 2); // 304 * 2 = 608 = shared2
+  console.log("exiting tx -- will notify observers of the final state");
+});
+
+tx(() => {
+  console.log(
+    "this transaction will fail and thus not change state or notify anyone"
+  );
+  shared1.set(888);
+  shared2.set(888);
+  throw new Error();
 });
 ```
+
+[fiddle](https://jsfiddle.net/qncsafvh/14/)
 
 ## Persisted (to disk) values:
 
