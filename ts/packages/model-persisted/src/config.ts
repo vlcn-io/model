@@ -1,4 +1,4 @@
-import { invariant } from "@aphrodite.sh/util";
+import { invariant } from "@vulcan.sh/util";
 
 type Config = {
   deviceId: string;

@@ -1,4 +1,4 @@
-import { isHex } from "@aphrodite.sh/util";
+import { isHex } from "@vulcan.sh/util";
 import { newId } from "../id.js";
 
 test("Requires hex device id", () => {

@@ -1,5 +1,5 @@
 {
-  "name": "@aphrodite.sh/util",
+  "name": "@vulcan.sh/util",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",

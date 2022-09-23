@@ -1,5 +1,5 @@
 {
-  "name": "@aphrodite.sh/id",
+  "name": "@vulcan.sh/id",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/packages/id"
   },
   "dependencies": {
-    "@aphrodite.sh/util": "workspace:*"
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

@@ -1,5 +1,5 @@
-import { Model } from "@aphrodite.sh/model";
-import { ID_of, newId } from "@aphrodite.sh/id";
+import { Model } from "@vulcan.sh/model";
+import { ID_of, newId } from "@vulcan.sh/id";
 import { config } from "./config.js";
 
 export abstract class PersistedModel<

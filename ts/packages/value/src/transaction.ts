@@ -1,4 +1,4 @@
-import { newScope } from "@aphrodite.sh/context-provider";
+import { newScope } from "@vulcan.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { IValue } from "./Value.js";
 

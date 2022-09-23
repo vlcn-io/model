@@ -1,6 +1,6 @@
 export type DeviceId = string;
 
-import { invariant, assertUnreachable } from "@aphrodite.sh/util";
+import { invariant, assertUnreachable } from "@vulcan.sh/util";
 
 // 32 bit random var in decimal
 let randomVariable = Math.floor(Number.MAX_SAFE_INTEGER * Math.random());

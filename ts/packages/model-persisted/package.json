@@ -1,5 +1,5 @@
 {
-  "name": "@aphrodite.sh/model-persisted",
+  "name": "@vulcan.sh/model-persisted",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",
@@ -9,10 +9,10 @@
     "directory": "ts/packages/model-persisted"
   },
   "dependencies": {
-    "@aphrodite.sh/model": "workspace:*",
-    "@aphrodite.sh/id": "workspace:*",
-    "@aphrodite.sh/util": "workspace:*",
-    "@aphrodite.sh/value": "workspace:*"
+    "@vulcan.sh/model": "workspace:*",
+    "@vulcan.sh/id": "workspace:*",
+    "@vulcan.sh/util": "workspace:*",
+    "@vulcan.sh/value": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

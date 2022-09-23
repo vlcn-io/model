@@ -1,4 +1,4 @@
-import { observableValue, IObservableValue } from "@aphrodite.sh/value";
+import { observableValue, IObservableValue } from "@vulcan.sh/value";
 
 export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;

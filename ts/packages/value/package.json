@@ -1,5 +1,5 @@
 {
-  "name": "@aphrodite.sh/value",
+  "name": "@vulcan.sh/value",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "@aphrodite.sh/context-provider": "workspace:*",
-    "@aphrodite.sh/util": "workspace:*"
+    "@vulcan.sh/context-provider": "workspace:*",
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

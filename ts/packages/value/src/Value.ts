@@ -1,6 +1,6 @@
 import { History } from "./History.js";
 import { MemoryVersion, memory } from "./memory.js";
-import { PSD } from "@aphrodite.sh/context-provider";
+import { PSD } from "@vulcan.sh/context-provider";
 
 export interface IValue<T> {
   get(): T;
