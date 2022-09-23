@@ -39,7 +39,7 @@ try {
     throw new Error("oops!");
   });
 } catch (e) {
-  // will print: {some: 'data'}; since the transaction failed
+  // will print: "initial value" since the transaction failed
   console.log(
     "exceptions thrown from a transaction prevent the changes of that transaction from being committed",
     shared.get()
