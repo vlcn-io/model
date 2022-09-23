@@ -105,6 +105,3 @@ export function value<T>(data: T): IValue<T> {
 
   return ret;
 }
-
-// TODO: read up on how sqlite provides guarantees:
-// https://www.sqlite.org/lang_transaction.html
