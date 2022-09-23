@@ -1,5 +1,5 @@
 import { History } from "./History.js";
-import { MemoryVersion, memory } from "./memory.js";
+import { memory } from "./memory.js";
 import { PSD } from "@vulcan.sh/context-provider";
 
 export interface IValue<T> {

@@ -1,16 +1,5 @@
 # vulcan.sh/value - Transactional Memory
 
-This package is the core building block of ACI~~D~~ Memory. All instances of "Value" are transaction aware an uphold ACI~~D~~ properties.
-
-In that:
-
-- **A** - all `Values` changed within a transaction are committed **A**tomically
-- **C** - values are only updated if the system will be left in a **C**onsistent state state. Uncaught exceptions in a transaction roll back all changes as if they never happened.
-- **I** - transactions are **I**solated, thus each transaction is alway operating on a consistent set of data.
-- **D** - given this is in-memory, durability is currently a non-goal.
-
-# Why
-
 Keeping a program's state consistent is a challenging task. Once you throw exceptions and error handling into the mix it gets even harder. If you add the ability to observe values & objects as they change... well it becomes nigh impossible.
 
 As such, mutable state is rightly frowned upon and a trend towards functional programming and systems like `Redux` have gained steam. Their key insight is that you make all your changes in a _new_ copy of state and, once that is done, replace the _old_ copy of state.
@@ -23,7 +12,7 @@ This very much mimicks the feature of a database transaction:
 
 Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. And more so when you need to compute what parts of the tree changed in order to notify interested parties.
 
-https://twitter.com/dan_abramov/status/1191487232038883332
+![https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png](https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png)
 
 So lets take a lesson from relational databases. Relational databases provide a set of **global** and **mutable** state yet we have very few problems with the state managed by our databases in comparison to state in program memory. This is because the database provides better abstractions for handling mutations. Namely transactions, atomic commits of transactions, transaction isolation and rollback on failure.
 
@@ -36,25 +25,29 @@ This project brings that to `JavaScript` & `TypeScript`.
 ```javascript
 import { value, tx } from "@vulcan.sh/value";
 
-// values can be anything. primitives, objects, arrays, etc.
-
 // creating or updating a value outside a transaction commits the value immediately.
-const shared = value({ some: "data" });
+// values can be anything. primitives, objects, arrays, etc.
+const shared = value("initial value");
 
-// within a transaction, all changes are isolate to the transaction
-// until it completes
+// within a transaction, all changes are isolated to the transaction
 try {
   tx(() => {
-    shared.set({ some: "other data" });
-    console.log(shared.get()); // will print: {some: 'other data'};
+    shared.set("updated value");
+    console.log("a transaction can see its own changes", shared.get()); // will print: "updated value";
 
     // throw to simulate an error in the transaction
     throw new Error("oops!");
   });
 } catch (e) {
-  console.log(shared.get()); // will print: {some: 'data'}; since the transaction failed
+  // will print: {some: 'data'}; since the transaction failed
+  console.log(
+    "exceptions thrown from a transaction prevent the changes of that transaction from being committed",
+    shared.get()
+  );
 }
 ```
+
+[fiddle](https://jsfiddle.net/jw3zc7fs/10/)
 
 ## Async transactions and transaction isolation:
 
@@ -62,43 +55,48 @@ try {
 import { value, tx } from "@vulcan.sh/value";
 
 // creating or updating a value outside a transaction commits the value immediately.
-const shared1 = value({ some: "data" });
-const shared2 = value({ more: "data" });
+const shared1 = value({ a: "initial-value" });
+const shared2 = value({ b: "initial-value" });
 
+console.log("Start at initial values");
 console.log(shared1.get());
 console.log(shared2.get());
 
 const promise = tx(async () => {
-  const v = shared1.set({ some: "other data" });
-  const r = await callWorker(v);
+  shared1.set({ a: "worker-arg" });
+  const r = await callWorker(shared1.get());
   shared2.set(r);
 });
 
 // tx stareted but not complete because we did not await it.
 // since it is not complete the main application cannot see its changes yet
+console.log("transaction not complete -- still at initial values");
 console.log(shared1.get());
 console.log(shared2.get());
 
 await promise;
 
 // awaited and now committed. can see all modifications.
+console.log("Awaited transaction to completion -- now at new values");
 console.log(shared1.get());
 console.log(shared2.get());
 
-callWorker(v) {
+async function callWorker(v) {
   // simulate web worker call + delay
   await new Promise((resolve) => setTimeout(resolve, 100));
-  return 'called worker';
+  return { b: v.a + " + worker-result" };
 }
 ```
+
+[fiddle](https://jsfiddle.net/vec0h7zn/9/)
 
 ## Observable values:
 
 ```javascript
-import { value, tx } from "@vulcan.sh/value";
+import { observableValue, tx } from "@vulcan.sh/value";
 
-const shared1 = value(100);
-const shared2 = value(200);
+const [shared1] = observableValue(100);
+const [shared2] = observableValue(200);
 
 shared1.onTransactionComplete((v) => {
   console.log(v);
@@ -126,6 +124,17 @@ tx(() => {
 ## Persisted (to disk) values:
 
 TBD -- being developed to support [aphrodite.sh](https://aphrodite.sh)
+
+# ACID
+
+This package is the core building block of transactional memory. All instances of "Value" are transaction aware an uphold ACI~~D~~ properties.
+
+In that:
+
+- **A** - all Values changed within a transaction are committed **A**tomically
+- **C** - values are only updated if the system will be left in a **C**onsistent state state. Uncaught exceptions in a transaction roll back all changes as if they never happened.
+- **I** - transactions are **I**solated, thus each transaction is alway operating on a consistent set of data.
+- **D** - given this is in-memory, durability is currently a non-goal.
 
 # Implementation
 

@@ -3,6 +3,7 @@
 // Triggers being run pre-commit
 // Observers being run post-commit
 import { IValue, Value } from "./Value.js";
+import { PSD } from "@vulcan.sh/context-provider";
 
 type OnTxComplete<T> = (v: T) => void;
 type Disposer = () => void;
