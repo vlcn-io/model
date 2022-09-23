@@ -4,11 +4,11 @@ Keeping a program's state consistent is a challenging task. Once you throw excep
 
 As such, mutable state is rightly frowned upon and a trend towards functional programming and systems like `Redux` have gained steam. Their key insight is that you make all your changes in a _new_ copy of state and, once that is done, replace the _old_ copy of state.
 
-This very much mimicks the feature of a database transaction:
+This very much mimicks the features of a database transaction:
 
 - the new copy of state is isolated from the rest of the app
-- can be committed atomically (setting a pointer to the new state tree)
-- has no impact if exceptions happen, thus preventing inconsistent state during errors
+- the new copy can be committed atomically (by setting a pointer to the new state tree)
+- the changes to the new copy have no impact if exceptions happen, thus preventing inconsistent state
 
 Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. It gets harder again when you need to compute what parts of the tree changed in order to notify interested parties.
 
