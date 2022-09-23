@@ -1,4 +1,4 @@
-`Vulcan.sh` is an exploration of how to simplify [aphrodite.sh](https://aphrodite.sh)
+`Vulcan.sh` is a collection of projects to simplify [aphrodite.sh](https://aphrodite.sh) and move the state of programming forward.
 
 Hephaestus is too hard to say and spell [hence the name Vulcan](https://en.wikipedia.org/wiki/Hephaestus#:~:text=Hephaestus%27s%20Roman%20counterpart%20is%20Vulcan).
 

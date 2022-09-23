@@ -11,17 +11,21 @@ In that:
 
 # Why
 
-Keeping a program's state consistent is a challenging task. Once you throw exceptions and error handling into the mix it gets even harder. And if you add the ability to observe values & objects as they change through generators or listeners... well it becomes neigh impossible.
+Keeping a program's state consistent is a challenging task. Once you throw exceptions and error handling into the mix it gets even harder. If you add the ability to observe values & objects as they change... well it becomes nigh impossible.
 
 As such, mutable state is rightly frowned upon and a trend towards functional programming and systems like `Redux` have gained steam. Their key insight is that you make all your changes in a _new_ copy of state and, once that is done, replace the _old_ copy of state.
 
-This very much mimicks the feature of a database transaction as the new copy of state is isolated from the rest of the app, can be committed atomically (setting a pointer to the new state tree), and has no impact if exceptions happen - preventing inconsistent state.
+This very much mimicks the feature of a database transaction:
+
+- the new copy of state is isolated from the rest of the app
+- can be committed atomically (setting a pointer to the new state tree)
+- has no impact if exceptions happen, thus preventing inconsistent state during errors
 
 Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. And more so when you need to compute what parts of the tree changed in order to notify interested parties.
 
 https://twitter.com/dan_abramov/status/1191487232038883332
 
-So lets take a lesson from relational databases. Relational databases provide a set of **global** and **mutable** state yet we have very few problems with the state managed by our databases in comparison to state in program memory. This is because the database provides better abstractions for handling mutations. Namely transactions, atomic commits of transactions, transaction isolation and transaction rollback on failure.
+So lets take a lesson from relational databases. Relational databases provide a set of **global** and **mutable** state yet we have very few problems with the state managed by our databases in comparison to state in program memory. This is because the database provides better abstractions for handling mutations. Namely transactions, atomic commits of transactions, transaction isolation and rollback on failure.
 
 This project brings that to `JavaScript` & `TypeScript`.
 
@@ -121,7 +125,7 @@ tx(() => {
 
 ## Persisted (to disk) values:
 
-Future -- being developed to support [aphrodite.sh](https://aphrodite.sh) / vulcan.sh/orm
+TBD -- being developed to support [aphrodite.sh](https://aphrodite.sh)
 
 # Implementation
 

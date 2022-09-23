@@ -2,7 +2,7 @@
 
 Allows storing data in the current execution context and tracks across async calls.
 
-Basically just pulled and isolated from `Dexie.js`
+The `context-provider` package is 100% pulled and isolated from `Dexie.js`.
 
 ```
 newScope(async () => {
