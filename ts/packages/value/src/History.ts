@@ -29,6 +29,11 @@ export class History<T> {
       return;
     }
 
+    // still inflight txs but our history is at a certain limit
+    if (this.nodes.length > 3) {
+      this.#maybeDrop(memoryVersion);
+    }
+
     this.nodes.push({
       memVers: memoryVersion,
       data,
@@ -39,5 +44,11 @@ export class History<T> {
     if (this.nodes.length > 0) {
       this.nodes = [];
     }
+  }
+
+  #maybeDrop(memoryVersion: MemoryVersion) {
+    // TODO
+    // based on min memory version of inflight transactions
+    // We can drop all history entries except for the one before the one greater than the smallest inflight mem version.
   }
 }

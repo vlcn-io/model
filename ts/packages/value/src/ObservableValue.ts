@@ -2,8 +2,9 @@
 // build triggers and observers.
 // Triggers being run pre-commit
 // Observers being run post-commit
-import { IValue, Value } from "./Value.js";
+import { Event, IValue, Value } from "./Value.js";
 import { PSD } from "@vulcan.sh/context-provider";
+import { Transaction } from "./transaction.js";
 
 type OnTxComplete<T> = (v: T) => void;
 type Disposer = () => void;
@@ -21,7 +22,7 @@ class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
     return () => this.#observers.delete(fn);
   }
 
-  __transactionComplete() {
+  __transactionComplete(e: Event) {
     this.#notifyObservers();
   }
 
@@ -36,19 +37,18 @@ class ObservableValue<T> extends Value<T> implements IObservableValue<T> {
   }
 }
 
-// take mem version as optional...? for re-hydrate case?
 export function observableValue<T>(data: T): [IObservableValue<T>, boolean] {
   const ret = new ObservableValue(data);
 
   // @ts-ignore
-  const tx = PSD.tx;
+  const tx = PSD.tx as Transaction;
   let txComplete = false;
   if (tx) {
-    tx.touched.set(ret, data);
+    tx.created.set(ret, data);
   } else {
     // we're not inside a running tx? then the tx is the create and is done.
     txComplete = true;
-    ret.__transactionComplete();
+    ret.__transactionComplete("create");
   }
 
   // we return a bool indicating if the tx is complete.

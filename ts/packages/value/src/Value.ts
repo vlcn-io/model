@@ -1,13 +1,16 @@
 import { History } from "./History.js";
 import { memory } from "./memory.js";
 import { PSD } from "@vulcan.sh/context-provider";
+import { Transaction } from "./transaction.js";
+
+export type Event = "create" | "update";
 
 export interface IValue<T> {
   get(): T;
   set(data: T): void;
 
   __commit(data: T): void;
-  __transactionComplete(): void;
+  __transactionComplete(e: Event): void;
 }
 
 /**
@@ -28,13 +31,16 @@ export class Value<T> implements IValue<T> {
   get(): T {
     // TODO:
     // @ts-ignore
-    const tx = PSD.tx;
+    const tx = PSD.tx as Transaction;
     if (!tx) {
       return this.data;
     }
 
-    if (tx.touched.has(this)) {
-      return tx.touched.get(this);
+    if (tx.created.has(this)) {
+      return tx.created.get(this);
+    }
+    if (tx.updated.has(this)) {
+      return tx.updated.get(this);
     }
 
     // Now check based on memory version.
@@ -42,7 +48,6 @@ export class Value<T> implements IValue<T> {
       // data is the latest data for this value.
       // if the latest data for the value is not newer than when
       // the transaction started then the transaction can receive it.
-      this.history.drop();
       return this.data;
     }
 
@@ -63,20 +68,29 @@ export class Value<T> implements IValue<T> {
    * @returns
    */
   set(data: T): void {
-    // @ts-ignore
-    const tx = PSD.tx;
-    if (!tx) {
-      this.__commit(data);
-      this.__transactionComplete();
+    if (this.data === data) {
       return;
     }
 
-    tx.touched.set(this, data);
+    // @ts-ignore
+    const tx = PSD.tx as Transaction;
+    if (!tx) {
+      this.__commit(data);
+      this.__transactionComplete("update");
+      return;
+    }
+
+    if (tx.created.has(this)) {
+      tx.created.set(this, data);
+    } else {
+      tx.updated.set(this, data);
+    }
   }
 
   /**
    * Commit the change. Should only be called by
    * transaction logic and not end users.
+   *
    */
   __commit(data: T): void {
     this.history.maybeAdd(this.data, this.memVers);
@@ -84,7 +98,7 @@ export class Value<T> implements IValue<T> {
     this.memVers = memory.nextVersion();
   }
 
-  __transactionComplete(): void {}
+  __transactionComplete(e: Event): void {}
 
   /**
    * Since transaction mutations are written to the transaction object and not to the value prior to commit,
@@ -96,11 +110,11 @@ export class Value<T> implements IValue<T> {
 export function value<T>(data: T): IValue<T> {
   const ret = new Value(data);
   // @ts-ignore
-  const tx = PSD.tx;
+  const tx = PSD.tx as Transaction;
   if (tx) {
-    tx.touched.set(ret, data);
+    tx.created.set(ret, data);
   } else {
-    ret.__transactionComplete();
+    ret.__transactionComplete("create");
   }
 
   return ret;

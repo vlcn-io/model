@@ -5,14 +5,16 @@ import { IValue } from "./Value.js";
 export const inflight: Transaction[] = [];
 
 export type Transaction = {
-  readonly touched: Map<IValue<any>, any>;
+  readonly created: Map<IValue<any>, any>;
+  readonly updated: Map<IValue<any>, any>;
   readonly memoryVersion: MemoryVersion;
 };
 
 export function transaction(): Transaction {
   return {
     memoryVersion: memory.version,
-    touched: new Map(),
+    created: new Map(),
+    updated: new Map(),
   };
 }
 
@@ -57,11 +59,17 @@ export function tx<T>(fn: () => T): T {
 }
 
 function commit(tx: Transaction) {
-  for (const [value, data] of tx.touched.entries()) {
+  for (const [value, data] of tx.created.entries()) {
+    value.__commit(data);
+  }
+  for (const [value, data] of tx.updated.entries()) {
     value.__commit(data);
   }
 
-  for (const value of tx.touched.keys()) {
-    value.__transactionComplete();
+  for (const value of tx.created.keys()) {
+    value.__transactionComplete("create");
+  }
+  for (const value of tx.updated.keys()) {
+    value.__transactionComplete("update");
   }
 }
