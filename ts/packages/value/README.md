@@ -12,7 +12,7 @@ This very much mimicks the feature of a database transaction:
 
 Trying to manage a giant tree of completely immutable state can be rather complicated, however. Especially when you need to update deeply nested state in that tree. And more so when you need to compute what parts of the tree changed in order to notify interested parties.
 
-![https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png](https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png)
+[![https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png](https://github.com/aphrodite-sh/vulcan/raw/main/assets/redux-tweet.png)](https://twitter.com/dan_abramov/status/1191487232038883332)
 
 So lets take a lesson from relational databases. Relational databases provide a set of **global** and **mutable** state yet we have very few problems with the state managed by our databases in comparison to state in program memory. This is because the database provides better abstractions for handling mutations. Namely transactions, atomic commits of transactions, transaction isolation and rollback on failure.
 
