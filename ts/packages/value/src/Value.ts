@@ -3,13 +3,13 @@ import { memory, MemoryVersion } from "./memory.js";
 import { PSD } from "@vulcan.sh/context-provider";
 import { Transaction } from "./transaction.js";
 
-export type Event = "create" | "update";
+export type Event = "create" | "update" | "delete";
 
 export interface IValue<T> {
   get(): T;
   set(data: T): void;
 
-  __commit(data: T): void;
+  __commit(data: T, e: Event): void;
   __transactionComplete(e: Event): void;
 }
 
@@ -38,11 +38,12 @@ export class Value<T> implements IValue<T> {
       return this.data;
     }
 
-    if (tx.created.has(this)) {
-      return tx.created.get(this);
-    }
-    if (tx.updated.has(this)) {
-      return tx.updated.get(this);
+    const v = tx.touched.get(this);
+    if (v != null) {
+      if (v[1] % 2 === 0) {
+        console.warn("Reading a deleted value");
+      }
+      return v[2];
     }
 
     // Now check based on memory version.
@@ -82,11 +83,7 @@ export class Value<T> implements IValue<T> {
       return;
     }
 
-    if (tx.created.has(this)) {
-      tx.created.set(this, data);
-    } else {
-      tx.updated.set(this, data);
-    }
+    tx.touch(this, "update", data);
   }
 
   /**
@@ -114,7 +111,7 @@ export function value<T>(data: T): IValue<T> {
   // @ts-ignore
   const tx = PSD.tx as Transaction;
   if (tx) {
-    tx.created.set(ret, data);
+    tx.touch(ret, "create", data);
   } else {
     ret.__transactionComplete("create");
   }

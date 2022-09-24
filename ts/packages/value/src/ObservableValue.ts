@@ -47,7 +47,7 @@ export function observableValue<T>(data: T): [IObservableValue<T>, boolean] {
   const tx = PSD.tx as Transaction;
   let txComplete = false;
   if (tx) {
-    tx.created.set(ret, data);
+    tx.touch(ret, "create", data);
   } else {
     // we're not inside a running tx? then the tx is the create and is done.
     txComplete = true;

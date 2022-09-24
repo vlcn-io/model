@@ -35,7 +35,7 @@ export function newPersistedValue<T>(data: T): [IPersistedValue<T>, boolean] {
   const tx = PSD.tx as Transaction;
   let txComplete = false;
   if (tx) {
-    tx.created.set(ret, data);
+    tx.touch(ret, "create", data);
   } else {
     txComplete = true;
     ret.__transactionComplete("create");

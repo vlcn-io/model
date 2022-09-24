@@ -16,23 +16,39 @@
 import { invariant } from "@vulcan.sh/util";
 import { PersistedModel } from "./PersistedModel";
 
+export type Listener = (
+  pendingCreates: ModelSet,
+  pendingUpdates: ModelSet,
+  pendingDeletes: ModelSet
+) => void;
+
 type ModelSet = Set<PersistedModel<any>>;
 class PersistTracker {
+  // instead collect all events
+  // in a list.
+  // then collapse them
+  // and incr causal length on create + deletes to figure out
+  // final state (created or deleted) of a thing
+  // #pendingEvents: [PersistedModel<any>, "create" | "update" | "delete"][] = [];
+
   #pendingCreates = new Set<PersistedModel<any>>();
   #pendingUpdates = new Set<PersistedModel<any>>();
   #pendingDeletes = new Set<PersistedModel<any>>();
+  #listeners = new Set<Listener>();
 
   #hasPendingMicroTask = false;
 
   constructor() {}
 
+  onBatchReady() {}
+
   addCreate(m: PersistedModel<any>) {
     this.#pendingCreates.add(m);
 
-    invariant(
-      !this.#pendingDeletes.has(m),
-      "Created something after it was requested to be deleted."
-    );
+    // if someone is creating after deleting, cancel the delete
+    this.#pendingDeletes.delete(m);
+    // create includes update
+    this.#pendingUpdates.delete(m);
 
     this.#maybeQueueMicroTask();
   }
@@ -70,8 +86,6 @@ class PersistTracker {
     }
 
     queueMicrotask(() => {
-      this.#hasPendingMicroTask = false;
-
       const [pendingCreates, pendingUpdates, pendingDeletes] = [
         this.#pendingCreates,
         this.#pendingUpdates,
@@ -81,6 +95,7 @@ class PersistTracker {
       this.#pendingUpdates = new Set();
       this.#pendingDeletes = new Set();
 
+      this.#hasPendingMicroTask = false;
       this.#notifyBackends(pendingCreates, pendingUpdates, pendingDeletes);
     });
     this.#hasPendingMicroTask = true;
@@ -90,7 +105,16 @@ class PersistTracker {
     pendingCreates: ModelSet,
     pendingUpdates: ModelSet,
     pendingDeletes: ModelSet
-  ) {}
+  ) {
+    for (const l of this.#listeners) {
+      try {
+        l(pendingCreates, pendingUpdates, pendingDeletes);
+      } catch (e) {
+        // one backend failing shouldn't prevent telling other backends
+        console.error(e);
+      }
+    }
+  }
 }
 
 export const persistTracker = new PersistTracker();
