@@ -6,6 +6,9 @@ async function nativePromiseDelay(n: number) {
   await new Promise((resolve) => setTimeout(resolve, n));
 }
 
+/**
+ * All value types (normal, observable, persisted) should pass these test cases.
+ */
 export function createCases(
   value: (v: any) => IValue<any>
 ): [string, () => any][] {
@@ -208,12 +211,6 @@ export function createCases(
         });
 
         expect(shared.get()).toBe("async set");
-      },
-    ],
-    [
-      "async txns do not lose scope",
-      async () => {
-        // TODO await a bunch of stuff in different orders to try to drop scope
       },
     ],
   ];

@@ -10,6 +10,22 @@ import { Event, IValue } from "./Value.js";
 
 export const inflight: Transaction[] = [];
 
+// Need to track what transactions
+// ran concurrently.
+// inflight provides a window into what is running _now_.
+// When a new tx starts, it should register itself with all
+// other inflights.
+// When a tx commits,
+// it should check everyone who ran with it.
+// if they are all still inflight (not committed)
+// then the tx can commit.
+// If any of them committed (not inflight), we need to check if we conflict
+// if we conflict, throw.  We _could_ retry if the dev indicates that is safe.
+
+// tx serialization --
+// either a mutex
+// or a queue of promises
+
 export type Transaction = {
   // The models that were touched, the first event that touched them,
   // the causal length if subsequent events touched them, their most recent data
