@@ -40,10 +40,11 @@ export class Value<T> implements IValue<T> {
 
     const v = tx.touched.get(this);
     if (v != null) {
-      if (v[1] % 2 === 0) {
+      if (v[0] === "delete") {
         console.warn("Reading a deleted value");
+        throw new Error("Reading a deleted value");
       }
-      return v[2];
+      return v[1];
     }
 
     // Now check based on memory version.
