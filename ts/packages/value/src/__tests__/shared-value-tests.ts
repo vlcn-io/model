@@ -1,5 +1,5 @@
 import { IValue } from "../Value";
-import { tx } from "../transaction.js";
+import { tx, txAsync } from "../transaction.js";
 
 export function createCases(
   value: (v: any) => IValue<any>
@@ -30,7 +30,7 @@ export function createCases(
         });
 
         // async
-        await tx(async () => {
+        await txAsync(async () => {
           expect(v.get()).toBe(d);
         });
       },
@@ -53,7 +53,7 @@ export function createCases(
         });
 
         // cb fn that returns a promise
-        await tx(async () => {
+        await txAsync(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -80,7 +80,7 @@ export function createCases(
     [
       "Within a transaction that awaits and is thus suspended",
       async () => {
-        await tx(async () => {
+        await txAsync(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -103,7 +103,7 @@ export function createCases(
         const shared = value(initial);
 
         const task = () =>
-          tx(async () => {
+          txAsync(async () => {
             expect(shared.get()).toBe(initial);
 
             const newVal = Math.random() * 1000;
@@ -144,7 +144,7 @@ export function createCases(
         expect(shared.get().x).toBe(1);
 
         try {
-          await tx(async () => {
+          await txAsync(async () => {
             shared.set({ x: -1 });
             throw new Error("Failed");
           });
@@ -163,7 +163,7 @@ export function createCases(
         const initial = { x: 1 };
         const shared = value(initial);
 
-        const handle = tx(async () => {
+        const handle = txAsync(async () => {
           shared.set({ x: 2 });
           await new Promise((resolved) => setTimeout(resolved, 0));
         });
@@ -173,6 +173,31 @@ export function createCases(
         await handle;
 
         expect(shared.get().x).toBe(2);
+      },
+    ],
+    [
+      "effects of a tx are observable post commit",
+      async () => {
+        const initial = "initial";
+        const shared = value(initial);
+
+        tx(() => {
+          shared.set("sync set");
+        });
+
+        expect(shared.get()).toBe("sync set");
+
+        await txAsync(async () => {
+          shared.set("async set");
+        });
+
+        expect(shared.get()).toBe("async set");
+      },
+    ],
+    [
+      "async txns do not lose scope",
+      async () => {
+        // TODO await a bunch of stuff in different orders to try to drop scope
       },
     ],
   ];
