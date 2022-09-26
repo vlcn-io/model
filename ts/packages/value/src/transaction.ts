@@ -54,6 +54,7 @@ export function transaction(): Transaction {
   };
 }
 
+let txid = 0;
 export function tx<T>(fn: () => T): T {
   const tx = transaction();
   inflight.push(tx);
@@ -68,6 +69,7 @@ export function tx<T>(fn: () => T): T {
 
     let ret = newScope(fn, {
       tx,
+      txid: txid++,
     });
 
     if (typeof ret?.then === "function") {

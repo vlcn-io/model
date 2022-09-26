@@ -1,5 +1,10 @@
 import { IValue } from "../Value";
 import { tx } from "../transaction.js";
+import { PSD } from "@vulcan.sh/context-provider";
+
+async function nativePromiseDelay(n: number) {
+  await new Promise((resolve) => setTimeout(resolve, n));
+}
 
 export function createCases(
   value: (v: any) => IValue<any>
@@ -104,16 +109,27 @@ export function createCases(
 
         const task = () =>
           tx(async () => {
+            const txid = (PSD as any).txid;
+
             expect(shared.get()).toBe(initial);
-
-            const newVal = Math.random() * 1000;
-            shared.set({ x: newVal });
-
-            expect(shared.get().x).toBe(newVal);
 
             await new Promise((resolved) =>
               setTimeout(resolved, Math.random() * 25)
             );
+
+            // chack that interleaving executions get the correct
+            // transaction reassigned to them
+            expect((PSD as any).txid).toBe(txid);
+
+            expect(shared.get()).toBe(initial);
+
+            const newVal = Math.random() * 1000 + 2;
+            shared.set({ x: newVal });
+
+            expect(shared.get().x).toBe(newVal);
+
+            await nativePromiseDelay(25);
+            expect((PSD as any).txid).toBe(txid);
 
             // we should never see updates made by other tasks when inside a tx.
             expect(shared.get().x).toBe(newVal);
