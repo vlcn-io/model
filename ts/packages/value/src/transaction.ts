@@ -51,49 +51,42 @@ export function transaction(): Transaction {
 export function tx<T>(fn: () => T): T {
   const tx = transaction();
   inflight.push(tx);
+
+  let updatedInflight = false;
   try {
-    let ret = newScope(fn, {
+    const ret = newScope(fn, {
       tx,
     });
-
-    // if ret is a promise we must then it.
-    if (typeof ret?.then === "function") {
-      ret = ret.then(
-        (result: any) => {
-          inflight.splice(inflight.indexOf(tx), 1);
-          console.log("pre-commit");
-          commit(tx);
-          return result;
-        },
-        (reason: any) => {
-          inflight.splice(inflight.indexOf(tx), 1);
-          throw reason;
-        }
-      );
-    } else {
-      // removal from inflight before committing is intentional
-      // so history knows to or not to add the change.
-      // commit is atomic so this is ok.
-      inflight.splice(inflight.indexOf(tx), 1);
-      commit(tx);
-    }
-
+    inflight.splice(inflight.indexOf(tx), 1);
+    updatedInflight = true;
+    commit(tx);
+    // TODO: warn if a promise is returned?
     return ret;
-  } catch (e) {
-    const idx = inflight.indexOf(tx);
-    if (idx != -1) {
+  } finally {
+    if (!updatedInflight) {
+      const idx = inflight.indexOf(tx);
       inflight.splice(idx, 1);
     }
-
-    throw e;
   }
 }
 
 export async function txAsync<T>(fn: () => Promise<T>): Promise<T> {
   const tx = transaction();
   inflight.push(tx);
+
+  let updatedInflight = false;
   try {
-  } catch (e) {}
+    const ret = await newScope(fn, { tx });
+    inflight.splice(inflight.indexOf(tx), 1);
+    updatedInflight = true;
+    commit(tx);
+    return ret;
+  } finally {
+    if (!updatedInflight) {
+      const idx = inflight.indexOf(tx);
+      inflight.splice(idx, 1);
+    }
+  }
 }
 
 function commit(tx: Transaction) {
