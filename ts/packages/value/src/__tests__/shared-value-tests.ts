@@ -1,5 +1,5 @@
 import { IValue } from "../Value";
-import { tx, txAsync } from "../transaction.js";
+import { tx } from "../transaction.js";
 
 export function createCases(
   value: (v: any) => IValue<any>
@@ -30,7 +30,7 @@ export function createCases(
         });
 
         // async
-        await txAsync(async () => {
+        await tx(async () => {
           expect(v.get()).toBe(d);
         });
       },
@@ -53,7 +53,7 @@ export function createCases(
         });
 
         // cb fn that returns a promise
-        await txAsync(async () => {
+        await tx(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -80,7 +80,7 @@ export function createCases(
     [
       "Within a transaction that awaits and is thus suspended",
       async () => {
-        await txAsync(async () => {
+        await tx(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -103,7 +103,7 @@ export function createCases(
         const shared = value(initial);
 
         const task = () =>
-          txAsync(async () => {
+          tx(async () => {
             expect(shared.get()).toBe(initial);
 
             const newVal = Math.random() * 1000;
@@ -144,7 +144,7 @@ export function createCases(
         expect(shared.get().x).toBe(1);
 
         try {
-          await txAsync(async () => {
+          await tx(async () => {
             shared.set({ x: -1 });
             throw new Error("Failed");
           });
@@ -163,7 +163,7 @@ export function createCases(
         const initial = { x: 1 };
         const shared = value(initial);
 
-        const handle = txAsync(async () => {
+        const handle = tx(async () => {
           shared.set({ x: 2 });
           await new Promise((resolved) => setTimeout(resolved, 0));
         });
@@ -187,7 +187,7 @@ export function createCases(
 
         expect(shared.get()).toBe("sync set");
 
-        await txAsync(async () => {
+        await tx(async () => {
           shared.set("async set");
         });
 

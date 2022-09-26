@@ -1,4 +1,10 @@
-import { newScope, PSD } from "@vulcan.sh/context-provider";
+import {
+  decrementExpectedAwaits,
+  incrementExpectedAwaits,
+  isAsyncFunction,
+  newScope,
+  PSD,
+} from "@vulcan.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
@@ -53,39 +59,68 @@ export function tx<T>(fn: () => T): T {
   inflight.push(tx);
 
   let updatedInflight = false;
+  const fnAsync = isAsyncFunction(fn);
   try {
-    const ret = newScope(fn, {
+    // Detect native async function usage
+    if (fnAsync) {
+      incrementExpectedAwaits();
+    }
+
+    let ret = newScope(fn, {
       tx,
     });
-    inflight.splice(inflight.indexOf(tx), 1);
-    updatedInflight = true;
-    commit(tx);
-    // TODO: warn if a promise is returned?
+
+    if (typeof ret?.then === "function") {
+      ret = ret.then(
+        (result: any) => {
+          if (fnAsync) {
+            decrementExpectedAwaits();
+          }
+          if (!updatedInflight) {
+            inflight.splice(inflight.indexOf(tx), 1);
+            // no need to set but for symmetry
+            updatedInflight = true;
+          }
+
+          commit(tx);
+          return result;
+        },
+        (reason: any) => {
+          if (fnAsync) {
+            decrementExpectedAwaits();
+          }
+          if (!updatedInflight) {
+            inflight.splice(inflight.indexOf(tx), 1);
+            // no need to set but for symmetry
+            updatedInflight = true;
+          }
+
+          throw reason;
+        }
+      );
+    } else {
+      // removal from inflight before committing is intentional
+      // so history knows to or not to add the change.
+      // commit is atomic so this is ok.
+      inflight.splice(inflight.indexOf(tx), 1);
+      updatedInflight = true;
+      commit(tx);
+    }
+
     return ret;
-  } finally {
+  } catch (e) {
+    // not in a finally. Since if the inner func is async we don't want to run
+    // until then/catch.
+    // finally would run too early / before the inner func completes.
+    // Catch will only run if the sync code throws -- aborting
+    // the tx in all cases.
     if (!updatedInflight) {
+      updatedInflight = true;
       const idx = inflight.indexOf(tx);
       inflight.splice(idx, 1);
     }
-  }
-}
 
-export async function txAsync<T>(fn: () => Promise<T>): Promise<T> {
-  const tx = transaction();
-  inflight.push(tx);
-
-  let updatedInflight = false;
-  try {
-    const ret = await newScope(fn, { tx });
-    inflight.splice(inflight.indexOf(tx), 1);
-    updatedInflight = true;
-    commit(tx);
-    return ret;
-  } finally {
-    if (!updatedInflight) {
-      const idx = inflight.indexOf(tx);
-      inflight.splice(idx, 1);
-    }
+    throw e;
   }
 }
 
@@ -95,7 +130,6 @@ function commit(tx: Transaction) {
   // commits.
   // @ts-ignore
   const parentTx = PSD.tx as Transaction | undefined;
-  console.log(PSD);
   if (parentTx) {
     parentTx.merge(tx);
     return;

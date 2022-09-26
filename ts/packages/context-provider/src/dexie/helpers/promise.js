@@ -836,7 +836,6 @@ function zoneLeaveEcho() {
 }
 
 function switchToZone(targetZone, bEnteringZone) {
-  console.log("switching zone");
   var currentZone = PSD;
   if (
     bEnteringZone

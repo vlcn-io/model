@@ -1,5 +1,12 @@
 # vulcan.sh/value - Transactional Memory
 
+Related projects:
+
+- [Scala & ZIO STM](https://zio.dev/version-1.x/datatypes/stm/)
+- [Effect-TS STM](https://github.com/Effect-TS/core/tree/main/packages/core/_src/stm)
+- [Haskell STM](https://hackage.haskell.org/package/stm-2.5.0.0/docs/Control-Concurrent-STM.html)
+- [Clojure STM](https://clojure.github.io/clojure/clojure.core-api.html#clojure.core/dosync)
+
 Keeping a program's state consistent is a challenging task. Once you throw exceptions and error handling into the mix it gets even harder. If you add the ability to observe values & objects as they change... well it becomes nigh impossible.
 
 As such, mutable state is rightly frowned upon and a trend towards functional programming and systems like `Redux` have gained steam. Their key insight is that you make all your changes in a _new_ copy of state and, once that is done, replace the _old_ copy of state.
