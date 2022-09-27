@@ -1,3 +1,6 @@
+import { tx } from "../transaction";
+import { value } from "../Value.js";
+
 test("see Value.test.ts which inorporates transaction tests", () => {});
 
 test("nested transactions", () => {
@@ -6,6 +9,23 @@ test("nested transactions", () => {
   //
   // If a child transaction throws, the parent can still complete if the parent
   // catches the error. The child's changes won't be included.
+});
+test("nested transactions are not treated as concurrent transactions", async () => {
+  const shared = value(1);
+  expect(shared.get()).toBe(1);
+
+  tx(() => {
+    expect(shared.get()).toBe(1);
+    shared.set(2);
+    expect(shared.get()).toBe(2);
+    tx(() => {
+      shared.set(3);
+      expect(shared.get()).toBe(3);
+    });
+    expect(shared.get()).toBe(3);
+  });
+
+  expect(shared.get()).toBe(3);
 });
 test("sibling transactions throw if they modify the same data", async () => {});
 test("sibling transactions commit without error if they do not modify the same data", async () => {});

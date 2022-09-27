@@ -110,6 +110,8 @@ export function createCases(
         const initial = { x: 1 };
         const shared = value(initial);
 
+        let taskCompletions = 0;
+
         const task = () =>
           tx(async () => {
             const txid = (PSD as any).txid;
@@ -136,9 +138,26 @@ export function createCases(
 
             // we should never see updates made by other tasks when inside a tx.
             expect(shared.get().x).toBe(newVal);
+            taskCompletions++;
           });
 
-        await Promise.all([task(), task(), task(), task(), task()]);
+        const txResults = await Promise.allSettled([
+          task(),
+          task(),
+          task(),
+          task(),
+          task(),
+        ]);
+
+        // all tasks should reach the end -- checking so we can ensure all our expects were run.
+        // we do this since the transactions will throw concurrent modification exceptions
+        // and we're swallowing all errors with `allSettled`
+        expect(taskCompletions).toEqual(5);
+
+        // one transaction should have committed, all others should have been rejected with concurrent modification exceptions
+        expect(txResults.filter((r) => r.status === "fulfilled").length).toBe(
+          1
+        );
       },
     ],
     [
