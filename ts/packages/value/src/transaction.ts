@@ -8,8 +8,6 @@ import {
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
-// export const inflight: Transaction[] = [];
-
 const _inflight = new Set<Transaction>();
 export const inflight = {
   add(t: Transaction) {
@@ -33,34 +31,51 @@ export const inflight = {
   },
 };
 
-// Need to track what transactions
-// ran concurrently.
-// inflight provides a window into what is running _now_.
-// When a new tx starts, it should register itself with all
-// other inflights.
-// When a tx commits,
-// it should check everyone who ran with it.
-// if they are all still inflight (not committed)
-// then the tx can commit.
-// If any of them committed (not inflight), we need to check if we conflict
-// if we conflict, throw.  We _could_ retry if the dev indicates that is safe.
+export type TxOptions = {
+  // When a concurrente modification is detected do we:
+  // - fail the transaction
+  // - run it again until it succeeds
+  // Currently we only support failing.
+  // We also support "serialize" which takes effect prior to
+  // commit and at transaction submission. This mode
+  // serializes all sibling transactions. Reduces throughput of your system.
+  // E.g., `await Promise.all([a,b,c])` would turn into `await a; await b; await c;`
+  readonly concurrentModification: "fail"; // | "retry" | "serialize";
+  readonly name?: string;
 
-// tx serialization --
-// either a mutex
-// or a queue of promises
+  // consistent read option as in the clojure dining philosophers example?
+};
 
 export type Transaction = {
+  readonly options: TxOptions;
   // The models that were touched, the first event that touched them,
   // the causal length if subsequent events touched them, their most recent data
   readonly touched: ReadonlyMap<IValue<any>, [Event, any]>;
   touch(value: IValue<any>, e: Event, d: any): void;
+  // Whenever a tx starts while we are still running, it'll register itself with us as being
+  // a concurrent transaction.
+  registerConcurrentSibling(sibling: Transaction): void;
+  // Whenever a tx commits while we are still running, it'll register itself with us as being
+  // a concurrent commit.
+  registerConcurrentCommit(sibling: Transaction): void;
   // merge(subTransaction: Transaction): void;
   readonly memoryVersion: MemoryVersion;
+  readonly concurrentSiblings: Transaction[];
+  readonly concurrentCommits: Transaction[];
 };
 
-export function transaction(): Transaction {
+export function transaction(
+  options: TxOptions = { concurrentModification: "fail" }
+): Transaction {
   const touched = new Map<IValue<any>, [Event, any]>();
-  return {
+
+  // copy off inflight transactions and save them as being run
+  // as concurrent siblings with this transaction
+  const siblings: Transaction[] = [..._inflight];
+  const concurrentCommits: Transaction[] = [];
+
+  const ret = {
+    options,
     touch(value: IValue<any>, e: Event, d: any): void {
       const existing = touched.get(value);
       if (!existing) {
@@ -72,29 +87,32 @@ export function transaction(): Transaction {
         existing[1] = d;
       }
     },
-    // merge(subTransaction: Transaction): void {
-    //   for (const [value, [event, data]] of subTransaction.touched) {
-    //     const existing = touched.get(value);
-    //     if (existing != null) {
-    //       if (event === "create" || event === "delete") {
-    //         // deletes and creates take precedence over update.
-    //         // as if create or delete exists then that's what is important
-    //         // to the outside world post transaction
-    //         existing[0] = event;
-    //       }
-    //       existing[1] = data;
-    //     } else {
-    //       touched.set(value, [event, data]);
-    //     }
-    //   }
-    // },
+    registerConcurrentSibling(sibling: Transaction) {
+      siblings.push(sibling);
+    },
+    registerConcurrentCommit(sibling: Transaction) {
+      concurrentCommits.push(sibling);
+    },
     touched,
+    concurrentSiblings: siblings,
+    concurrentCommits,
     memoryVersion: memory.version,
   };
+
+  // When a new tx starts, it registers itself with all currently running
+  // transactions.
+  for (const tx of _inflight) {
+    tx.registerConcurrentSibling(ret);
+  }
+
+  return ret;
 }
 
 let txid = 0;
-export function tx<T>(fn: () => T): T {
+export function tx<T>(
+  fn: () => T,
+  options: TxOptions = { concurrentModification: "fail" }
+): T {
   // If still in a tx, use that tx.
   // @ts-ignore
   const parentTx = PSD.tx as Transaction | undefined;
@@ -102,7 +120,7 @@ export function tx<T>(fn: () => T): T {
   if (parentTx) {
     tx = parentTx;
   } else {
-    tx = transaction();
+    tx = transaction(options);
     inflight.add(tx);
   }
 
@@ -173,11 +191,64 @@ export function tx<T>(fn: () => T): T {
 }
 
 function commit(tx: Transaction) {
+  // check our concurrent siblings
+  // if:
+  // a. we have none or b. they are all still running, commit
+  // if:
+  // any of them have committed, intersect our touched sets.
+  // if our touched sets overlap, throw
+  // if not, commit
+
+  if (tx.concurrentCommits.length !== 0) {
+    // someone committed while we were running
+    const conflicts = checkForConflictingWrites(tx);
+    if (conflicts != null) {
+      switch (tx.options.concurrentModification) {
+        case "fail":
+          throw new Error(
+            `Transaction ${
+              tx.options.name || "unnamed"
+            } and ${conflicts} had conflicting writes. ${
+              tx.options.name || "unnamed"
+            } was reverted.`
+          );
+      }
+
+      throw new Error("Should be unreachable");
+    }
+    // else we can commit
+  }
+
   for (const [value, [event, data]] of tx.touched.entries()) {
     value.__commit(data, event);
   }
 
+  // No need to register a concurrent commit if we did not write anything.
+  if (tx.touched.size > 0) {
+    // we were able to fully commit
+    // some of these siblings might be done...
+    // so registering a concurrent commit with them will be a no-op
+    // maybe we shouldn't even register a concurrent commit if the sibling has already committed?
+    for (const sibling of tx.concurrentSiblings) {
+      sibling.registerConcurrentCommit(tx);
+    }
+  }
+
+  // notify potential listeners to values of transaction completion
   for (const [value, [event, _data]] of tx.touched.entries()) {
     value.__transactionComplete(event);
   }
+}
+
+function checkForConflictingWrites(tx: Transaction): string | undefined {
+  const iTouched = [...tx.touched.keys()];
+  // for each sibling
+  for (const sibling of tx.concurrentCommits) {
+    // if any of them touched a value I did
+    if (iTouched.some((x) => sibling.touched.has(x))) {
+      // return them as a conflict
+      return sibling.options.name || "unnamed";
+    }
+  }
+  return undefined;
 }
