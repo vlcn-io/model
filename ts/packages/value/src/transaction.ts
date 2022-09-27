@@ -1,11 +1,4 @@
-import {
-  decrementExpectedAwaits,
-  incrementExpectedAwaits,
-  isAsyncFunction,
-  newScope,
-  PSD,
-  ZonedPromise,
-} from "@vulcan.sh/context-provider";
+import { runInScope, runInAsyncScope } from "@vulcan.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
@@ -130,7 +123,7 @@ export function tx<T>(
     });
     if (typeof ret?.then === "function") {
       console.warn(
-        "Looks like you called `tx` with a function that returns a promise. You should call `asyncTx` instead."
+        "Looks like you called `tx` with a function that returns a promise. You should call `txAsync` instead."
       );
     }
     return ret;
@@ -141,7 +134,7 @@ export function tx<T>(
   }
 }
 
-export function asyncTx<T>(
+export function txAsync<T>(
   fn: () => Promise<T>,
   options: TxOptions = { concurrentModification: "fail" }
 ): Promise<T> {

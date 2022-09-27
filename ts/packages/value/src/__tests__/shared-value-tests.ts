@@ -1,5 +1,5 @@
 import { IValue } from "../Value";
-import { asyncTx, tx } from "../transaction.js";
+import { txAsync, tx } from "../transaction.js";
 import { PSD } from "@vulcan.sh/context-provider";
 
 async function nativePromiseDelay(n: number) {
@@ -203,7 +203,7 @@ export function createCases(
         const initial = { x: 1 };
         const shared = value(initial);
 
-        const handle = asyncTx(async () => {
+        const handle = txAsync(async () => {
           shared.val = { x: 2 };
           await new Promise((resolved) => setTimeout(resolved, 0));
         });
