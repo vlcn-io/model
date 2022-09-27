@@ -139,6 +139,8 @@ export function createCases(
             // we should never see updates made by other tasks when inside a tx.
             expect(shared.val.x).toBe(newVal);
             taskCompletions++;
+
+            return shared.val;
           });
 
         const txResults = await Promise.allSettled([
@@ -156,8 +158,10 @@ export function createCases(
 
         // one transaction should have committed, all others should have been rejected with concurrent modification exceptions
         expect(shared.val).not.toBe(initial);
-        expect(txResults.filter((r) => r.status === "fulfilled").length).toBe(
-          1
+        const fulfilled = txResults.filter((r) => r.status === "fulfilled");
+        expect(fulfilled.length).toBe(1);
+        expect(shared.val).toBe(
+          (fulfilled[0] as PromiseFulfilledResult<any>).value
         );
       },
     ],

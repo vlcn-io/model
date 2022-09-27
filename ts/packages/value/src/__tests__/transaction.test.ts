@@ -34,7 +34,6 @@ test("async transaction leaves scope after being awaited", async () => {
   expect((PSD as any).tx).toBe(undefined);
 });
 
-// Test same but throwing.
 test("async transaction that contains inner awaits leaves scope after being awaited", async () => {
   const currentPSD = PSD;
 
@@ -59,6 +58,8 @@ test("async transaction that contains inner awaits leaves scope after being awai
   expect(currentPSD).toBe(PSD);
   expect((PSD as any).tx).toBe(undefined);
 });
+
+test("async transactions that throw correctly clean up inflight transactions", async () => {});
 
 test("nested transactions", () => {
   // Nested transactions should roll their changes into the parent transaction

@@ -146,8 +146,8 @@ export function txAsync<T>(
   const resolved = (r: any) => {
     if (!parentTx) {
       inflight.remove(tx);
+      commit(tx);
     }
-    commit(tx);
     return r;
   };
   const rejected = (e: any) => {
