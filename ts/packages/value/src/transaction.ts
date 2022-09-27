@@ -191,13 +191,12 @@ export function tx<T>(
 }
 
 function commit(tx: Transaction) {
-  // check our concurrent siblings
-  // if:
-  // a. we have none or b. they are all still running, commit
-  // if:
-  // any of them have committed, intersect our touched sets.
-  // if our touched sets overlap, throw
-  // if not, commit
+  // If we're inside a parent transaction then the parent will handle the
+  // commit for us
+  const parentTx = (PSD as any).tx as Transaction | undefined;
+  if (parentTx) {
+    return;
+  }
 
   if (tx.concurrentCommits.length !== 0) {
     // someone committed while we were running

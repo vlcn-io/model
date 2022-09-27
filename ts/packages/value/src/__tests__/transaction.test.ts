@@ -1,7 +1,21 @@
+import { PSD } from "@vulcan.sh/context-provider";
 import { tx } from "../transaction";
 import { value } from "../Value.js";
 
 test("see Value.test.ts which inorporates transaction tests", () => {});
+
+test("sync transaction immediately leaves its scope", () => {
+  const currentPSD = PSD;
+
+  tx(() => {
+    expect(currentPSD).not.toBe(PSD);
+  });
+
+  expect(currentPSD).toBe(PSD);
+  expect((PSD as any).tx).toBe(undefined);
+});
+
+test("async transaction leaves scope after being awaited", () => {});
 
 test("nested transactions", () => {
   // Nested transactions should roll their changes into the parent transaction
