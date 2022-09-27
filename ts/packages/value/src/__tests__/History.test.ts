@@ -3,7 +3,7 @@ import { inflight, transaction } from "../transaction";
 
 test("at", () => {
   const history = new History<string>();
-  inflight.splice(0);
+  inflight.clear();
 
   // empty histories can't return anything
   expect(() => history.at(0)).toThrow();
@@ -13,7 +13,7 @@ test("at", () => {
   // nothing is in flight so no history should have been added
   expect(() => history.at(2)).toThrow();
 
-  inflight.push(transaction());
+  inflight.add(transaction());
 
   history.maybeAdd("first", 1);
 
@@ -34,14 +34,14 @@ test("at", () => {
 
 test("maybe add prunes history", () => {
   const history = new History<string>();
-  inflight.splice(0);
+  inflight.clear();
 
-  inflight.push(transaction());
+  inflight.add(transaction());
 
   history.maybeAdd("first", 1);
   expect(history.at(1)).toEqual("first");
 
-  inflight.splice(0);
+  inflight.clear();
 
   // history should be cleaned up given no in-flight transactions
   history.maybeAdd("first", 1);

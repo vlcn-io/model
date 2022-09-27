@@ -8,7 +8,30 @@ import {
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
-export const inflight: Transaction[] = [];
+// export const inflight: Transaction[] = [];
+
+const _inflight = new Set<Transaction>();
+export const inflight = {
+  add(t: Transaction) {
+    _inflight.add(t);
+  },
+
+  has(t: Transaction): boolean {
+    return _inflight.has(t);
+  },
+
+  remove(t: Transaction) {
+    _inflight.delete(t);
+  },
+
+  get length() {
+    return _inflight.size;
+  },
+
+  clear() {
+    _inflight.clear();
+  },
+};
 
 // Need to track what transactions
 // ran concurrently.
@@ -31,7 +54,7 @@ export type Transaction = {
   // the causal length if subsequent events touched them, their most recent data
   readonly touched: ReadonlyMap<IValue<any>, [Event, any]>;
   touch(value: IValue<any>, e: Event, d: any): void;
-  merge(subTransaction: Transaction): void;
+  // merge(subTransaction: Transaction): void;
   readonly memoryVersion: MemoryVersion;
 };
 
@@ -49,22 +72,22 @@ export function transaction(): Transaction {
         existing[1] = d;
       }
     },
-    merge(subTransaction: Transaction): void {
-      for (const [value, [event, data]] of subTransaction.touched) {
-        const existing = touched.get(value);
-        if (existing != null) {
-          if (event === "create" || event === "delete") {
-            // deletes and creates take precedence over update.
-            // as if create or delete exists then that's what is important
-            // to the outside world post transaction
-            existing[0] = event;
-          }
-          existing[1] = data;
-        } else {
-          touched.set(value, [event, data]);
-        }
-      }
-    },
+    // merge(subTransaction: Transaction): void {
+    //   for (const [value, [event, data]] of subTransaction.touched) {
+    //     const existing = touched.get(value);
+    //     if (existing != null) {
+    //       if (event === "create" || event === "delete") {
+    //         // deletes and creates take precedence over update.
+    //         // as if create or delete exists then that's what is important
+    //         // to the outside world post transaction
+    //         existing[0] = event;
+    //       }
+    //       existing[1] = data;
+    //     } else {
+    //       touched.set(value, [event, data]);
+    //     }
+    //   }
+    // },
     touched,
     memoryVersion: memory.version,
   };
@@ -72,8 +95,16 @@ export function transaction(): Transaction {
 
 let txid = 0;
 export function tx<T>(fn: () => T): T {
-  const tx = transaction();
-  inflight.push(tx);
+  // If still in a tx, use that tx.
+  // @ts-ignore
+  const parentTx = PSD.tx as Transaction | undefined;
+  let tx: Transaction;
+  if (parentTx) {
+    tx = parentTx;
+  } else {
+    tx = transaction();
+    inflight.add(tx);
+  }
 
   let updatedInflight = false;
   const fnAsync = isAsyncFunction(fn);
@@ -95,7 +126,7 @@ export function tx<T>(fn: () => T): T {
             decrementExpectedAwaits();
           }
           if (!updatedInflight) {
-            inflight.splice(inflight.indexOf(tx), 1);
+            inflight.remove(tx);
             // no need to set but for symmetry
             updatedInflight = true;
           }
@@ -108,7 +139,7 @@ export function tx<T>(fn: () => T): T {
             decrementExpectedAwaits();
           }
           if (!updatedInflight) {
-            inflight.splice(inflight.indexOf(tx), 1);
+            inflight.remove(tx);
             // no need to set but for symmetry
             updatedInflight = true;
           }
@@ -120,7 +151,7 @@ export function tx<T>(fn: () => T): T {
       // removal from inflight before committing is intentional
       // so history knows to or not to add the change.
       // commit is atomic so this is ok.
-      inflight.splice(inflight.indexOf(tx), 1);
+      inflight.remove(tx);
       updatedInflight = true;
       commit(tx);
     }
@@ -134,8 +165,7 @@ export function tx<T>(fn: () => T): T {
     // the tx in all cases.
     if (!updatedInflight) {
       updatedInflight = true;
-      const idx = inflight.indexOf(tx);
-      inflight.splice(idx, 1);
+      inflight.remove(tx);
     }
 
     throw e;
@@ -143,16 +173,6 @@ export function tx<T>(fn: () => T): T {
 }
 
 function commit(tx: Transaction) {
-  // If still in a tx, roll values up into parent tx rather
-  // than committing. We only commit when outer most tx finally
-  // commits.
-  // @ts-ignore
-  const parentTx = PSD.tx as Transaction | undefined;
-  if (parentTx) {
-    parentTx.merge(tx);
-    return;
-  }
-
   for (const [value, [event, data]] of tx.touched.entries()) {
     value.__commit(data, event);
   }
