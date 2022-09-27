@@ -1,5 +1,5 @@
 import { IValue } from "../Value";
-import { tx } from "../transaction.js";
+import { tx, txAsync } from "../transaction.js";
 import { PSD } from "@vulcan.sh/context-provider";
 
 async function nativePromiseDelay(n: number) {
@@ -38,7 +38,7 @@ export function createCases(
         });
 
         // async
-        await tx(async () => {
+        await txAsync(async () => {
           expect(v.val).toBe(d);
         });
       },
@@ -61,7 +61,7 @@ export function createCases(
         });
 
         // cb fn that returns a promise
-        await tx(async () => {
+        await txAsync(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -88,7 +88,7 @@ export function createCases(
     [
       "Within a transaction that awaits and is thus suspended",
       async () => {
-        await tx(async () => {
+        await txAsync(async () => {
           let d = { x: "y" };
           const v = value(d);
 
@@ -113,7 +113,7 @@ export function createCases(
         let taskCompletions = 0;
 
         const task = () =>
-          tx(async () => {
+          txAsync(async () => {
             const txid = (PSD as any).txid;
 
             expect(shared.val).toBe(initial);
@@ -155,6 +155,7 @@ export function createCases(
         expect(taskCompletions).toEqual(5);
 
         // one transaction should have committed, all others should have been rejected with concurrent modification exceptions
+        expect(shared.val).not.toBe(initial);
         expect(txResults.filter((r) => r.status === "fulfilled").length).toBe(
           1
         );
@@ -182,7 +183,7 @@ export function createCases(
         expect(shared.val.x).toBe(1);
 
         try {
-          await tx(async () => {
+          await txAsync(async () => {
             shared.val = { x: -1 };
             throw new Error("Failed");
           });
@@ -201,7 +202,7 @@ export function createCases(
         const initial = { x: 1 };
         const shared = value(initial);
 
-        const handle = tx(async () => {
+        const handle = txAsync(async () => {
           shared.val = { x: 2 };
           await new Promise((resolved) => setTimeout(resolved, 0));
         });
@@ -225,7 +226,7 @@ export function createCases(
 
         expect(shared.val).toBe("sync set");
 
-        await tx(async () => {
+        await txAsync(async () => {
           shared.val = "async set";
         });
 

@@ -67,7 +67,7 @@ test("nested transactions", () => {
   // If a child transaction throws, the parent can still complete if the parent
   // catches the error. The child's changes won't be included.
 });
-test("nested transactions are not treated as concurrent transactions", async () => {
+test("nested transactions are not treated as concurrent transactions", () => {
   const shared = value(1);
   expect(shared.val).toBe(1);
 

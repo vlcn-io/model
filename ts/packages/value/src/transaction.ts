@@ -166,9 +166,7 @@ export function tx<T>(
   fn: () => T,
   options: TxOptions = { concurrentModification: "fail" }
 ): T {
-  // If still in a tx, use that tx.
-  // @ts-ignore
-  const parentTx = PSD.tx as Transaction | undefined;
+  const parentTx = (PSD as any).tx as Transaction | undefined;
   let tx: Transaction;
   if (parentTx) {
     tx = parentTx;
@@ -177,14 +175,7 @@ export function tx<T>(
     inflight.add(tx);
   }
 
-  let updatedInflight = false;
-  const fnAsync = isAsyncFunction(fn);
   try {
-    // Detect native async function usage
-    if (fnAsync) {
-      incrementExpectedAwaits();
-    }
-
     let ret = newScope(
       fn,
       {
@@ -194,57 +185,22 @@ export function tx<T>(
       null,
       null
     );
-
     if (typeof ret?.then === "function") {
-      ret = ret.then(
-        (result: any) => {
-          if (fnAsync) {
-            decrementExpectedAwaits();
-          }
-          if (!updatedInflight) {
-            inflight.remove(tx);
-            // no need to set but for symmetry
-            updatedInflight = true;
-          }
-
-          commit(tx);
-          return result;
-        },
-        (reason: any) => {
-          if (fnAsync) {
-            decrementExpectedAwaits();
-          }
-          if (!updatedInflight) {
-            inflight.remove(tx);
-            // no need to set but for symmetry
-            updatedInflight = true;
-          }
-
-          throw reason;
-        }
+      console.error(
+        "Looks like you called `tx` with a function that returns a promise. You should call `txAsync` instead."
       );
-    } else {
-      // removal from inflight before committing is intentional
-      // so history knows to or not to add the change.
-      // commit is atomic so this is ok.
+    }
+
+    if (!parentTx) {
       inflight.remove(tx);
-      updatedInflight = true;
       commit(tx);
     }
 
     return ret;
-  } catch (e) {
-    // not in a finally. Since if the inner func is async we don't want to run
-    // until then/catch.
-    // finally would run too early / before the inner func completes.
-    // Catch will only run if the sync code throws -- aborting
-    // the tx in all cases.
-    if (!updatedInflight) {
-      updatedInflight = true;
+  } finally {
+    if (!parentTx) {
       inflight.remove(tx);
     }
-
-    throw e;
   }
 }
 
