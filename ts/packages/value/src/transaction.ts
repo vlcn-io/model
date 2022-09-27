@@ -4,6 +4,7 @@ import {
   isAsyncFunction,
   newScope,
   PSD,
+  ZonedPromise,
 } from "@vulcan.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
@@ -113,9 +114,7 @@ export function tx<T>(
   fn: () => T,
   options: TxOptions = { concurrentModification: "fail" }
 ): T {
-  // If still in a tx, use that tx.
-  // @ts-ignore
-  const parentTx = PSD.tx as Transaction | undefined;
+  const parentTx = (PSD as any).tx as Transaction | undefined;
   let tx: Transaction;
   if (parentTx) {
     tx = parentTx;
@@ -124,14 +123,58 @@ export function tx<T>(
     inflight.add(tx);
   }
 
-  let updatedInflight = false;
-  const fnAsync = isAsyncFunction(fn);
   try {
+    let ret = newScope(fn, {
+      tx,
+      txid: txid++,
+    });
+    if (typeof ret?.then === "function") {
+      console.warn(
+        "Looks like you called `tx` with a function that returns a promise. You should call `asyncTx` instead."
+      );
+    }
+    return ret;
+  } finally {
+    if (!parentTx) {
+      inflight.remove(tx);
+    }
+  }
+}
+
+export function asyncTx<T>(
+  fn: () => Promise<T>,
+  options: TxOptions = { concurrentModification: "fail" }
+): Promise<T> {
+  // If still in a tx, use that tx.
+  const parentTx = (PSD as any).tx as Transaction | undefined;
+  let tx: Transaction;
+  if (parentTx) {
+    tx = parentTx;
+  } else {
+    tx = transaction(options);
+    inflight.add(tx);
+  }
+
+  const fnAsync = isAsyncFunction(fn);
+  if (fnAsync) {
+    incrementExpectedAwaits();
+  }
+}
+
+// function runSyncTransaction<T>(
+//   fn: () => T,
+//   options: TxOptions = { concurrentModification: "fail" }
+// ): T {}
+
+/*
+try {
     // Detect native async function usage
     if (fnAsync) {
       incrementExpectedAwaits();
     }
 
+    // TODO: should we even enter a new scope
+    // if we're nested inside a parent tx already?
     let ret = newScope(fn, {
       tx,
       txid: txid++,
@@ -148,7 +191,6 @@ export function tx<T>(
             // no need to set but for symmetry
             updatedInflight = true;
           }
-
           commit(tx);
           return result;
         },
@@ -188,16 +230,24 @@ export function tx<T>(
 
     throw e;
   }
-}
+*/
 
 function commit(tx: Transaction) {
-  // check our concurrent siblings
-  // if:
-  // a. we have none or b. they are all still running, commit
-  // if:
-  // any of them have committed, intersect our touched sets.
-  // if our touched sets overlap, throw
-  // if not, commit
+  // @ts-ignore
+  const parentTx = PSD.tx as Transaction | undefined;
+  if (parentTx != null) {
+    // we're nested inside another tx. The outer tx handles commits.
+    if (parentTx !== tx) {
+      console.log("mismatch");
+      throw new Error(
+        "Parent tx did not match nested tx -- they should be the same thing"
+      );
+    }
+    console.log("no commit");
+    return;
+  }
+
+  console.log("commit");
 
   if (tx.concurrentCommits.length !== 0) {
     // someone committed while we were running
