@@ -287,7 +287,7 @@ props(DexiePromise.prototype, {
   timeout: function (ms, msg) {
     return ms < Infinity
       ? new DexiePromise((resolve, reject) => {
-          var handle = setTimeout(() => reject(new Exception(msg)), ms);
+          var handle = setTimeout(() => reject(new Error(msg)), ms);
           this.then(resolve, reject).finally(clearTimeout.bind(null, handle));
         })
       : this;
@@ -729,7 +729,7 @@ var zoneEchoes = 0; // zoneEchoes is a must in order to persist zones between na
 var totalEchoes = 0; // ID counter for micro-tasks. Used to detect possible native await in our Promise.prototype.then.
 
 var zone_id_counter = 0;
-export function newScope(fn, props) {
+export function newScope(fn, props, a1, a2) {
   var parent = PSD,
     psd = Object.create(parent);
   psd.parent = parent;
@@ -766,7 +766,7 @@ export function newScope(fn, props) {
   psd.finalize = function () {
     --this.parent.ref || this.parent.finalize();
   };
-  var rv = usePSD(psd, fn);
+  var rv = usePSD(psd, fn, a1, a2);
   if (psd.ref === 0) psd.finalize();
   return rv;
 }
@@ -902,11 +902,11 @@ function snapShot() {
     : {};
 }
 
-export function usePSD(psd, fn) {
+export function usePSD(psd, fn, a1, a2, a3) {
   var outerScope = PSD;
   try {
     switchToZone(psd, true);
-    return fn();
+    return fn(a1, a2, a3);
   } finally {
     switchToZone(outerScope, false);
   }

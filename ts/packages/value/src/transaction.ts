@@ -4,6 +4,7 @@ import {
   isAsyncFunction,
   newScope,
   PSD,
+  ZonedPromise,
 } from "@vulcan.sh/context-provider";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
@@ -109,6 +110,58 @@ export function transaction(
 }
 
 let txid = 0;
+export function txAsync<T>(
+  fn: () => Promise<T>,
+  options: TxOptions = { concurrentModification: "fail" }
+): Promise<T> {
+  const parentTx = (PSD as any).tx as Transaction | undefined;
+  let tx: Transaction;
+  if (parentTx) {
+    tx = parentTx;
+  } else {
+    tx = transaction(options);
+    inflight.add(tx);
+  }
+
+  const isAsync = isAsyncFunction(fn);
+  if (isAsync) {
+    incrementExpectedAwaits();
+  }
+
+  let returnValue: any;
+  const promiseFollowed = (ZonedPromise as any).follow(
+    () => {
+      returnValue = fn();
+      if (isAsync) {
+        var decrementor = decrementExpectedAwaits.bind(null, null);
+        returnValue.then(decrementor, decrementor);
+      }
+    },
+    {
+      tx,
+      txid: txid++,
+    }
+  );
+
+  const resolved = (r: any) => {
+    if (!parentTx) {
+      inflight.remove(tx);
+    }
+    commit(tx);
+    return r;
+  };
+  const rejected = (e: any) => {
+    if (!parentTx) {
+      inflight.remove(tx);
+    }
+    throw e;
+  };
+
+  return returnValue && typeof returnValue.then === "function"
+    ? (ZonedPromise as any).resolve(returnValue).then(resolved, rejected)
+    : promiseFollowed.then(() => returnValue).then(resolved, rejected);
+}
+
 export function tx<T>(
   fn: () => T,
   options: TxOptions = { concurrentModification: "fail" }
@@ -132,10 +185,15 @@ export function tx<T>(
       incrementExpectedAwaits();
     }
 
-    let ret = newScope(fn, {
-      tx,
-      txid: txid++,
-    });
+    let ret = newScope(
+      fn,
+      {
+        tx,
+        txid: txid++,
+      },
+      null,
+      null
+    );
 
     if (typeof ret?.then === "function") {
       ret = ret.then(

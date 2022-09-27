@@ -5,4 +5,5 @@ export {
   PSD,
   incrementExpectedAwaits,
   decrementExpectedAwaits,
+  DexiePromise as ZonedPromise,
 } from "./dexie/helpers/promise.js";
