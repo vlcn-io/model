@@ -39,8 +39,8 @@ const shared = value("initial value");
 // within a transaction, all changes are isolated to the transaction
 try {
   tx(() => {
-    shared.set("updated value");
-    console.log("a transaction can see its own changes", shared.get()); // will print: "updated value";
+    shared.val = "updated value";
+    console.log("a transaction can see its own changes", shared.val); // will print: "updated value";
 
     // throw to simulate an error in the transaction
     throw new Error("oops!");
@@ -49,7 +49,7 @@ try {
   // will print: "initial value" since the transaction failed
   console.log(
     "exceptions thrown from a transaction prevent the changes of that transaction from being committed",
-    shared.get()
+    shared.val
   );
 }
 ```
@@ -66,27 +66,27 @@ const shared1 = value({ a: "initial-value" });
 const shared2 = value({ b: "initial-value" });
 
 console.log("Start at initial values");
-console.log(shared1.get());
-console.log(shared2.get());
+console.log(shared1.val);
+console.log(shared2.val);
 
 const promise = tx(async () => {
-  shared1.set({ a: "worker-arg" });
-  const r = await callWorker(shared1.get());
-  shared2.set(r);
+  shared1.val = { a: "worker-arg" };
+  const r = await callWorker(shared1.val);
+  shared2.val = r;
 });
 
 // tx stareted but not complete because we did not await it.
 // since it is not complete the main application cannot see its changes yet
 console.log("transaction not complete -- still at initial values");
-console.log(shared1.get());
-console.log(shared2.get());
+console.log(shared1.val);
+console.log(shared2.val);
 
 await promise;
 
 // awaited and now committed. can see all modifications.
 console.log("Awaited transaction to completion -- now at new values");
-console.log(shared1.get());
-console.log(shared2.get());
+console.log(shared1.val);
+console.log(shared2.val);
 
 async function callWorker(v) {
   // simulate web worker call + delay
@@ -114,19 +114,19 @@ shared2.onTransactionComplete((v) => {
 
 // setting outside a transaction immediately commits. Observers will be trigger by each of these statements.
 console.log("outside tx -- commit and notify immediately on set");
-shared1.set(101);
-shared2.set(201);
+shared1.val = 101;
+shared2.val = 201;
 
 // we can make all the adjustments and intermediate adjustments to shared1 and shared2 we want inside the tx.
 // nobody will be notified until the tx completes -- allowing us to get all state into a consistent
 // state before leaking that state to the outside world.
 tx(() => {
   console.log("inside tx -- no notifications about intermediate state changes");
-  shared1.set(102);
-  shared2.set(202);
+  shared1.val = 102;
+  shared2.val = 202;
 
-  shared1.set(shared2.get() + shared1.get()); // 102 + 202 = 304 = shared1
-  shared2.set(shared1.get() * 2); // 304 * 2 = 608 = shared2
+  shared1.val = shared2.val + shared1.val; // 102 + 202 = 304 = shared1
+  shared2.val = shared1.val * 2; // 304 * 2 = 608 = shared2
   console.log("exiting tx -- will notify observers of the final state");
 });
 
@@ -134,8 +134,8 @@ tx(() => {
   console.log(
     "this transaction will fail and thus not change state or notify anyone"
   );
-  shared1.set(888);
-  shared2.set(888);
+  shared1.val = 888;
+  shared2.val = 888;
   throw new Error();
 });
 ```

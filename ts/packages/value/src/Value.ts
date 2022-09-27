@@ -6,8 +6,7 @@ import { Transaction } from "./transaction.js";
 export type Event = "create" | "update" | "delete";
 
 export interface IValue<T> {
-  get(): T;
-  set(data: T): void;
+  val: T;
 
   __commit(data: T, e: Event): void;
   __transactionComplete(e: Event): void;
@@ -30,7 +29,7 @@ export class Value<T> implements IValue<T> {
    * @param tx
    * @returns
    */
-  get(): T {
+  get val(): T {
     // TODO:
     // @ts-ignore
     const tx = PSD.tx as Transaction;
@@ -71,7 +70,7 @@ export class Value<T> implements IValue<T> {
    * @param tx
    * @returns
    */
-  set(data: T): void {
+  set val(data: T) {
     if (this.data === data) {
       return;
     }

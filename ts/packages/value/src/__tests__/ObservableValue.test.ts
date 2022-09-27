@@ -17,7 +17,7 @@ test("Observers are not called back until after tx commit", () => {
   });
 
   tx(() => {
-    v.set(2);
+    v.val = 2;
     expect(notified).toBe(false);
   });
   expect(notified).toBe(true);

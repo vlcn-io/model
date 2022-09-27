@@ -32,7 +32,7 @@ export class ObservableValue<T>
   #notifyObservers(e: Event) {
     for (const o of this.#observers) {
       try {
-        o(this.get(), e);
+        o(this.val, e);
       } catch (e) {
         console.error(e);
       }

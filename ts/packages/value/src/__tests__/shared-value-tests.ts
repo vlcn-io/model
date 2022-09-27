@@ -19,11 +19,11 @@ export function createCases(
         let d = { x: "y" };
         const v = value(d);
 
-        expect(v.get()).toBe(d);
+        expect(v.val).toBe(d);
 
         d = { x: "z" };
-        v.set(d);
-        expect(v.get()).toBe(d);
+        v.val = d;
+        expect(v.val).toBe(d);
       },
     ],
     [
@@ -34,12 +34,12 @@ export function createCases(
 
         // sync
         tx(() => {
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
         });
 
         // async
         await tx(async () => {
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
         });
       },
     ],
@@ -53,11 +53,11 @@ export function createCases(
 
           // the value was created within the current tx...
           // should this not mean it was touched by the current tx?
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
 
           d = { x: "z" };
-          v.set(d);
-          expect(v.get()).toBe(d);
+          v.val = d;
+          expect(v.val).toBe(d);
         });
 
         // cb fn that returns a promise
@@ -65,11 +65,11 @@ export function createCases(
           let d = { x: "y" };
           const v = value(d);
 
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
 
           d = { x: "z" };
-          v.set(d);
-          expect(v.get()).toBe(d);
+          v.val = d;
+          expect(v.val).toBe(d);
         });
 
         let d = { x: "y" };
@@ -77,11 +77,11 @@ export function createCases(
 
         // test when the value exists before entering the tx.
         tx(() => {
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
 
           d = { x: "z" };
-          v.set(d);
-          expect(v.get()).toBe(d);
+          v.val = d;
+          expect(v.val).toBe(d);
         });
       },
     ],
@@ -94,13 +94,13 @@ export function createCases(
 
           await new Promise((resolved) => setTimeout(resolved, 0));
 
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
 
           d = { x: "z" };
-          v.set(d);
+          v.val = d;
           await new Promise((resolved) => setTimeout(resolved, 0));
 
-          expect(v.get()).toBe(d);
+          expect(v.val).toBe(d);
         });
       },
     ],
@@ -116,7 +116,7 @@ export function createCases(
           tx(async () => {
             const txid = (PSD as any).txid;
 
-            expect(shared.get()).toBe(initial);
+            expect(shared.val).toBe(initial);
 
             await new Promise((resolved) =>
               setTimeout(resolved, Math.random() * 25)
@@ -126,18 +126,18 @@ export function createCases(
             // transaction reassigned to them
             expect((PSD as any).txid).toBe(txid);
 
-            expect(shared.get()).toBe(initial);
+            expect(shared.val).toBe(initial);
 
             const newVal = Math.random() * 1000 + 2;
-            shared.set({ x: newVal });
+            shared.val = { x: newVal };
 
-            expect(shared.get().x).toBe(newVal);
+            expect(shared.val.x).toBe(newVal);
 
             await nativePromiseDelay(25);
             expect((PSD as any).txid).toBe(txid);
 
             // we should never see updates made by other tasks when inside a tx.
-            expect(shared.get().x).toBe(newVal);
+            expect(shared.val.x).toBe(newVal);
             taskCompletions++;
           });
 
@@ -169,7 +169,7 @@ export function createCases(
         let caught = false;
         try {
           tx(() => {
-            shared.set({ x: -1 });
+            shared.val = { x: -1 };
             throw new Error("Failed");
           });
         } catch (e) {
@@ -179,11 +179,11 @@ export function createCases(
         caught = false;
 
         // failed transactions leave no trace
-        expect(shared.get().x).toBe(1);
+        expect(shared.val.x).toBe(1);
 
         try {
           await tx(async () => {
-            shared.set({ x: -1 });
+            shared.val = { x: -1 };
             throw new Error("Failed");
           });
         } catch (e) {
@@ -192,7 +192,7 @@ export function createCases(
         expect(caught).toBe(true);
 
         // failed transactions on async functions leave no trace
-        expect(shared.get().x).toBe(1);
+        expect(shared.val.x).toBe(1);
       },
     ],
     [
@@ -202,15 +202,15 @@ export function createCases(
         const shared = value(initial);
 
         const handle = tx(async () => {
-          shared.set({ x: 2 });
+          shared.val = { x: 2 };
           await new Promise((resolved) => setTimeout(resolved, 0));
         });
 
-        expect(shared.get().x).toBe(1);
+        expect(shared.val.x).toBe(1);
 
         await handle;
 
-        expect(shared.get().x).toBe(2);
+        expect(shared.val.x).toBe(2);
       },
     ],
     [
@@ -220,16 +220,16 @@ export function createCases(
         const shared = value(initial);
 
         tx(() => {
-          shared.set("sync set");
+          shared.val = "sync set";
         });
 
-        expect(shared.get()).toBe("sync set");
+        expect(shared.val).toBe("sync set");
 
         await tx(async () => {
-          shared.set("async set");
+          shared.val = "async set";
         });
 
-        expect(shared.get()).toBe("async set");
+        expect(shared.val).toBe("async set");
       },
     ],
   ];

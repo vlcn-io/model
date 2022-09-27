@@ -32,7 +32,7 @@ export class Model<T extends {}> implements IModel<T> {
   }
 
   get data(): T {
-    return this.value.get();
+    return this.value.val;
   }
 
   protected constructValue(frozen: T): [IObservableValue<T>, boolean] {
@@ -103,12 +103,10 @@ export class Model<T extends {}> implements IModel<T> {
 
   update(updates: Partial<T>): void {
     // TODO: check for no-op?
-    this.value.set(
-      Object.freeze({
-        ...this.value.get(),
-        ...updates,
-      })
-    );
+    this.value.val = Object.freeze({
+      ...this.value.val,
+      ...updates,
+    });
   }
 
   subscribe(c: () => void): () => void {

@@ -29,7 +29,7 @@ export abstract class PersistedModel<
   }
 
   get id(): ID_of<T> {
-    return this.value.get().id;
+    return this.value.val.id;
   }
 
   protected constructValue(frozen: T): [IObservableValue<T>, boolean] {
