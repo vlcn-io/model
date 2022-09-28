@@ -1,6 +1,6 @@
-# vulcan.sh/value - Transactional Memory
+# vulcan.sh/value - Software Transactional Memory (STM)
 
-Related projects:
+Prior Art:
 
 - [Scala & ZIO STM](https://zio.dev/version-1.x/datatypes/stm/)
 - [Effect-TS STM](https://github.com/Effect-TS/core/tree/main/packages/core/_src/stm)
