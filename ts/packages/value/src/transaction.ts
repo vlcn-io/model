@@ -83,6 +83,22 @@ export function transaction(
   return ret;
 }
 
+let serialTxQueue: Promise<any> = Promise.resolve();
+export function txSerializedAsync<T>(
+  fn: () => Promise<T>,
+  options: TxOptions = { concurrentModification: "fail" }
+): Promise<T> {
+  const parentTx = (PSD as any).tx as Transaction | undefined;
+  // If there's a parent, they've already serialized us
+  if (parentTx) {
+    return txAsync(fn, options);
+  }
+
+  const res = serialTxQueue.then(() => txAsync(fn, options));
+  serialTxQueue = res.catch(() => {});
+  return res;
+}
+
 let txid = 0;
 export function txAsync<T>(
   fn: () => Promise<T>,

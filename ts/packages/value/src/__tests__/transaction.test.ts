@@ -1,5 +1,5 @@
 import { PSD } from "@vulcan.sh/context-provider";
-import { inflight, tx, txAsync } from "../transaction";
+import { inflight, tx, txAsync, txSerializedAsync } from "../transaction";
 import { value } from "../Value.js";
 
 async function nativePromiseDelay(n: number) {
@@ -316,7 +316,30 @@ test("serialized siblings can never conflict", async () => {
   expect(shared.val).toBe(3);
 });
 
-test("sibling transactions can be automatically serialized if desired", async () => {});
+test("sibling transactions can be automatically serialized if desired", async () => {
+  const shared = value(1);
+
+  // The runtime forces these to run serially even though the user
+  // attempts to await them in parallel.
+  // This is very important for things like sqlite transactions
+  // where we cannot start two on the same connection
+  // concurrently.
+  // If we introduce connection pooling that we'd want to serialize
+  // against some pool of resources.
+  const t1 = txSerializedAsync(async () => {
+    await promiseDelay(0);
+    shared.val = shared.val + 1;
+  });
+
+  const t2 = txSerializedAsync(async () => {
+    await promiseDelay(0);
+    shared.val = shared.val + 1;
+  });
+
+  await Promise.all([t1, t2]);
+
+  expect(shared.val).toBe(3);
+});
 
 test("we do not lose track of the transaction we are in -- even across multiple promise and async function boundaries", async () => {});
 
