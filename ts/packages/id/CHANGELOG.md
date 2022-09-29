@@ -1,16 +1,9 @@
-# @vulcan.sh/value
-
-## 0.0.3
-
-### Patch Changes
-
-- retryable transactions, serializable transactions, conflict detection
-- Updated dependencies
-  - @vulcan.sh/context-provider@0.0.2
-  - @vulcan.sh/util@0.0.2
+# @vulcan.sh/id
 
 ## 0.0.2
 
 ### Patch Changes
 
-- include psd in observable value
+- retryable transactions, serializable transactions, conflict detection
+- Updated dependencies
+  - @vulcan.sh/util@0.0.2

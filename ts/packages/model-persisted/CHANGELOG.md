@@ -1,5 +1,16 @@
 # @vulcan.sh/model-persisted
 
+## 0.0.3
+
+### Patch Changes
+
+- retryable transactions, serializable transactions, conflict detection
+- Updated dependencies
+  - @vulcan.sh/id@0.0.2
+  - @vulcan.sh/model@0.0.3
+  - @vulcan.sh/util@0.0.2
+  - @vulcan.sh/value@0.0.3
+
 ## 0.0.2
 
 ### Patch Changes
