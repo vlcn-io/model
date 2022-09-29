@@ -101,8 +101,17 @@ export class Model<T extends {}> implements IModel<T> {
     }
   }
 
+  protected isNoop(updates: Partial<T>): boolean {
+    return (Object.entries(updates) as [keyof Partial<T>, any][]).every(
+      (entry) => this.data[entry[0]] === entry[1]
+    );
+  }
+
   update(updates: Partial<T>): void {
-    // TODO: check for no-op?
+    if (this.isNoop(updates)) {
+      return;
+    }
+
     this.value.val = Object.freeze({
       ...this.value.val,
       ...updates,
