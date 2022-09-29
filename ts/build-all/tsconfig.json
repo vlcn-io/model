@@ -16,6 +16,9 @@
       "path": "../packages/codegen-api"
     },
     {
+      "path": "../packages/codegen-sql"
+    },
+    {
       "path": "../packages/context-provider"
     },
     {
