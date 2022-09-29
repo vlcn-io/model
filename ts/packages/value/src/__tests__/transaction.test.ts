@@ -274,6 +274,12 @@ test("sibling transactions can be retried until success if they modify the same 
   expect(shared.val).toBe(3);
 });
 
+test("A transaction can conflict with an auto transaction", async () => {
+  // h = txAsync();
+  // shared.val = x;
+  // await h;
+});
+
 test("sibling transactions commit without error if they do not modify the same data", async () => {
   const shared1 = value(1);
   const shared2 = value(2);

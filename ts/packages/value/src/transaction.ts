@@ -54,27 +54,14 @@ export type Transaction = {
   // the causal length if subsequent events touched them, their most recent data
   readonly touched: ReadonlyMap<IValue<any>, [Event, any]>;
   touch(value: IValue<any>, e: Event, d: any): void;
-  // Whenever a tx starts while we are still running, it'll register itself with us as being
-  // a concurrent transaction.
-  registerConcurrentSibling(sibling: Transaction): void;
-  // Whenever a tx commits while we are still running, it'll register itself with us as being
-  // a concurrent commit.
-  registerConcurrentCommit(sibling: Transaction): void;
   // merge(subTransaction: Transaction): void;
   readonly memoryVersion: MemoryVersion;
-  readonly concurrentSiblings: Transaction[];
-  readonly concurrentCommits: Transaction[];
 };
 
 export function transaction(
   options: TxOptions = { concurrentModification: "fail" }
 ): Transaction {
   const touched = new Map<IValue<any>, [Event, any]>();
-
-  // copy off inflight transactions and save them as being run
-  // as concurrent siblings with this transaction
-  const siblings: Transaction[] = [..._inflight];
-  const concurrentCommits: Transaction[] = [];
 
   const ret = {
     options,
@@ -89,23 +76,9 @@ export function transaction(
         existing[1] = d;
       }
     },
-    registerConcurrentSibling(sibling: Transaction) {
-      siblings.push(sibling);
-    },
-    registerConcurrentCommit(sibling: Transaction) {
-      concurrentCommits.push(sibling);
-    },
     touched,
-    concurrentSiblings: siblings,
-    concurrentCommits,
     memoryVersion: memory.version,
   };
-
-  // When a new tx starts, it registers itself with all currently running
-  // transactions.
-  for (const tx of _inflight) {
-    tx.registerConcurrentSibling(ret);
-  }
 
   return ret;
 }
@@ -222,42 +195,29 @@ function commit<T>(tx: Transaction) {
     return;
   }
 
-  if (tx.concurrentCommits.length !== 0) {
-    // someone committed while we were running
-    const conflicts = checkForConflictingWrites(tx);
-    if (conflicts != null) {
-      switch (tx.options.concurrentModification) {
-        case "fail":
-          throw new Error(
-            `Transaction ${
-              tx.options.name || "unnamed"
-            } and ${conflicts} had conflicting writes. ${
-              tx.options.name || "unnamed"
-            } was reverted.`
-          );
-        case "retry":
-          // will be caught and retried
-          throw "retry";
-      }
-
-      throw new Error("Should be unreachable");
+  // someone committed while we were running
+  const conflicts = checkForConflictingWrites(tx);
+  if (conflicts) {
+    switch (tx.options.concurrentModification) {
+      case "fail":
+        throw new Error(
+          `Transaction ${
+            tx.options.name || "unnamed"
+          } had conflicting writes. ${
+            tx.options.name || "unnamed"
+          } was reverted.`
+        );
+      case "retry":
+        // will be caught and retried
+        throw "retry";
     }
-    // else we can commit
+
+    throw new Error("Should be unreachable");
   }
+  // else we can commit
 
   for (const [value, [event, data]] of tx.touched.entries()) {
     value.__commit(data, event);
-  }
-
-  // No need to register a concurrent commit if we did not write anything.
-  if (tx.touched.size > 0) {
-    // we were able to fully commit
-    // some of these siblings might be done...
-    // so registering a concurrent commit with them will be a no-op
-    // maybe we shouldn't even register a concurrent commit if the sibling has already committed?
-    for (const sibling of tx.concurrentSiblings) {
-      sibling.registerConcurrentCommit(tx);
-    }
   }
 
   // notify potential listeners to values of transaction completion
@@ -284,15 +244,19 @@ function commit<T>(tx: Transaction) {
 // mem vers, if we can pull it off, would let us figure out
 // if the write was before or after our read. For stable
 // reads anyway
-function checkForConflictingWrites(tx: Transaction): string | undefined {
-  const iTouched = [...tx.touched.keys()];
-  // for each sibling
-  for (const sibling of tx.concurrentCommits) {
-    // if any of them touched a value I did
-    if (iTouched.some((x) => sibling.touched.has(x))) {
-      // return them as a conflict
-      return sibling.options.name || "unnamed";
+//
+// at commit, does everything you touched have a memory version <= your
+// transaction memory version?
+// if so, no conflicts
+// if not, conflicts
+// this captures all conflicts with no cross registration.
+function checkForConflictingWrites(tx: Transaction): boolean {
+  for (const touched of tx.touched.keys()) {
+    // Someone committed after we started running and before we committed
+    if (touched.__memVers > tx.memoryVersion) {
+      return true;
     }
   }
-  return undefined;
+
+  return false;
 }

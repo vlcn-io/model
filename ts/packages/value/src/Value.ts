@@ -7,6 +7,7 @@ export type Event = "create" | "update" | "delete";
 
 export interface IValue<T> {
   val: T;
+  readonly __memVers: MemoryVersion;
 
   __commit(data: T, e: Event): void;
   __transactionComplete(e: Event): void;
@@ -19,8 +20,19 @@ export interface IValue<T> {
 export class Value<T> implements IValue<T> {
   private history: History<T> = new History();
   private memVers: MemoryVersion;
+  // memVers can be passed as a parameter for hydration?
+  // hydrated objects would have minimum memory version.
   constructor(private data: T, memVers?: MemoryVersion) {
-    this.memVers = memVers === undefined ? memory.nextVersion() : memVers;
+    const tx = (PSD as any).tx as Transaction | undefined;
+    if (tx) {
+      this.memVers = memVers === undefined ? tx.memoryVersion : memVers;
+    } else {
+      this.memVers = memVers === undefined ? memory.nextVersion() : memVers;
+    }
+  }
+
+  get __memVers(): number {
+    return this.memVers;
   }
 
   /**
@@ -32,7 +44,7 @@ export class Value<T> implements IValue<T> {
   get val(): T {
     // TODO:
     // @ts-ignore
-    const tx = PSD.tx as Transaction;
+    const tx = PSD.tx as Transaction | undefined;
     if (!tx) {
       return this.data;
     }
