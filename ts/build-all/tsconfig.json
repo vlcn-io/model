@@ -16,6 +16,9 @@
       "path": "../packages/codegen-sql"
     },
     {
+      "path": "../packages/codegen-ts"
+    },
+    {
       "path": "../packages/config"
     },
     {

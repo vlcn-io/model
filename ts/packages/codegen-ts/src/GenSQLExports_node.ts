@@ -1,5 +1,5 @@
-import { SchemaEdge, SchemaNode } from '@aphro/schema-api';
-import { GenSQLExports } from './GenSQLExports.js';
+import { SchemaEdge, SchemaNode } from "@vulcan.sh/schema-api";
+import { GenSQLExports } from "./GenSQLExports.js";
 
 export class GenSQLExports_node extends GenSQLExports {
   protected getImports() {
@@ -17,14 +17,14 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const [${this.all.map(nore => nore.name).join(',\n')}] = await Promise.all([
-  ${this.all.map(this.getReadFileCode).join(',\n')}
+const [${this.all.map((nore) => nore.name).join(",\n")}] = await Promise.all([
+  ${this.all.map(this.getReadFileCode).join(",\n")}
 ]);
 `;
   }
 
   protected getFilename() {
-    return 'exports-node-sql.ts';
+    return "exports-node-sql.ts";
   }
 
   private getReadFileCode(nore: SchemaNode | SchemaEdge): string {

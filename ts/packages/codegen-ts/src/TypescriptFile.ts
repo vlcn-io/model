@@ -1,7 +1,7 @@
-import { sign } from '@aphro/codegen';
-import { CodegenFile, algolTemplates } from '@aphro/codegen-api';
+import { sign } from "@vulcan.sh/codegen-api";
+import { CodegenFile, algolTemplates } from "@vulcan.sh/codegen-api";
 // @ts-ignore
-import prettier from 'prettier';
+import prettier from "prettier";
 
 export default class TypescriptFile implements CodegenFile {
   #contents: string;
@@ -11,7 +11,7 @@ export default class TypescriptFile implements CodegenFile {
     public readonly name: string,
     contents: string,
     public readonly isUnsigned: boolean = false,
-    public readonly nochange: boolean = false,
+    public readonly nochange: boolean = false
   ) {
     this.#contents = contents;
   }
@@ -19,7 +19,7 @@ export default class TypescriptFile implements CodegenFile {
   get contents(): string {
     let contents = this.#contents;
     if (this.isUnsigned) {
-      return prettier.format(contents, { parser: 'typescript' });
+      return prettier.format(contents, { parser: "typescript" });
     }
 
     contents =
@@ -29,6 +29,9 @@ export default class TypescriptFile implements CodegenFile {
  */
 ` + this.#contents;
 
-    return sign(prettier.format(contents, { parser: 'typescript' }), this.templates);
+    return sign(
+      prettier.format(contents, { parser: "typescript" }),
+      this.templates
+    );
   }
 }

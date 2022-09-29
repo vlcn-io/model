@@ -1,14 +1,14 @@
 // declare module "*.sql?raw";
-import { CodegenStep, CodegenFile, generatedDir } from '@aphro/codegen-api';
-import { SchemaEdge, SchemaNode } from '@aphro/schema-api';
-import * as path from 'path';
-import TypescriptFile from './TypescriptFile.js';
+import { CodegenStep, CodegenFile, generatedDir } from "@vulcan.sh/codegen-api";
+import { SchemaEdge, SchemaNode } from "@vulcan.sh/schema-api";
+import * as path from "path";
+import TypescriptFile from "./TypescriptFile.js";
 
 export class GenTypes_d_ts extends CodegenStep {
   constructor(
     private nodes: SchemaNode[],
     private edges: SchemaEdge[],
-    private schemaFileName: string,
+    private schemaFileName: string
   ) {
     super();
   }
@@ -18,7 +18,10 @@ export class GenTypes_d_ts extends CodegenStep {
   }
 
   async gen(): Promise<CodegenFile> {
-    const filename = 'types.d.ts';
-    return new TypescriptFile(path.join(generatedDir, filename), `declare module "*.sql?raw";`);
+    const filename = "types.d.ts";
+    return new TypescriptFile(
+      path.join(generatedDir, filename),
+      `declare module "*.sql?raw";`
+    );
   }
 }

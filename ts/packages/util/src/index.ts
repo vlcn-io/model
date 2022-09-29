@@ -22,3 +22,33 @@ export function assert(condition: boolean) {
     throw new Error("Assertion failed");
   }
 }
+
+export function upcaseAt(str: string, i: number) {
+  return str.substr(0, i) + str.substr(i, 1).toUpperCase() + str.substr(i + 1);
+}
+
+export function lowercaseAt(str: string, i: number) {
+  return (
+    str.substring(0, i) +
+    str.substring(i, 1).toLowerCase() +
+    str.substring(i + 1)
+  );
+}
+
+export type Concat<T, S, V> = string;
+
+export function falsish(x: any): boolean {
+  return !!x === false;
+}
+
+export function isValidPropertyAccessor(a: string): boolean {
+  return (a.match(/[A-z_$]+[A-z0-9_$]*/) || [])[0] === a;
+}
+
+export function not(x: any) {
+  return !x;
+}
+
+export function asPropertyAccessor(a: string): string {
+  return isValidPropertyAccessor(a) ? a : `'${a}'`;
+}

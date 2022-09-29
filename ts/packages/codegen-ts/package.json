@@ -1,21 +1,19 @@
 {
-  "name": "@aphro/codegen-ts",
+  "name": "@vulcan.sh/codegen-ts",
   "version": "0.4.2",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/codegen-ts"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/codegen-ts"
   },
   "dependencies": {
-    "@aphro/codegen": "workspace:*",
-    "@aphro/codegen-api": "workspace:*",
-    "@aphro/schema": "workspace:*",
-    "@aphro/schema-api": "workspace:*",
-    "@aphro/feature-gates": "workspace:*",
-    "@strut/counter": "^0.0.11",
-    "@strut/utils": "^0.1.1",
+    "@vulcan.sh/codegen-api": "workspace:*",
+    "@vulcan.sh/schema": "workspace:*",
+    "@vulcan.sh/schema-api": "workspace:*",
+    "@vulcan.sh/feature-gates": "workspace:*",
+    "@vulcan.sh/util": "workspace:*",
     "md5": "^2.3.0",
     "prettier": "^2.7.1"
   },
@@ -27,7 +25,6 @@
     "@types/prettier": "^2.7.0",
     "@typescript-eslint/typescript-estree": "^5.35.1",
     "jest": "^29.0.1",
-    "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
   },
   "scripts": {

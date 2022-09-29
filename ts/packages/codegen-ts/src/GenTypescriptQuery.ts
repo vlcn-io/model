@@ -1,6 +1,6 @@
-import { nullthrows, upcaseAt } from '@strut/utils';
-import { CodegenFile, CodegenStep, generatedDir } from '@aphro/codegen-api';
-import TypescriptFile from './TypescriptFile.js';
+import { upcaseAt } from "@vulcan.sh/util";
+import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
+import TypescriptFile from "./TypescriptFile.js";
 import {
   Field,
   SchemaNode,
@@ -10,16 +10,16 @@ import {
   Import,
   SchemaEdge,
   FieldDeclaration,
-} from '@aphro/schema-api';
-import { nodeFn, edgeFn, tsImport } from '@aphro/schema';
-import { importsToString } from './tsUtils.js';
-import * as path from 'path';
+} from "@vulcan.sh/schema-api";
+import { nodeFn, edgeFn, tsImport } from "@vulcan.sh/schema";
+import { importsToString } from "./tsUtils.js";
+import * as path from "path";
 
 export default class GenTypescriptQuery extends CodegenStep {
   // This can technicall take a node _or_ an edge.
   // also... should we have access to the entire schema file?
   static accepts(schema: SchemaNode | SchemaEdge): boolean {
-    return schema.storage.type !== 'ephemeral';
+    return schema.storage.type !== "ephemeral";
   }
 
   private schema: SchemaNode | SchemaEdge;
@@ -43,16 +43,18 @@ export default class GenTypescriptQuery extends CodegenStep {
   async gen(): Promise<CodegenFile> {
     const imports = this.collectImports();
     return new TypescriptFile(
-      path.join(generatedDir, nodeFn.queryTypeName(this.schema.name) + '.ts'),
+      path.join(generatedDir, nodeFn.queryTypeName(this.schema.name) + ".ts"),
       `${importsToString(imports)}
 
-export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQuery<${
+export default class ${nodeFn.queryTypeName(
         this.schema.name
-      }> {
+      )} extends DerivedQuery<${this.schema.name}> {
   static create(ctx: Context) {
     return new ${nodeFn.queryTypeName(this.schema.name)}(
       ctx,
-      QueryFactory.createSourceQueryFor(ctx, ${nodeFn.specName(this.schema.name)}),
+      QueryFactory.createSourceQueryFor(ctx, ${nodeFn.specName(
+        this.schema.name
+      )}),
       modelLoad(ctx, ${nodeFn.specName(this.schema.name)}.createFrom),
     );
   }
@@ -64,7 +66,9 @@ export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQu
     );
   }
 
-  protected derive(expression: Expression): ${nodeFn.queryTypeName(this.schema.name)} {
+  protected derive(expression: Expression): ${nodeFn.queryTypeName(
+    this.schema.name
+  )} {
     return new ${nodeFn.queryTypeName(this.schema.name)}(
       this.ctx,
       this,
@@ -83,33 +87,33 @@ export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQu
 
   ${this.getProjectionMethodsCode()}
 }
-`,
+`
     );
   }
 
   private collectImports(): Import[] {
     return [
-      tsImport('{Context}', null, '@aphro/runtime-ts'),
+      tsImport("{Context}", null, "@vulcan.sh/runtime-ts"),
       ...[
-        'DerivedQuery',
-        'QueryFactory',
-        'modelLoad',
-        'filter',
-        'Predicate',
-        'take',
-        'orderBy',
-        'P',
-        'ModelFieldGetter',
-        'Expression',
-        'EmptyQuery',
-      ].map(i => tsImport(`{${i}}`, null, '@aphro/runtime-ts')),
-      tsImport('{SID_of}', null, '@aphro/runtime-ts'),
+        "DerivedQuery",
+        "QueryFactory",
+        "modelLoad",
+        "filter",
+        "Predicate",
+        "take",
+        "orderBy",
+        "P",
+        "ModelFieldGetter",
+        "Expression",
+        "EmptyQuery",
+      ].map((i) => tsImport(`{${i}}`, null, "@vulcan.sh/runtime-ts")),
+      tsImport("{SID_of}", null, "@vulcan.sh/runtime-ts"),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
-      tsImport('{Data}', null, `./${this.schema.name}Base.js`),
+      tsImport("{Data}", null, `./${this.schema.name}Base.js`),
       tsImport(
         nodeFn.specName(this.schema.name),
         null,
-        `./${nodeFn.specName(this.schema.name)}.js`,
+        `./${nodeFn.specName(this.schema.name)}.js`
       ),
       ...this.getIdFieldImports(),
       ...this.getEdgeImports(),
@@ -125,7 +129,7 @@ export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQu
         ${this.getFilterMethodBody(field)}
       }`);
     }
-    return ret.join('\n');
+    return ret.join("\n");
   }
 
   private getFilterMethodBody(field: FieldDeclaration): string {
@@ -147,7 +151,7 @@ export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQu
         ${this.getOrderByMethodBody(field)}
       }`);
     }
-    return ret.join('\n');
+    return ret.join("\n");
   }
 
   private getOrderByMethodBody(field: FieldDeclaration): string {
@@ -160,8 +164,8 @@ export default class ${nodeFn.queryTypeName(this.schema.name)} extends DerivedQu
   }
 
   private getFromIdMethodCode(): string {
-    if (this.schema.type === 'standaloneEdge') {
-      return '';
+    if (this.schema.type === "standaloneEdge") {
+      return "";
     }
     return `
 static fromId(ctx: Context, id: SID_of<${this.schema.name}>) {
@@ -172,28 +176,32 @@ static fromId(ctx: Context, id: SID_of<${this.schema.name}>) {
 
   private getFromInboundFieldEdgeMethodsCode(): string {
     const schema = this.schema;
-    if (schema.type === 'standaloneEdge') {
-      return '';
+    if (schema.type === "standaloneEdge") {
+      return "";
     }
     // this would be inbound edges, right?
     // inbound edges to me based on one of my fields.
-    const inbound: EdgeDeclaration[] = Object.values(schema.extensions.inboundEdges?.edges || {})
-      .filter((edge): edge is EdgeDeclaration => edge.type === 'edge')
+    const inbound: EdgeDeclaration[] = Object.values(
+      schema.extensions.inboundEdges?.edges || {}
+    )
+      .filter((edge): edge is EdgeDeclaration => edge.type === "edge")
       .filter((edge: EdgeDeclaration) => edgeFn.isThroughNode(schema, edge));
 
-    return inbound.map(this.getFromInboundFieldEdgeMethodCode).join('\n');
+    return inbound.map(this.getFromInboundFieldEdgeMethodCode).join("\n");
   }
 
   private getFromInboundFieldEdgeMethodCode(edge: EdgeDeclaration): string {
-    const column = nullthrows(edge.throughOrTo.column);
+    const column = edge.throughOrTo.column!;
     const field = this.schema.fields[column];
 
-    const idParts = field.type.filter((f): f is ID => typeof f !== 'string' && f.type === 'id');
+    const idParts = field.type.filter(
+      (f): f is ID => typeof f !== "string" && f.type === "id"
+    );
     if (idParts.length === 0) {
-      throw new Error('fields edges must refer to id fields');
+      throw new Error("fields edges must refer to id fields");
     } else if (idParts.length > 1) {
       throw new Error(
-        `unioning of ids for edges is not yet supported. Processing field ${field.name}`,
+        `unioning of ids for edges is not yet supported. Processing field ${field.name}`
       );
     }
 
@@ -206,29 +214,33 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: SID_of<${idParts[0].of}>) {
 
   private getEdgeImports(): Import[] {
     const schema = this.schema;
-    if (schema.type === 'standaloneEdge') {
+    if (schema.type === "standaloneEdge") {
       return [];
     }
-    const inbound = Object.values(schema.extensions.inboundEdges?.edges || {}).map(e =>
-      edgeFn.dereference(e, this.edges),
-    );
+    const inbound = Object.values(
+      schema.extensions.inboundEdges?.edges || {}
+    ).map((e) => edgeFn.dereference(e, this.edges));
 
-    const outbound = Object.values(schema.extensions.outboundEdges?.edges || {}).map(e =>
-      edgeFn.dereference(e, this.edges),
-    );
+    const outbound = Object.values(
+      schema.extensions.outboundEdges?.edges || {}
+    ).map((e) => edgeFn.dereference(e, this.edges));
 
     return [...inbound, ...outbound]
-      .filter(edge => edgeFn.queryTypeName(schema, edge) !== nodeFn.queryTypeName(this.schema.name))
-      .flatMap(edge => [
+      .filter(
+        (edge) =>
+          edgeFn.queryTypeName(schema, edge) !==
+          nodeFn.queryTypeName(this.schema.name)
+      )
+      .flatMap((edge) => [
         tsImport(
           edgeFn.destModelSpecName(schema, edge),
           null,
-          `./${edgeFn.destModelSpecName(schema, edge)}.js`,
+          `./${edgeFn.destModelSpecName(schema, edge)}.js`
         ),
         tsImport(
           edgeFn.queryTypeName(schema, edge),
           null,
-          `./${edgeFn.queryTypeName(schema, edge)}.js`,
+          `./${edgeFn.queryTypeName(schema, edge)}.js`
         ),
       ]);
 
@@ -237,25 +249,32 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: SID_of<${idParts[0].of}>) {
 
   private getIdFieldImports(): Import[] {
     const idFields = Object.values(this.schema.fields)
-      .flatMap(f => f.type)
-      .filter((f): f is ID => typeof f !== 'string' && f.type === 'id' && f.of !== 'any');
+      .flatMap((f) => f.type)
+      .filter(
+        (f): f is ID =>
+          typeof f !== "string" && f.type === "id" && f.of !== "any"
+      );
 
-    return idFields.map(f => tsImport(f.of, null, '../' + f.of + '.js'));
+    return idFields.map((f) => tsImport(f.of, null, "../" + f.of + ".js"));
   }
 
   private getHopMethodsCode(): string {
-    if (this.schema.type === 'standaloneEdge') {
-      return '';
+    if (this.schema.type === "standaloneEdge") {
+      return "";
     }
     // hop methods are edges
     // e.g., Deck.querySlides().queryComponents()
-    const outbound = Object.values(this.schema.extensions.outboundEdges?.edges || {});
-    return outbound.map(e => this.getHopMethod(e)).join('\n');
+    const outbound = Object.values(
+      this.schema.extensions.outboundEdges?.edges || {}
+    );
+    return outbound.map((e) => this.getHopMethod(e)).join("\n");
   }
 
-  private getHopMethod(edge: EdgeDeclaration | EdgeReferenceDeclaration): string {
-    if (this.schema.type === 'standaloneEdge') {
-      return '';
+  private getHopMethod(
+    edge: EdgeDeclaration | EdgeReferenceDeclaration
+  ): string {
+    if (this.schema.type === "standaloneEdge") {
+      return "";
     }
     const e = edgeFn.dereference(edge, this.edges);
 
@@ -263,29 +282,37 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: SID_of<${idParts[0].of}>) {
     //   body = this.getHopMethodForJunctionLikeEdge(edge);
     // }
 
-    return `query${upcaseAt(edge.name, 0)}(): ${edgeFn.queryTypeName(this.schema, e)} {
+    return `query${upcaseAt(edge.name, 0)}(): ${edgeFn.queryTypeName(
+      this.schema,
+      e
+    )} {
       ${this.getHopMethodBody(e, edge)}
     }`;
   }
 
-  private getHopMethodForJunctionLikeEdge(edge: EdgeDeclaration | SchemaEdge): string {
-    return '';
+  private getHopMethodForJunctionLikeEdge(
+    edge: EdgeDeclaration | SchemaEdge
+  ): string {
+    return "";
   }
 
   private getHopMethodBody(
     edge: EdgeDeclaration | SchemaEdge,
-    ref: EdgeDeclaration | EdgeReferenceDeclaration,
+    ref: EdgeDeclaration | EdgeReferenceDeclaration
   ): string {
-    if (this.schema.type === 'standaloneEdge') {
-      return '';
+    if (this.schema.type === "standaloneEdge") {
+      return "";
     }
     return `return new ${edgeFn.queryTypeName(
       this.schema,
-      edge,
+      edge
     )}(this.ctx, QueryFactory.createHopQueryFor(this.ctx, this, ${nodeFn.specName(
-      this.schema.name,
+      this.schema.name
     )}.outboundEdges.${ref.name}),
-      modelLoad(this.ctx, ${edgeFn.destModelSpecName(this.schema, edge)}.createFrom),
+      modelLoad(this.ctx, ${edgeFn.destModelSpecName(
+        this.schema,
+        edge
+      )}.createFrom),
     );`;
   }
 
@@ -300,7 +327,7 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: SID_of<${idParts[0].of}>) {
   }
 
   private getProjectionMethodsCode(): string {
-    return '';
+    return "";
   }
 
   /*

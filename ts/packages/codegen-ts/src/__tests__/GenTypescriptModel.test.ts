@@ -1,6 +1,6 @@
-import GenTypescriptModel from '../GenTypescriptModel.js';
-import { SchemaNode } from '@aphro/schema-api';
-import { createCompiler } from '@aphro/schema';
+import GenTypescriptModel from "../GenTypescriptModel.js";
+import { SchemaNode } from "@vulcan.sh/schema-api";
+import { createCompiler } from "@vulcan.sh/schema";
 
 const { compileFromString } = createCompiler();
 
@@ -49,8 +49,10 @@ Bar as Node {
 }
 `;
 
-test('Generating an ID only model', async () => {
-  const contents = (await genIt(compileFromString(IDOnlySchema)[1].nodes.IDOnly)).contents;
+test("Generating an ID only model", async () => {
+  const contents = (
+    await genIt(compileFromString(IDOnlySchema)[1].nodes.IDOnly)
+  ).contents;
   expect(contents).toEqual(
     `// SIGNED-SOURCE: <d2227f032dbc4a713934f4b7a353259d>
 /**
@@ -114,13 +116,16 @@ export default abstract class IDOnlyBase extends Node<Data> {
     return new DeleteMutationBuilder(this.ctx, this.spec, this).toChangeset();
   }
 }
-`,
+`
   );
 });
 
-test('Generating all primitive fields', async () => {
-  const contents = (await genIt(compileFromString(PrimitiveFieldsSchema)[1].nodes.PrimitiveFields))
-    .contents;
+test("Generating all primitive fields", async () => {
+  const contents = (
+    await genIt(
+      compileFromString(PrimitiveFieldsSchema)[1].nodes.PrimitiveFields
+    )
+  ).contents;
   expect(contents).toEqual(`// SIGNED-SOURCE: <e4485c83d52fc02c8c93ff3c75039b1a>
 /**
  * AUTO-GENERATED FILE
@@ -219,8 +224,10 @@ export default abstract class PrimitiveFieldsBase extends Node<Data> {
 `);
 });
 
-test('Outbound field edge', async () => {
-  const contents = (await genIt(compileFromString(OutboundFieldEdgeSchema)[1].nodes.Foo)).contents;
+test("Outbound field edge", async () => {
+  const contents = (
+    await genIt(compileFromString(OutboundFieldEdgeSchema)[1].nodes.Foo)
+  ).contents;
   expect(contents).toEqual(`// SIGNED-SOURCE: <63109a3e39d55fc60c7776573e39989c>
 /**
  * AUTO-GENERATED FILE
@@ -303,9 +310,10 @@ export default abstract class FooBase extends Node<Data> {
 `);
 });
 
-test('Outbound foreign key edge', async () => {
-  const contents = (await genIt(compileFromString(OutboundForeignKeyEdgeSchema)[1].nodes.Bar))
-    .contents;
+test("Outbound foreign key edge", async () => {
+  const contents = (
+    await genIt(compileFromString(OutboundForeignKeyEdgeSchema)[1].nodes.Bar)
+  ).contents;
   expect(contents).toEqual(`// SIGNED-SOURCE: <8e8ecd287b4ade8e799a595bd0d4c1f6>
 /**
  * AUTO-GENERATED FILE
@@ -372,5 +380,9 @@ export default abstract class BarBase extends Node<Data> {
 });
 
 async function genIt(schema: SchemaNode) {
-  return await new GenTypescriptModel({ nodeOrEdge: schema, edges: {}, dest: '' }).gen();
+  return await new GenTypescriptModel({
+    nodeOrEdge: schema,
+    edges: {},
+    dest: "",
+  }).gen();
 }

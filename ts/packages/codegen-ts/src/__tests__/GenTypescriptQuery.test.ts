@@ -1,6 +1,6 @@
-import { SchemaNode } from '@aphro/schema-api';
-import { createCompiler } from '@aphro/schema';
-import GenTypescriptQuery from '../GenTypescriptQuery';
+import { SchemaNode } from "@vulcan.sh/schema-api";
+import { createCompiler } from "@vulcan.sh/schema";
+import GenTypescriptQuery from "../GenTypescriptQuery";
 
 const { compileFromString } = createCompiler();
 
@@ -87,8 +87,9 @@ BarToFooEdge as InverseEdge<FooToBarEdge> {}
 
 const InboundThroughLocalFieldSchema = ``;
 
-test('NoEdgesSchema', async () => {
-  const contents = (await genIt(compileFromString(NoEdgesSchema)[1].nodes.Foo)).contents;
+test("NoEdgesSchema", async () => {
+  const contents = (await genIt(compileFromString(NoEdgesSchema)[1].nodes.Foo))
+    .contents;
 
   // TODO: remove unneeded imports
   // Validation should require that a primary key field exists
@@ -142,9 +143,10 @@ export default class FooQuery extends DerivedQuery<Foo> {
 `);
 });
 
-test('OutboundEdgeViaFieldSchema', async () => {
-  const contents = (await genIt(compileFromString(OutboundEdgeViaFieldSchema)[1].nodes.Foo))
-    .contents;
+test("OutboundEdgeViaFieldSchema", async () => {
+  const contents = (
+    await genIt(compileFromString(OutboundEdgeViaFieldSchema)[1].nodes.Foo)
+  ).contents;
 
   expect(contents).toEqual(`// SIGNED-SOURCE: <afc38a702ee61fa481fd19383e09e039>
 /**
@@ -218,9 +220,12 @@ export default class FooQuery extends DerivedQuery<Foo> {
 `);
 });
 
-test('OutboundThroughForeignFieldSchema', async () => {
-  const contents = (await genIt(compileFromString(OutboundThroughForeignFieldSchema)[1].nodes.Foo))
-    .contents;
+test("OutboundThroughForeignFieldSchema", async () => {
+  const contents = (
+    await genIt(
+      compileFromString(OutboundThroughForeignFieldSchema)[1].nodes.Foo
+    )
+  ).contents;
 
   expect(contents).toEqual(`// SIGNED-SOURCE: <1222775915aac9b251cdfbb9ce058982>
 /**
@@ -287,5 +292,9 @@ export default class FooQuery extends DerivedQuery<Foo> {
 });
 
 function genIt(schema: SchemaNode) {
-  return new GenTypescriptQuery({ nodeOrEdge: schema, edges: {}, dest: '' }).gen();
+  return new GenTypescriptQuery({
+    nodeOrEdge: schema,
+    edges: {},
+    dest: "",
+  }).gen();
 }

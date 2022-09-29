@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig-templates/lib.json",
+  "extends": "../../tsconfig-lib.json",
   "compilerOptions": {
     "outDir": "./lib/",
     "rootDir": "./src",
@@ -10,7 +10,6 @@
     { "path": "../codegen-api" },
     { "path": "../schema" },
     { "path": "../schema-api" },
-    { "path": "../codegen" },
     { "path": "../feature-gates" }
   ]
 }

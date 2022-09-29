@@ -2,6 +2,7 @@ packages:
   - packages/cache
   - packages/codegen-api
   - packages/codegen-sql
+  - packages/codegen-ts
   - packages/config
   - packages/feature-gates
   - packages/grammar-extension-api
