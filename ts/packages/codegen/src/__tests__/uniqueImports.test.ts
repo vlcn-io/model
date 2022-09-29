@@ -1,8 +1,8 @@
-import uniqueImports from '../uniqueImports.js';
-import { Import } from '@aphro/schema-api';
-import fc from 'fast-check';
+import uniqueImports from "../uniqueImports.js";
+import { Import } from "@vulcan.sh/schema-api";
+import fc from "fast-check";
 
-test('matching imports are de-duplicated', () => {
+test("matching imports are de-duplicated", () => {
   fc.assert(
     fc.property(
       fc.string(),
@@ -20,12 +20,12 @@ test('matching imports are de-duplicated', () => {
         }
         const uniqued = uniqueImports(imports);
         expect(uniqued.length).toEqual(1);
-      },
-    ),
+      }
+    )
   );
 });
 
-test('mismatching imports are not de-duplicated', () => {
+test("mismatching imports are not de-duplicated", () => {
   fc.assert(
     fc.property(
       fc.string(),
@@ -43,7 +43,7 @@ test('mismatching imports are not de-duplicated', () => {
         }
         const uniqued = uniqueImports(imports);
         expect(uniqued.length).toEqual(imports.length);
-      },
-    ),
+      }
+    )
   );
 });

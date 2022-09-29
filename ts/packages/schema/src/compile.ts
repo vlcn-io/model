@@ -1,16 +1,22 @@
-import condense from './parser/condense.js';
-import validate from './validate.js';
-import { createParser } from './parser/parse.js';
-import { SchemaFile, SchemaFileAst, ValidationError } from '@aphro/schema-api';
-import { Config } from './runtimeConfig.js';
+import condense from "./parser/condense.js";
+import validate from "./validate.js";
+import { createParser } from "./parser/parse.js";
+import {
+  SchemaFile,
+  SchemaFileAst,
+  ValidationError,
+} from "@vulcan.sh/schema-api";
+import { Config } from "./runtimeConfig.js";
 
 export function createCompiler(config: Config = {}) {
   const parser = createParser(config);
 
   const condensors: Map<string | Symbol, (arg0: any) => any> = new Map();
-  config.grammarExtensions?.forEach(e => {
+  config.grammarExtensions?.forEach((e) => {
     if (condensors.has(e.name)) {
-      throw new Error('Condensor already exists for a plugin with the name/symbol ' + e.name);
+      throw new Error(
+        "Condensor already exists for a plugin with the name/symbol " + e.name
+      );
     }
     condensors.set(e.name, e.condensor);
   });
@@ -19,7 +25,9 @@ export function createCompiler(config: Config = {}) {
     return compileFromAst(parser.parse(path));
   }
 
-  function compileFromString(contents: string): [ValidationError[], SchemaFile] {
+  function compileFromString(
+    contents: string
+  ): [ValidationError[], SchemaFile] {
     const ast = parser.parseString(contents);
     return compileFromAst(ast);
   }

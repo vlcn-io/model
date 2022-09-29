@@ -157,6 +157,7 @@ importers:
       '@vulcan.sh/codegen-api': workspace:*
       '@vulcan.sh/grammar-extension-api': workspace:*
       '@vulcan.sh/schema-api': workspace:*
+      '@vulcan.sh/util': workspace:*
       chalk: ^5.0.1
       command-line-args: ^5.2.1
       command-line-usage: ^6.1.3
@@ -170,6 +171,7 @@ importers:
       '@vulcan.sh/codegen-api': link:../codegen-api
       '@vulcan.sh/grammar-extension-api': link:../grammar-extension-api
       '@vulcan.sh/schema-api': link:../schema-api
+      '@vulcan.sh/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1

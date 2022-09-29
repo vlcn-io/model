@@ -6,8 +6,8 @@ import {
   Import,
   SchemaEdge,
   SchemaNode,
-} from '@aphro/schema-api';
-import fieldFn from './field.js';
+} from "@vulcan.sh/schema-api";
+import fieldFn from "./field.js";
 
 const inboundEdges = {
   isForeignKeyEdge() {},
@@ -29,19 +29,23 @@ const fields = {};
 
 export default {
   allEdges(node: SchemaNode) {
-    const inboundEdges = Object.values(node.extensions.inboundEdges?.edges || {});
-    const outboundEdges = Object.values(node.extensions.outboundEdges?.edges || {});
+    const inboundEdges = Object.values(
+      node.extensions.inboundEdges?.edges || {}
+    );
+    const outboundEdges = Object.values(
+      node.extensions.outboundEdges?.edges || {}
+    );
 
     return [...inboundEdges, ...outboundEdges];
   },
 
   queryTypeName(nodeName: string): string {
-    return nodeName + 'Query';
+    return nodeName + "Query";
   },
 
   addModuleImport(node: SchemaNode, imp: Import) {
     const module = (node.extensions.module = node.extensions.module || {
-      name: 'moduleConfig',
+      name: "moduleConfig",
       imports: new Map(),
     });
 
@@ -50,7 +54,7 @@ export default {
 
   decorateType(node: SchemaNode, decoration: string) {
     const typeConfig = node.extensions.type || {
-      name: 'typeConfig',
+      name: "typeConfig",
       decorators: [],
     };
 
@@ -63,13 +67,15 @@ export default {
   },
 
   specName(nodeName: string, srcName?: string): string {
-    return nodeName + 'Spec';
+    return nodeName + "Spec";
   },
 
   inlineEnums(node: SchemaNode): Enum[] {
     return Object.values(node.fields)
-      .flatMap(f => f.type)
-      .filter((f): f is Enum => typeof f !== 'string' && f.type === 'enumeration');
+      .flatMap((f) => f.type)
+      .filter(
+        (f): f is Enum => typeof f !== "string" && f.type === "enumeration"
+      );
   },
 
   isRequiredField(node: SchemaNode, field: string): boolean {

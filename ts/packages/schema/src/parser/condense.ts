@@ -1,4 +1,4 @@
-import condenseEntities from './condenseEntities.js';
+import condenseEntities from "./condenseEntities.js";
 import {
   EdgeAst,
   NodeAst,
@@ -15,8 +15,8 @@ import {
   ValidationError,
   StorageConfig,
   FieldDeclaration,
-} from '@aphro/schema-api';
-import { assertUnreachable } from '@strut/utils';
+} from "@vulcan.sh/schema-api";
+import { assertUnreachable } from "@vulcan.sh/util";
 
 /**
  * The AST returned by the parser gives us lists of items.
@@ -54,23 +54,28 @@ export default function condense(
   condensors: Map<
     string | Symbol,
     (x: any) => [ValidationError[], NodeExtension | EdgeExtension]
-  > = new Map(),
+  > = new Map()
 ): [ValidationError[], SchemaFile] {
-  function nodeExtensionCondensor(extension: NodeAstExtension): [ValidationError[], NodeExtension] {
+  function nodeExtensionCondensor(
+    extension: NodeAstExtension
+  ): [ValidationError[], NodeExtension] {
     switch (extension.name) {
-      case 'index':
-      case 'traits':
+      case "index":
+      case "traits":
         return [[], extension];
-      case 'inboundEdges':
-      case 'outboundEdges':
+      case "inboundEdges":
+      case "outboundEdges":
         const [errors, edges] = arrayToMap(
           extension.declarations,
-          e => e.name,
-          e => ({
+          (e) => e.name,
+          (e) => ({
             message: `Duplicate ${extension.name} found for edge ${e.name}`,
-            severity: 'error',
-            type: extension.name === 'inboundEdges' ? 'duplicate-ib-edges' : 'duplicate-ob-edges',
-          }),
+            severity: "error",
+            type:
+              extension.name === "inboundEdges"
+                ? "duplicate-ib-edges"
+                : "duplicate-ob-edges",
+          })
         );
         return [
           errors,
@@ -79,7 +84,7 @@ export default function condense(
             edges,
           },
         ];
-      case 'storage':
+      case "storage":
         return [[], extension];
       default:
         // @ts-ignore -- TODO: how do we make typescript aware of client extensions to types?
@@ -93,12 +98,14 @@ export default function condense(
     }
   }
 
-  function edgeExtensionCondensor(extension: EdgeExtension): [ValidationError[], EdgeExtension] {
+  function edgeExtensionCondensor(
+    extension: EdgeExtension
+  ): [ValidationError[], EdgeExtension] {
     switch (extension?.name) {
-      case 'constrain':
-      case 'index':
-      case 'invert':
-      case 'storage':
+      case "constrain":
+      case "index":
+      case "invert":
+      case "storage":
         return [[], extension];
       default:
         // @ts-ignore -- TODO: how do we make typescript aware of client extensions to types?
@@ -114,41 +121,44 @@ export default function condense(
 
   function condenseNode(
     node: NodeAst | NodeTraitAst,
-    preamble: SchemaFileAst['preamble'],
+    preamble: SchemaFileAst["preamble"]
   ): [ValidationError[], SchemaNode] {
-    const [fieldErrors, fields] = condenseFieldsFor('Node', node);
+    const [fieldErrors, fields] = condenseFieldsFor("Node", node);
     const [extensionErrors, extensions] = condenseExtensionsFor(
-      'Node',
+      "Node",
       node,
       // @ts-ignore
-      nodeExtensionCondensor,
+      nodeExtensionCondensor
     );
 
-    let storageExtension = (extensions.storage as undefined | StorageConfig) || {};
-    if (node.type === 'node' && node.as === 'UnmanagedNode') {
+    let storageExtension =
+      (extensions.storage as undefined | StorageConfig) || {};
+    if (node.type === "node" && node.as === "UnmanagedNode") {
       storageExtension = {
-        name: 'storage',
-        db: '--',
-        engine: 'ephemeral',
-        type: 'ephemeral',
-        tablish: 'ephemeral',
+        name: "storage",
+        db: "--",
+        engine: "ephemeral",
+        type: "ephemeral",
+        tablish: "ephemeral",
       };
     }
 
     return [
       [...fieldErrors, ...extensionErrors],
       {
-        type: 'node',
+        type: "node",
         name: node.name,
-        primaryKey: 'id',
+        primaryKey: "id",
         fields,
-        extensions: extensions as SchemaNode['extensions'],
+        extensions: extensions as SchemaNode["extensions"],
         storage: {
-          name: 'storage',
+          name: "storage",
           db: preamble.db,
           engine: preamble.engine,
           type: engineToType(preamble.engine),
-          tablish: (extensions.storage as any)?.tablish || node.name.toLocaleLowerCase(),
+          tablish:
+            (extensions.storage as any)?.tablish ||
+            node.name.toLocaleLowerCase(),
           ...storageExtension,
         },
       },
@@ -157,32 +167,34 @@ export default function condense(
 
   function condenseEdge(
     edge: EdgeAst,
-    preamble: SchemaFileAst['preamble'],
+    preamble: SchemaFileAst["preamble"]
   ): [ValidationError[], SchemaEdge] {
-    const [fieldErrors, fields] = condenseFieldsFor('Edge', edge);
+    const [fieldErrors, fields] = condenseFieldsFor("Edge", edge);
     const [extensionErrors, extensions] = condenseExtensionsFor(
-      'Edge',
+      "Edge",
       edge,
       // @ts-ignore
-      edgeExtensionCondensor,
+      edgeExtensionCondensor
     );
 
     return [
       [...fieldErrors, ...extensionErrors],
       {
-        type: 'standaloneEdge',
+        type: "standaloneEdge",
         name: edge.name,
         src: edge.src,
         dest: edge.dest,
         fields,
         extensions,
         storage: {
-          name: 'storage',
+          name: "storage",
           type: engineToType(preamble.engine),
           engine: preamble.engine,
           db: preamble.db,
           // maybe we can figure out how to preseve the discrimnated type
-          tablish: (extensions.storage as any)?.tablish || edge.name.toLocaleLowerCase(),
+          tablish:
+            (extensions.storage as any)?.tablish ||
+            edge.name.toLocaleLowerCase(),
         },
       },
     ];
@@ -191,13 +203,13 @@ export default function condense(
   const [nodes, edges, traits] = schemaFile.entities.reduce(
     (left: [NodeAst[], EdgeAst[], NodeTraitAst[]], nodeOrEdge) => {
       switch (nodeOrEdge.type) {
-        case 'node':
+        case "node":
           left[0].push(nodeOrEdge);
           break;
-        case 'edge':
+        case "edge":
           left[1].push(nodeOrEdge);
           break;
-        case 'nodeTrait':
+        case "nodeTrait":
           left[2].push(nodeOrEdge);
           break;
         default:
@@ -205,53 +217,53 @@ export default function condense(
       }
       return left;
     },
-    [[], [], []],
+    [[], [], []]
   );
 
   const [nodeMappingErrors, nodesByName] = arrayToMap(
     nodes,
-    n => n.name,
-    n => ({
-      message: 'A node has already been defined with the name ' + n.name,
-      severity: 'error',
-      type: 'duplicate-nodes',
-    }),
+    (n) => n.name,
+    (n) => ({
+      message: "A node has already been defined with the name " + n.name,
+      severity: "error",
+      type: "duplicate-nodes",
+    })
   );
   const [edgeMappingErrors, edgesByName] = arrayToMap(
     edges,
-    e => e.name,
-    e => ({
-      message: 'An edge has already been defined with the name ' + e.name,
-      severity: 'error',
-      type: 'duplicate-edges',
-    }),
+    (e) => e.name,
+    (e) => ({
+      message: "An edge has already been defined with the name " + e.name,
+      severity: "error",
+      type: "duplicate-edges",
+    })
   );
   const [traitMappingErrors, traitsByName] = arrayToMap(
     traits,
-    e => e.name,
-    e => ({
-      message: 'An trait has already been defined with the name ' + e.name,
-      severity: 'error',
-      type: 'duplicate-traits',
-    }),
+    (e) => e.name,
+    (e) => ({
+      message: "An trait has already been defined with the name " + e.name,
+      severity: "error",
+      type: "duplicate-traits",
+    })
   );
 
   const [nodeErrors, validatedNodes] = condenseEntities(
     nodesByName,
     schemaFile.preamble,
-    condenseNode,
+    condenseNode
   );
 
   const [edgeErrors, validatedEdges] = condenseEntities(
     edgesByName,
     schemaFile.preamble,
-    condenseEdge,
+    condenseEdge
   );
 
   const [traitErrors, validatedTraits] = condenseEntities(
     traitsByName,
     schemaFile.preamble,
-    condenseNode,
+    condenseNode
   );
 
   return [
@@ -265,35 +277,35 @@ export default function condense(
 
 function condenseFieldsFor(
   entityType: string,
-  entity: { name: string; fields: FieldDeclaration[] },
+  entity: { name: string; fields: FieldDeclaration[] }
 ) {
   return arrayToMap(
     entity.fields,
-    f => f.name,
-    f => ({
+    (f) => f.name,
+    (f) => ({
       message: `${entityType} ${entity.name} had duplicate fields (${f.name}) defined`,
-      severity: 'error',
-      type: 'duplicate-fields',
-    }),
+      severity: "error",
+      type: "duplicate-fields",
+    })
   );
 }
 
 function condenseExtensionsFor<T, R extends { name: string }>(
   entityType: string,
   entity: { name: string; extensions: T[] },
-  extensionCondensor: (x: T) => [ValidationError[], R],
+  extensionCondensor: (x: T) => [ValidationError[], R]
 ): [ValidationError[], { [key: string]: R }] {
   const errorsAndExtensions = entity.extensions.map(extensionCondensor);
-  const extensionErrors = errorsAndExtensions.flatMap(e => e[0]);
-  const condensedExtensions = errorsAndExtensions.map(e => e[1]);
+  const extensionErrors = errorsAndExtensions.flatMap((e) => e[0]);
+  const condensedExtensions = errorsAndExtensions.map((e) => e[1]);
   const [extensionConflicts, extensionMap] = arrayToMap(
     condensedExtensions,
-    e => e.name,
-    e => ({
+    (e) => e.name,
+    (e) => ({
       message: `${entityType} ${entity.name} had duplicate extension (${e.name}) defined`,
-      severity: 'error',
-      type: 'duplicate-extensions',
-    }),
+      severity: "error",
+      type: "duplicate-extensions",
+    })
   );
 
   return [[...extensionErrors, ...extensionConflicts], extensionMap];
@@ -301,20 +313,20 @@ function condenseExtensionsFor<T, R extends { name: string }>(
 
 function engineToType(engine: StorageEngine): StorageType {
   switch (engine) {
-    case 'sqlite':
-    case 'postgres':
-      return 'sql';
-    case 'memory':
-      return 'memory';
-    case 'ephemeral':
-      return 'ephemeral';
+    case "sqlite":
+    case "postgres":
+      return "sql";
+    case "memory":
+      return "memory";
+    case "ephemeral":
+      return "ephemeral";
   }
 }
 
 function arrayToMap<T extends Object>(
   array: T[],
   getKey: (v: T) => string,
-  onDuplicate: (v: T) => ValidationError,
+  onDuplicate: (v: T) => ValidationError
 ): [ValidationError[], { [key: string]: T }] {
   const errors: ValidationError[] = [];
   const map = array.reduce((l: { [key: string]: T }, r: T) => {

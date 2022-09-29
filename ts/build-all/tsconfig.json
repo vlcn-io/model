@@ -7,6 +7,12 @@
   "include": ["./src/"],
   "references": [
     {
+      "path": "../packages/codegen"
+    },
+    {
+      "path": "../packages/codegen-api"
+    },
+    {
       "path": "../packages/context-provider"
     },
     {
@@ -17,6 +23,12 @@
     },
     {
       "path": "../packages/model-persisted"
+    },
+    {
+      "path": "../packages/schema"
+    },
+    {
+      "path": "../packages/schema-api"
     },
     {
       "path": "../packages/util"

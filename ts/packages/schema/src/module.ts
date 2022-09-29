@@ -1,6 +1,10 @@
-import { Import } from '@aphro/schema-api';
+import { Import } from "@vulcan.sh/schema-api";
 
-export function tsImport(name: string | null, as: string | null, from: string): Import {
+export function tsImport(
+  name: string | null,
+  as: string | null,
+  from: string
+): Import {
   return {
     name: name?.trim(),
     as,

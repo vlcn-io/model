@@ -1,34 +1,37 @@
-import { compileGrammar } from './ohm/grammar.js';
-import * as fs from 'fs';
-import { SchemaFileAst } from '@aphro/schema-api';
-import { Config } from '../runtimeConfig.js';
-import { ActionDict, Node } from 'ohm-js';
+import { compileGrammar } from "./ohm/grammar.js";
+import * as fs from "fs";
+import { SchemaFileAst } from "@vulcan.sh/schema-api";
+import { Config } from "../runtimeConfig.js";
+import { ActionDict, Node } from "ohm-js";
 
 const list = (l: Node, r: Node) => l.toAst().concat(r.toAst());
 const listInit = (_: Node) => [];
 const listWithSeparator = (l: Node, _: Node, r: Node) => list(l, r);
 
 function stripComments(s: string): string {
-  return s.replaceAll(/#[^\n]*/g, '');
+  return s.replaceAll(/#[^\n]*/g, "");
 }
 
 export function createParser(config: Config = {}) {
   const grammar = compileGrammar(config);
   const semantics = grammar.createSemantics();
-  semantics.addOperation('toAst', {
+  semantics.addOperation("toAst", {
     Main(preamble, entities) {
       return {
         preamble: preamble
           .toAst()
-          .reduce((l: { [key: string]: any }, r: { key: string; value: any }) => {
-            l[r.key] = r.value;
-            return l;
-          }, {}),
+          .reduce(
+            (l: { [key: string]: any }, r: { key: string; value: any }) => {
+              l[r.key] = r.value;
+              return l;
+            },
+            {}
+          ),
         entities: entities.toAst(),
       };
     },
     _iter(...children) {
-      return children.map(c => c.toAst());
+      return children.map((c) => c.toAst());
     },
     PropertyList_list: list,
     PropertyList_empty(_) {
@@ -58,16 +61,27 @@ export function createParser(config: Config = {}) {
     Entities_empty: listInit,
     Node(name, _as, shorthand, fields, functions) {
       return {
-        type: 'node',
+        type: "node",
         as: shorthand.sourceString,
         name: name.toAst(),
         fields: fields.toAst(),
         extensions: functions.toAst(),
       };
     },
-    Edge(name, _as, _edge, _lAngle, src, _comma, dest, _rAngle, fields, extensions) {
+    Edge(
+      name,
+      _as,
+      _edge,
+      _lAngle,
+      src,
+      _comma,
+      dest,
+      _rAngle,
+      fields,
+      extensions
+    ) {
       return {
-        type: 'edge',
+        type: "edge",
         src: {
           type: src.toAst(),
         },
@@ -84,7 +98,7 @@ export function createParser(config: Config = {}) {
     },
     NodeTrait(name, _as, _nodeTrait, nodeFields, extensions) {
       return {
-        type: 'nodeTrait',
+        type: "nodeTrait",
         name: name.toAst(),
         fields: nodeFields.toAst() || [],
         extensions: extensions.toAst() || [],
@@ -116,18 +130,18 @@ export function createParser(config: Config = {}) {
     },
     IdField(_id, _langle, of, _rangle) {
       return {
-        type: 'id',
+        type: "id",
         of: of.toAst(),
       };
     },
     NaturalLanguageField(_) {
       return {
-        type: 'naturalLanguage',
+        type: "naturalLanguage",
       };
     },
     EnumField(_, _lAngle, keys, _rAngle) {
       return {
-        type: 'enumeration',
+        type: "enumeration",
         keys: keys.toAst(),
       };
     },
@@ -137,13 +151,13 @@ export function createParser(config: Config = {}) {
     },
     BitmaskField(_, _lAngle, keys, _rAngle) {
       return {
-        type: 'bitmask',
+        type: "bitmask",
         keys: keys.toAst(),
       };
     },
     TimeField(_) {
       return {
-        type: 'timestamp',
+        type: "timestamp",
       };
     },
     // CurrencyField(_, _lAngle, denomination, _rAngle) {
@@ -154,19 +168,19 @@ export function createParser(config: Config = {}) {
     // },
     PrimitiveField(subtype) {
       return {
-        type: 'primitive',
+        type: "primitive",
         subtype: subtype.sourceString,
       };
     },
     ArrayField(_, _lAngle, values, _rAngle) {
       return {
-        type: 'array',
+        type: "array",
         values: values.toAst(),
       };
     },
     MapField(_, _lAngle, keys, _comma, values, _rAngle) {
       return {
-        type: 'map',
+        type: "map",
         keys: keys.toAst(),
         values: values.toAst(),
       };
@@ -183,37 +197,37 @@ export function createParser(config: Config = {}) {
     },
     OutboundEdgesFn(_, _lSquig, declarations, _rSquig) {
       return {
-        name: 'outboundEdges',
+        name: "outboundEdges",
         declarations: declarations.toAst(),
       };
     },
     InboundEdgesFn(_, _lSquig, declarations, _rSquig) {
       return {
-        name: 'inboundEdges',
+        name: "inboundEdges",
         declarations: declarations.toAst(),
       };
     },
     IndexFn(_, _lSquig, declarations, _rSquig) {
       return {
-        name: 'index',
+        name: "index",
         declarations: declarations.toAst(),
       };
     },
     InvertFn(_, _as, name) {
       return {
-        name: 'invert',
+        name: "invert",
         as: name.toAst(),
       };
     },
     ReadPrivacyFn(_, _lSquig, _rSquig) {
       return {
-        name: 'readPrivacy',
+        name: "readPrivacy",
         declarations: [],
       };
     },
     TraitsFn(_, _lSquig, traits, _rSquig) {
       return {
-        name: 'traits',
+        name: "traits",
         declarations: traits.toAst(),
       };
     },
@@ -228,13 +242,13 @@ export function createParser(config: Config = {}) {
     EdgeDeclaration_reference(key, name) {
       return {
         name: key.toAst(),
-        type: 'edgeReference',
+        type: "edgeReference",
         reference: name.toAst(),
       };
     },
     InlineEdgeDefinition(_, _lAngle, throughOrTo, _rAngle) {
       return {
-        type: 'edge',
+        type: "edge",
         throughOrTo: throughOrTo.toAst(),
       };
     },
@@ -260,19 +274,19 @@ export function createParser(config: Config = {}) {
     IndexDeclaration_shortDef(name) {
       return {
         name: name.toAst(),
-        type: 'nonUnique',
+        type: "nonUnique",
         columns: [name.toAst()],
       };
     },
     UniqueIndex(_, _lParen, columns, _rParen) {
       return {
-        type: 'unique',
+        type: "unique",
         columns: columns.toAst(),
       };
     },
     NonUniqueIndex(columns) {
       return {
-        type: 'nonUnique',
+        type: "nonUnique",
         columns: columns.toAst(),
       };
     },
@@ -287,7 +301,7 @@ export function createParser(config: Config = {}) {
     TypeExpression_union(list, _union, name) {
       return list.toAst().concat([
         {
-          type: 'union',
+          type: "union",
         },
         name.toAst(),
       ]);
@@ -295,7 +309,7 @@ export function createParser(config: Config = {}) {
     TypeExpression_intersection(list, _intersection, name) {
       return list.toAst().concat([
         {
-          type: 'intersection',
+          type: "intersection",
         },
         name.toAst(),
       ]);
@@ -308,8 +322,8 @@ export function createParser(config: Config = {}) {
 
   function parse(filePath: string): SchemaFileAst {
     const schemaFileContents = fs.readFileSync(filePath, {
-      encoding: 'utf8',
-      flag: 'r',
+      encoding: "utf8",
+      flag: "r",
     });
 
     return parseString(schemaFileContents);
@@ -342,10 +356,12 @@ function extendedSemantics<T>(config: Config): ActionDict<T> {
     return {};
   }
 
-  extensions.forEach(e => {
+  extensions.forEach((e) => {
     Object.entries(e.actions()).forEach(([key, value]) => {
       if (ret[key]) {
-        throw new Error(`Semantic action ${key} is being overriden by extension ${e.name}`);
+        throw new Error(
+          `Semantic action ${key} is being overriden by extension ${e.name}`
+        );
       }
       // @ts-ignore -- TODO
       ret[key] = value;

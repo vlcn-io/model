@@ -1,8 +1,8 @@
-import { Import } from '@aphro/schema-api';
+import { Import } from "@vulcan.sh/schema-api";
 
 export default function uniqueImports(imports: readonly Import[]): Import[] {
   const seen = new Set();
-  const ret = imports.filter(i => {
+  const ret = imports.filter((i) => {
     const key = toKey(i);
     if (seen.has(key)) {
       return false;
@@ -16,5 +16,5 @@ export default function uniqueImports(imports: readonly Import[]): Import[] {
 }
 
 function toKey(i: Import) {
-  return i.name + '-' + i.as + '-' + i.from;
+  return i.name + "-" + i.as + "-" + i.from;
 }

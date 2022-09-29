@@ -1,5 +1,5 @@
-import { ValidationError } from '@aphro/schema-api';
-import { ActionDict } from 'ohm-js';
+import { ValidationError } from "@vulcan.sh/schema-api";
+import { ActionDict } from "ohm-js";
 
 type RuleName = string;
 interface ExtensionPoints {

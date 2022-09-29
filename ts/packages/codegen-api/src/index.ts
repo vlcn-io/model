@@ -1,7 +1,7 @@
-export * from './CodegenFile.js';
-export { default as CodegenStep } from './CodegenStep.js';
-import CodegenStep from './CodegenStep.js';
-import { SchemaNode, SchemaEdge, SchemaFile } from '@aphro/schema-api';
+export * from "./CodegenFile.js";
+export { default as CodegenStep } from "./CodegenStep.js";
+import CodegenStep from "./CodegenStep.js";
+import { SchemaNode, SchemaEdge, SchemaFile } from "@vulcan.sh/schema-api";
 
 export type Step = {
   new (opts: {
@@ -17,4 +17,4 @@ export type GlobalStep = {
   accepts: (nodes: SchemaNode[], edges: SchemaEdge[]) => boolean;
 };
 
-export const generatedDir = 'generated';
+export const generatedDir = "generated";

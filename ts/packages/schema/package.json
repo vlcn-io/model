@@ -11,7 +11,8 @@
   "dependencies": {
     "@vulcan.sh/codegen-api": "workspace:*",
     "@vulcan.sh/grammar-extension-api": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*"
+    "@vulcan.sh/schema-api": "workspace:*",
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

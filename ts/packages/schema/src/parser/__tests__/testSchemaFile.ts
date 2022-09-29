@@ -1,4 +1,8 @@
-import { InboundEdgesAst, SchemaFile, SchemaFileAst } from '@aphro/schema-api';
+import {
+  InboundEdgesAst,
+  SchemaFile,
+  SchemaFileAst,
+} from "@vulcan.sh/schema-api";
 
 export const contents = `
 engine: sqlite
@@ -58,196 +62,196 @@ Fig as UnmanagedNode {
 
 export const ast: SchemaFileAst = {
   preamble: {
-    engine: 'sqlite',
-    db: 'test',
+    engine: "sqlite",
+    db: "test",
     complex: {
-      a: 'b',
-      c: 'd',
+      a: "b",
+      c: "d",
     },
   },
   entities: [
     {
-      type: 'node',
-      as: 'Node',
-      name: 'Person',
+      type: "node",
+      as: "Node",
+      name: "Person",
       fields: [
         {
-          name: 'id',
+          name: "id",
           type: [
             {
-              type: 'id',
-              of: 'Person',
+              type: "id",
+              of: "Person",
             },
           ],
         },
         {
-          name: 'name',
+          name: "name",
           type: [
             {
-              type: 'naturalLanguage',
+              type: "naturalLanguage",
             },
           ],
         },
         {
-          name: 'walletId',
+          name: "walletId",
           type: [
             {
-              type: 'id',
-              of: 'Wallet',
+              type: "id",
+              of: "Wallet",
             },
           ],
         },
         {
-          name: 'thing1',
+          name: "thing1",
           type: [
             {
-              type: 'primitive',
-              subtype: 'string',
+              type: "primitive",
+              subtype: "string",
             },
           ],
         },
         {
-          name: 'thing2',
+          name: "thing2",
           type: [
             {
-              type: 'primitive',
-              subtype: 'string',
+              type: "primitive",
+              subtype: "string",
             },
           ],
         },
       ],
       extensions: [
         {
-          name: 'outboundEdges',
+          name: "outboundEdges",
           declarations: [
             {
-              name: 'wallet',
-              type: 'edge',
+              name: "wallet",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
-                column: 'walletId',
+                type: "Person",
+                column: "walletId",
               },
             },
             {
-              name: 'friends',
-              type: 'edge',
+              name: "friends",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
+                type: "Person",
               },
             },
             {
-              name: 'cars',
-              type: 'edge',
+              name: "cars",
+              type: "edge",
               throughOrTo: {
-                type: 'Car',
-                column: 'ownerId',
+                type: "Car",
+                column: "ownerId",
               },
             },
             {
-              name: 'follows',
-              type: 'edgeReference',
-              reference: 'FollowEdge',
+              name: "follows",
+              type: "edgeReference",
+              reference: "FollowEdge",
             },
             {
-              name: 'followedBy',
-              type: 'edgeReference',
-              reference: 'FollowerEdge',
+              name: "followedBy",
+              type: "edgeReference",
+              reference: "FollowerEdge",
             },
           ],
         },
         {
-          name: 'inboundEdges',
+          name: "inboundEdges",
           declarations: [
             {
-              name: 'fromWallet',
-              type: 'edge',
+              name: "fromWallet",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
-                column: 'walletId',
+                type: "Person",
+                column: "walletId",
               },
             },
           ],
         } as InboundEdgesAst,
         {
-          name: 'index',
+          name: "index",
           declarations: [
             {
-              name: 'walletId',
-              type: 'unique',
-              columns: ['walletId'],
+              name: "walletId",
+              type: "unique",
+              columns: ["walletId"],
             },
             {
-              name: 'compound',
-              type: 'nonUnique',
-              columns: ['thing1', 'thing2'],
+              name: "compound",
+              type: "nonUnique",
+              columns: ["thing1", "thing2"],
             },
             {
-              name: 'thing2',
-              type: 'nonUnique',
-              columns: ['thing2'],
+              name: "thing2",
+              type: "nonUnique",
+              columns: ["thing2"],
             },
           ],
         },
       ],
     },
     {
-      type: 'edge',
+      type: "edge",
       src: {
-        type: 'Person',
+        type: "Person",
       },
       dest: {
-        type: 'Person',
+        type: "Person",
       },
-      name: 'FollowEdge',
+      name: "FollowEdge",
       fields: [
         {
-          name: 'when',
+          name: "when",
           type: [
             {
-              type: 'timestamp',
+              type: "timestamp",
             },
           ],
         },
       ],
       extensions: [
         {
-          name: 'invert',
-          as: 'FollowerEdge',
+          name: "invert",
+          as: "FollowerEdge",
         },
       ],
     },
     {
-      type: 'node',
-      as: 'Node',
-      name: 'Wallet',
+      type: "node",
+      as: "Node",
+      name: "Wallet",
       fields: [
         {
-          name: 'id',
+          name: "id",
           type: [
             {
-              type: 'id',
-              of: 'Wallet',
+              type: "id",
+              of: "Wallet",
             },
           ],
         },
         {
-          name: 'balance',
-          type: [{ type: 'primitive', subtype: 'float32' }],
+          name: "balance",
+          type: [{ type: "primitive", subtype: "float32" }],
         },
         {
-          name: 'status',
+          name: "status",
           type: [
             {
-              type: 'enumeration',
-              keys: ['Active', 'Locked'],
+              type: "enumeration",
+              keys: ["Active", "Locked"],
             },
           ],
         },
         {
-          name: 'alias',
+          name: "alias",
           type: [
             {
-              type: 'naturalLanguage',
+              type: "naturalLanguage",
             },
           ],
         },
@@ -255,70 +259,70 @@ export const ast: SchemaFileAst = {
       extensions: [],
     },
     {
-      type: 'node',
-      as: 'Node',
-      name: 'Transaction',
+      type: "node",
+      as: "Node",
+      name: "Transaction",
       fields: [
         {
-          name: 'id',
+          name: "id",
           type: [
             {
-              type: 'id',
-              of: 'Transaction',
+              type: "id",
+              of: "Transaction",
             },
           ],
         },
         {
-          name: 'time',
-          type: [{ type: 'timestamp' }],
+          name: "time",
+          type: [{ type: "timestamp" }],
         },
         {
-          name: 'blob',
+          name: "blob",
           type: [
             {
-              type: 'map',
+              type: "map",
               keys: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
               values: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
             },
           ],
         },
         {
-          name: 'blobOfBlob',
+          name: "blobOfBlob",
           type: [
             {
-              type: 'map',
+              type: "map",
               keys: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
               values: {
-                type: 'map',
+                type: "map",
                 keys: {
-                  type: 'primitive',
-                  subtype: 'string',
+                  type: "primitive",
+                  subtype: "string",
                 },
                 values: {
-                  type: 'primitive',
-                  subtype: 'string',
+                  type: "primitive",
+                  subtype: "string",
                 },
               },
             },
           ],
         },
         {
-          name: 'list',
+          name: "list",
           type: [
             {
-              type: 'array',
+              type: "array",
               values: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
             },
           ],
@@ -327,23 +331,23 @@ export const ast: SchemaFileAst = {
       extensions: [],
     },
     {
-      type: 'node',
-      as: 'Node',
-      name: 'Pig',
+      type: "node",
+      as: "Node",
+      name: "Pig",
       fields: [
         {
-          name: 'optional',
+          name: "optional",
           type: [
             {
-              type: 'primitive',
-              subtype: 'string',
+              type: "primitive",
+              subtype: "string",
             },
             {
-              type: 'union',
+              type: "union",
             },
             {
-              type: 'primitive',
-              subtype: 'null',
+              type: "primitive",
+              subtype: "null",
             },
           ],
         },
@@ -351,16 +355,16 @@ export const ast: SchemaFileAst = {
       extensions: [],
     },
     {
-      type: 'node',
-      as: 'UnmanagedNode',
-      name: 'Fig',
+      type: "node",
+      as: "UnmanagedNode",
+      name: "Fig",
       fields: [
         {
-          name: 'wig',
+          name: "wig",
           type: [
             {
-              type: 'primitive',
-              subtype: 'string',
+              type: "primitive",
+              subtype: "string",
             },
           ],
         },
@@ -376,229 +380,229 @@ export const schemaFile: SchemaFile = {
       extensions: {},
       fields: {
         wig: {
-          name: 'wig',
+          name: "wig",
           type: [
             {
-              subtype: 'string',
-              type: 'primitive',
+              subtype: "string",
+              type: "primitive",
             },
           ],
         },
       },
-      name: 'Fig',
-      primaryKey: 'id',
+      name: "Fig",
+      primaryKey: "id",
       storage: {
-        db: '--',
-        engine: 'ephemeral',
-        name: 'storage',
-        tablish: 'ephemeral',
-        type: 'ephemeral',
+        db: "--",
+        engine: "ephemeral",
+        name: "storage",
+        tablish: "ephemeral",
+        type: "ephemeral",
       },
-      type: 'node',
+      type: "node",
     },
     Person: {
-      type: 'node',
-      name: 'Person',
-      primaryKey: 'id',
+      type: "node",
+      name: "Person",
+      primaryKey: "id",
       fields: {
         id: {
-          name: 'id',
+          name: "id",
           type: [
             {
-              type: 'id',
-              of: 'Person',
+              type: "id",
+              of: "Person",
             },
           ],
         },
         name: {
-          name: 'name',
-          type: [{ type: 'naturalLanguage' }],
+          name: "name",
+          type: [{ type: "naturalLanguage" }],
         },
         walletId: {
-          name: 'walletId',
-          type: [{ type: 'id', of: 'Wallet' }],
+          name: "walletId",
+          type: [{ type: "id", of: "Wallet" }],
         },
         thing1: {
-          name: 'thing1',
-          type: [{ type: 'primitive', subtype: 'string' }],
+          name: "thing1",
+          type: [{ type: "primitive", subtype: "string" }],
         },
         thing2: {
-          name: 'thing2',
-          type: [{ type: 'primitive', subtype: 'string' }],
+          name: "thing2",
+          type: [{ type: "primitive", subtype: "string" }],
         },
       },
       extensions: {
         outboundEdges: {
-          name: 'outboundEdges',
+          name: "outboundEdges",
           edges: {
             wallet: {
-              name: 'wallet',
-              type: 'edge',
+              name: "wallet",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
-                column: 'walletId',
+                type: "Person",
+                column: "walletId",
               },
             },
             friends: {
-              name: 'friends',
-              type: 'edge',
+              name: "friends",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
+                type: "Person",
               },
             },
             cars: {
-              name: 'cars',
-              type: 'edge',
+              name: "cars",
+              type: "edge",
               throughOrTo: {
-                type: 'Car',
-                column: 'ownerId',
+                type: "Car",
+                column: "ownerId",
               },
             },
             follows: {
-              name: 'follows',
-              type: 'edgeReference',
-              reference: 'FollowEdge',
+              name: "follows",
+              type: "edgeReference",
+              reference: "FollowEdge",
             },
             followedBy: {
-              name: 'followedBy',
-              type: 'edgeReference',
-              reference: 'FollowerEdge',
+              name: "followedBy",
+              type: "edgeReference",
+              reference: "FollowerEdge",
             },
           },
         },
         inboundEdges: {
-          name: 'inboundEdges',
+          name: "inboundEdges",
           edges: {
             fromWallet: {
-              name: 'fromWallet',
-              type: 'edge',
+              name: "fromWallet",
+              type: "edge",
               throughOrTo: {
-                type: 'Person',
-                column: 'walletId',
+                type: "Person",
+                column: "walletId",
               },
             },
           },
         },
         index: {
-          name: 'index',
+          name: "index",
           declarations: [
             {
-              name: 'walletId',
-              type: 'unique',
-              columns: ['walletId'],
+              name: "walletId",
+              type: "unique",
+              columns: ["walletId"],
             },
             {
-              name: 'compound',
-              type: 'nonUnique',
-              columns: ['thing1', 'thing2'],
+              name: "compound",
+              type: "nonUnique",
+              columns: ["thing1", "thing2"],
             },
             {
-              name: 'thing2',
-              type: 'nonUnique',
-              columns: ['thing2'],
+              name: "thing2",
+              type: "nonUnique",
+              columns: ["thing2"],
             },
           ],
         },
       },
       storage: {
-        name: 'storage',
-        type: 'sql',
-        engine: 'sqlite',
-        db: 'test',
-        tablish: 'person',
+        name: "storage",
+        type: "sql",
+        engine: "sqlite",
+        db: "test",
+        tablish: "person",
       },
     },
     Wallet: {
-      type: 'node',
-      name: 'Wallet',
-      primaryKey: 'id',
+      type: "node",
+      name: "Wallet",
+      primaryKey: "id",
       fields: {
         id: {
-          name: 'id',
-          type: [{ type: 'id', of: 'Wallet' }],
+          name: "id",
+          type: [{ type: "id", of: "Wallet" }],
         },
         balance: {
-          name: 'balance',
-          type: [{ type: 'primitive', subtype: 'float32' }],
+          name: "balance",
+          type: [{ type: "primitive", subtype: "float32" }],
         },
         status: {
-          name: 'status',
-          type: [{ type: 'enumeration', keys: ['Active', 'Locked'] }],
+          name: "status",
+          type: [{ type: "enumeration", keys: ["Active", "Locked"] }],
         },
         alias: {
-          name: 'alias',
-          type: [{ type: 'naturalLanguage' }],
+          name: "alias",
+          type: [{ type: "naturalLanguage" }],
         },
       },
       extensions: {},
       storage: {
-        name: 'storage',
-        type: 'sql',
-        engine: 'sqlite',
-        db: 'test',
-        tablish: 'wallet',
+        name: "storage",
+        type: "sql",
+        engine: "sqlite",
+        db: "test",
+        tablish: "wallet",
       },
     },
     Transaction: {
-      type: 'node',
-      name: 'Transaction',
-      primaryKey: 'id',
+      type: "node",
+      name: "Transaction",
+      primaryKey: "id",
       fields: {
         id: {
-          name: 'id',
-          type: [{ type: 'id', of: 'Transaction' }],
+          name: "id",
+          type: [{ type: "id", of: "Transaction" }],
         },
         time: {
-          name: 'time',
-          type: [{ type: 'timestamp' }],
+          name: "time",
+          type: [{ type: "timestamp" }],
         },
         blob: {
-          name: 'blob',
+          name: "blob",
           type: [
             {
-              type: 'map',
+              type: "map",
               keys: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
               values: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
             },
           ],
         },
         blobOfBlob: {
-          name: 'blobOfBlob',
+          name: "blobOfBlob",
           type: [
             {
-              type: 'map',
+              type: "map",
               keys: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
               values: {
-                type: 'map',
+                type: "map",
                 keys: {
-                  type: 'primitive',
-                  subtype: 'string',
+                  type: "primitive",
+                  subtype: "string",
                 },
                 values: {
-                  type: 'primitive',
-                  subtype: 'string',
+                  type: "primitive",
+                  subtype: "string",
                 },
               },
             },
           ],
         },
         list: {
-          name: 'list',
+          name: "list",
           type: [
             {
-              type: 'array',
+              type: "array",
               values: {
-                type: 'primitive',
-                subtype: 'string',
+                type: "primitive",
+                subtype: "string",
               },
             },
           ],
@@ -606,65 +610,65 @@ export const schemaFile: SchemaFile = {
       },
       extensions: {},
       storage: {
-        name: 'storage',
-        type: 'sql',
-        engine: 'sqlite',
-        db: 'test',
-        tablish: 'transaction',
+        name: "storage",
+        type: "sql",
+        engine: "sqlite",
+        db: "test",
+        tablish: "transaction",
       },
     },
     Pig: {
-      type: 'node',
-      name: 'Pig',
-      primaryKey: 'id',
+      type: "node",
+      name: "Pig",
+      primaryKey: "id",
       fields: {
         optional: {
-          name: 'optional',
+          name: "optional",
           type: [
-            { subtype: 'string', type: 'primitive' },
-            { type: 'union' },
-            { type: 'primitive', subtype: 'null' },
+            { subtype: "string", type: "primitive" },
+            { type: "union" },
+            { type: "primitive", subtype: "null" },
           ],
         },
       },
       extensions: {},
       storage: {
-        name: 'storage',
-        type: 'sql',
-        engine: 'sqlite',
-        db: 'test',
-        tablish: 'pig',
+        name: "storage",
+        type: "sql",
+        engine: "sqlite",
+        db: "test",
+        tablish: "pig",
       },
     },
   },
   edges: {
     FollowEdge: {
-      type: 'standaloneEdge',
-      name: 'FollowEdge',
+      type: "standaloneEdge",
+      name: "FollowEdge",
       src: {
-        type: 'Person',
+        type: "Person",
       },
       dest: {
-        type: 'Person',
+        type: "Person",
       },
       fields: {
         when: {
-          name: 'when',
-          type: [{ type: 'timestamp' }],
+          name: "when",
+          type: [{ type: "timestamp" }],
         },
       },
       extensions: {
         invert: {
-          name: 'invert',
-          as: 'FollowerEdge',
+          name: "invert",
+          as: "FollowerEdge",
         },
       },
       storage: {
-        name: 'storage',
-        type: 'sql',
-        engine: 'sqlite',
-        db: 'test',
-        tablish: 'followedge',
+        name: "storage",
+        type: "sql",
+        engine: "sqlite",
+        db: "test",
+        tablish: "followedge",
       },
     },
   },

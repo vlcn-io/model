@@ -1,11 +1,11 @@
-import { SchemaFile, ValidationError } from '@aphro/schema-api';
+import { SchemaFile, ValidationError } from "@vulcan.sh/schema-api";
 
 export default function validate(schemaFile: SchemaFile): ValidationError[] {
   return [];
 }
 
 export function stopsCodegen(error: ValidationError): boolean {
-  return error.severity === 'error';
+  return error.severity === "error";
 }
 
 /*

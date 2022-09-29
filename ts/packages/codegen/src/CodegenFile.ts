@@ -1,45 +1,57 @@
-import { Templates } from '@aphro/codegen-api';
+import { Templates } from "@vulcan.sh/codegen-api";
 // @ts-ignore
-import md5 from 'md5';
+import md5 from "md5";
 
 export function sign(content: string, templates: Templates) {
   // We have a call to "removeManualSections" here because the code-generator may wish to place comments into manual
   // sections. Those comments shouldn't get hashed.
   return `${templates.signature.replace(
-    '<>',
-    '<' + md5(removeManualSections(content, templates)) + '>\n',
+    "<>",
+    "<" + md5(removeManualSections(content, templates)) + ">\n"
   )}${content}`;
 }
 
 export function readSignature(content: string, templates: Templates): string {
-  const templateReg = new RegExp(templates.signature.replace('<>', '<([0-9a-f]+)>'));
-  const firstLine = content.split('\n')[0];
+  const templateReg = new RegExp(
+    templates.signature.replace("<>", "<([0-9a-f]+)>")
+  );
+  const firstLine = content.split("\n")[0];
   const result = templateReg.exec(firstLine);
   if (result) {
     return result[1];
   }
 
-  throw new Error('Could not find signature for ' + templates.signature + '\n' + firstLine);
+  throw new Error(
+    "Could not find signature for " + templates.signature + "\n" + firstLine
+  );
 }
 
 export function removeSignature(content: string, templates: Templates): string {
-  const templateReg = new RegExp(templates.signature.replace('<>', '<([0-9a-f]+)>\n'));
-  return content.replace(templateReg, '');
+  const templateReg = new RegExp(
+    templates.signature.replace("<>", "<([0-9a-f]+)>\n")
+  );
+  return content.replace(templateReg, "");
 }
 
 export function checkSignature(content: string, templates: Templates): void {
   const sig = readSignature(content, templates);
-  const baseContent = removeManualSections(removeSignature(content, templates), templates);
+  const baseContent = removeManualSections(
+    removeSignature(content, templates),
+    templates
+  );
 
   if (sig !== md5(baseContent)) {
     throw {
-      code: 'bad-signature',
+      code: "bad-signature",
     };
   }
 }
 
-export function removeManualSections(content: string, templates: Templates): string {
-  const lines = content.split('\n');
+export function removeManualSections(
+  content: string,
+  templates: Templates
+): string {
+  const lines = content.split("\n");
   const startMarkRegex = makeStartMarkerRegex(templates.startManual);
 
   const generatedLines: string[] = [];
@@ -58,15 +70,15 @@ export function removeManualSections(content: string, templates: Templates): str
     generatedLines.push(line);
   }
 
-  return generatedLines.join('\n');
+  return generatedLines.join("\n");
 }
 
 export function insertManualSections(
   content: string,
   manualCode: Map<string, string[]>,
-  templates: Templates,
+  templates: Templates
 ): string {
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const startMarkRegex = makeStartMarkerRegex(templates.startManual);
 
   const manualSectionStarts: [number, string][] = [];
@@ -89,12 +101,15 @@ export function insertManualSections(
     lines.splice(manualSectionStarts[i][0] + 1, 0, ...toInsert);
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
-export function readManualSections(content: string, templates: Templates): Map<string, string[]> {
+export function readManualSections(
+  content: string,
+  templates: Templates
+): Map<string, string[]> {
   const ret: Map<string, string[]> = new Map();
-  const lines = content.split('\n');
+  const lines = content.split("\n");
   const startMarkRegex = makeStartMarkerRegex(templates.startManual);
 
   let manualSectionName: string | null = null;
@@ -108,7 +123,10 @@ export function readManualSections(content: string, templates: Templates): Map<s
     manualSectionName = match[1];
     if (manualSectionName == null) {
       throw new Error(
-        `While processing ${content.substring(0, 100)} we hit a manual section without a name`,
+        `While processing ${content.substring(
+          0,
+          100
+        )} we hit a manual section without a name`
       );
     }
   };
@@ -136,5 +154,5 @@ export function readManualSections(content: string, templates: Templates): Map<s
 }
 
 function makeStartMarkerRegex(template: string) {
-  return new RegExp(template.replace('[]', '\\[(.*)\\]'));
+  return new RegExp(template.replace("[]", "\\[(.*)\\]"));
 }
