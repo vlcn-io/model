@@ -1,0 +1,29 @@
+{
+  "name": "@vulcan.sh/grammar-extension-api",
+  "version": "0.2.6",
+  "main": "lib/index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tantaman/aphrodite.git",
+    "directory": "packages/grammar-extension-api"
+  },
+  "dependencies": {
+    "@aphro/schema-api": "workspace:*",
+    "ohm-js": "^16.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --build -w",
+    "deep-clean": "rm -rf ./lib || true && rm tsconfig.tsbuildinfo || true"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
+  }
+}
