@@ -1,3 +1,9 @@
+// TODO: likely remove this!
+// Instead we'll persist as called
+// and for lazy, return a callback to call whenever the user decides to actually persist.
+// they can throw callbacks away if they're debouncing or throttling.
+// maybe return events that they can merge? changeset like things?
+
 /**
  * Persisted models add themselves to the tracker at the end of a transaction.
  *
@@ -17,9 +23,7 @@ import { invariant } from "@vulcan.sh/util";
 import { PersistedModel } from "./PersistedModel";
 
 export type Listener = (
-  pendingCreates: ModelSet,
-  pendingUpdates: ModelSet,
-  pendingDeletes: ModelSet
+  pending: [PersistedModel<any>, "create" | "update" | "delete"][]
 ) => void;
 
 type ModelSet = Set<PersistedModel<any>>;
@@ -29,11 +33,8 @@ class PersistTracker {
   // then collapse them
   // and incr causal length on create + deletes to figure out
   // final state (created or deleted) of a thing
-  // #pendingEvents: [PersistedModel<any>, "create" | "update" | "delete"][] = [];
+  #pendingEvents: [PersistedModel<any>, "create" | "update" | "delete"][] = [];
 
-  #pendingCreates = new Set<PersistedModel<any>>();
-  #pendingUpdates = new Set<PersistedModel<any>>();
-  #pendingDeletes = new Set<PersistedModel<any>>();
   #listeners = new Set<Listener>();
 
   #hasPendingMicroTask = false;
@@ -43,37 +44,18 @@ class PersistTracker {
   onBatchReady() {}
 
   addCreate(m: PersistedModel<any>) {
-    this.#pendingCreates.add(m);
-
-    // if someone is creating after deleting, cancel the delete
-    this.#pendingDeletes.delete(m);
-    // create includes update
-    this.#pendingUpdates.delete(m);
+    this.#pendingEvents.push([m, "create"]);
 
     this.#maybeQueueMicroTask();
   }
 
   addUpdate(m: PersistedModel<any>) {
-    if (this.#pendingCreates.has(m)) {
-      // create event will capture update data too -- in current implementation
-      return;
-    }
-
-    invariant(
-      !this.#pendingDeletes.has(m),
-      "Updating something after it was requested to be deleted"
-    );
-
-    this.#pendingUpdates.add(m);
+    this.#pendingEvents.push([m, "update"]);
     this.#maybeQueueMicroTask();
   }
 
   addDelete(m: PersistedModel<any>) {
-    this.#pendingDeletes.add(m);
-
-    this.#pendingCreates.delete(m);
-    this.#pendingUpdates.delete(m);
-
+    this.#pendingEvents.push([m, "delete"]);
     this.#maybeQueueMicroTask();
   }
 
@@ -86,29 +68,21 @@ class PersistTracker {
     }
 
     queueMicrotask(() => {
-      const [pendingCreates, pendingUpdates, pendingDeletes] = [
-        this.#pendingCreates,
-        this.#pendingUpdates,
-        this.#pendingDeletes,
-      ];
-      this.#pendingCreates = new Set();
-      this.#pendingUpdates = new Set();
-      this.#pendingDeletes = new Set();
+      const pending = this.#pendingEvents;
+      this.#pendingEvents = [];
 
       this.#hasPendingMicroTask = false;
-      this.#notifyBackends(pendingCreates, pendingUpdates, pendingDeletes);
+      this.#notifyBackends(pending);
     });
     this.#hasPendingMicroTask = true;
   }
 
   #notifyBackends(
-    pendingCreates: ModelSet,
-    pendingUpdates: ModelSet,
-    pendingDeletes: ModelSet
+    pending: [PersistedModel<any>, "create" | "update" | "delete"][]
   ) {
     for (const l of this.#listeners) {
       try {
-        l(pendingCreates, pendingUpdates, pendingDeletes);
+        l(pending);
       } catch (e) {
         // one backend failing shouldn't prevent telling other backends
         console.error(e);

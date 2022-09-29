@@ -83,6 +83,8 @@ export function transaction(
   return ret;
 }
 
+// TODO: this queue should go on `PSD`
+// so we can serialize siblings in nested transactions if requested
 let serialTxQueue: Promise<any> = Promise.resolve();
 export function txSerializedAsync<T>(
   fn: () => Promise<T>,

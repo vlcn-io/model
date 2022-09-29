@@ -344,3 +344,5 @@ test("sibling transactions can be automatically serialized if desired", async ()
 test("we do not lose track of the transaction we are in -- even across multiple promise and async function boundaries", async () => {});
 
 test("debit example", () => {});
+
+test("nested siblings are serializable", () => {});

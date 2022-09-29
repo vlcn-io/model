@@ -23,13 +23,13 @@ class PersistedValue<T>
   extends ObservableValue<T>
   implements IPersistedValue<T>
 {
-  constructor(data: T, memoryVersion: MemoryVersion) {
+  constructor(data: T, memoryVersion?: MemoryVersion) {
     super(data, memoryVersion);
   }
 }
 
 export function newPersistedValue<T>(data: T): [IPersistedValue<T>, boolean] {
-  const ret = new PersistedValue(data, memory.nextVersion());
+  const ret = new PersistedValue(data);
 
   // @ts-ignore
   const tx = PSD.tx as Transaction;
