@@ -9,7 +9,7 @@
     "directory": "packages/codegen-api"
   },
   "dependencies": {
-    "@aphro/schema-api": "workspace:*"
+    "@vulcan.sh/schema-api": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.8.2"

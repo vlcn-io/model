@@ -1,7 +1,12 @@
 packages:
+  - packages/codegen
+  - packages/codegen-api
   - packages/context-provider
+  - packages/grammar-extension-api
   - packages/id
   - packages/model
   - packages/model-persisted
+  - packages/schema
+  - packages/schema-api
   - packages/util
   - packages/value
