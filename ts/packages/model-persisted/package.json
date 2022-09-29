@@ -9,6 +9,7 @@
     "directory": "ts/packages/model-persisted"
   },
   "dependencies": {
+    "@vulcan.sh/config": "workspace:*",
     "@vulcan.sh/model": "workspace:*",
     "@vulcan.sh/id": "workspace:*",
     "@vulcan.sh/util": "workspace:*",

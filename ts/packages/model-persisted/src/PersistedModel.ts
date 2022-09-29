@@ -7,6 +7,8 @@ import {
   newPersistedValue_UNSAFE,
 } from "@vulcan.sh/value";
 import { invariant } from "@vulcan.sh/util";
+import cache from "./cache.js";
+import persistor from "./persistor.js";
 
 type Cause = "create" | "hydrate" | "sync";
 
@@ -77,8 +79,8 @@ export abstract class PersistedModel<
     // TODO: notify cache
     // issue delete operation to persist layer
     // but we need to fold this into the current tx
-    config.cache.remove(this);
-    return config.storage.delete(this);
+    cache.remove(this);
+    return persistor.delete(this);
   }
 
   static async create<D extends {}, M extends IModel<D>>(
@@ -88,24 +90,24 @@ export abstract class PersistedModel<
     // assert cache consistency first!!!
     const model = ctor(data);
     // TODO: evalulate privacy policy in app layer? if we go that route.
-    config.cache.add(model);
-    await config.storage.create(model);
+    cache.add(model);
+    await storage.create(model);
     return model;
   }
 
   static hydrate<D extends BasePersistedModelData, M extends IModel<D>>(
-    ctor: (data: D) => M,
+    ctor: (data: D) => M, // add dbName and typeName props to ctor
     data: D
   ): M {
-    const existing = config.cache.get(data.id);
+    const existing = cache.get(data.id);
     if (existing) {
-      config.cache.assertConsistent(existing, data);
+      cache.assertConsistent(existing, data);
       return existing;
     }
 
     const model = ctor(data);
     // TODO: evalulate privacy policy in app layer? if we go that route.
-    config.cache.add(model);
+    cache.add(model);
     return model;
   }
 }

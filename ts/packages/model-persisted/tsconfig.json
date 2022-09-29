@@ -9,6 +9,7 @@
     { "path": "../model" },
     { "path": "../id" },
     { "path": "../util" },
-    { "path": "../value" }
+    { "path": "../value" },
+    { "path": "../config" }
   ]
 }

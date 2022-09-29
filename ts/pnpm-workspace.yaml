@@ -3,6 +3,7 @@ packages:
   - packages/codegen
   - packages/codegen-api
   - packages/codegen-sql
+  - packages/config
   - packages/context-provider
   - packages/grammar-extension-api
   - packages/id

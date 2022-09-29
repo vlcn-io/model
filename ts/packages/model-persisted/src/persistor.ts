@@ -1,5 +1,11 @@
 /**
  * Reads the current Vulcan config to fetch:
- * - db resolver
+ * - resolved db
  * -
  */
+
+export default {
+  create() {},
+  update() {},
+  delete() {},
+};

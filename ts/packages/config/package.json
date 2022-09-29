@@ -1,16 +1,15 @@
 {
-  "name": "@vulcan.sh/cache",
+  "name": "@vulcan.sh/config",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/vulcan-sh/vulcan.git",
-    "directory": "ts/packages/cache"
+    "directory": "ts/packages/config"
   },
   "dependencies": {
-    "@vulcan.sh/util": "workspace:*",
-    "@vulcan.sh/id": "workspace:*"
+    "@vulcan.sh/sql": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
