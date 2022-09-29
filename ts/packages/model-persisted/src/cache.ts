@@ -1,3 +1,4 @@
+import { ID_of } from "@vulcan.sh/id";
 import { BasePersistedModelData, IPersistedModel } from "./PersistedModel";
 
 // delegate to config'ed cache
@@ -17,7 +18,7 @@ export default {
     throw new Error("unimplemented");
   },
 
-  get(/* static interface */): IPersistedModel<any> {
+  get(dbName: string, typeName: string, id: ID_of<any>): IPersistedModel<any> {
     throw new Error("unimplemented");
   },
 };

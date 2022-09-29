@@ -5,6 +5,6 @@ interface Type<T> {
 }
 
 /* class decorator */
-function staticImplements<T>() {
+export function staticImplements<T>() {
   return (constructor: T) => {};
 }

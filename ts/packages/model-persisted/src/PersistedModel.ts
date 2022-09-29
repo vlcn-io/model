@@ -6,7 +6,7 @@ import {
   IObservableValue,
   newPersistedValue_UNSAFE,
 } from "@vulcan.sh/value";
-import { invariant } from "@vulcan.sh/util";
+import { invariant, staticImplements } from "@vulcan.sh/util";
 import cache from "./cache.js";
 import persistor from "./persistor.js";
 
@@ -22,7 +22,16 @@ export interface IPersistedModel<T extends BasePersistedModelData>
   // update(): Promise<void> | void;
 }
 
-export abstract class PersistedModel<T extends BasePersistedModelData>
+interface IPersistedModelCtor<
+  D extends BasePersistedModelData,
+  M extends IPersistedModel<D>
+> {
+  new (data: D | Omit<D, "id">, cause: Cause): M;
+  readonly dbName: string;
+  readonly typeName: string;
+}
+
+abstract class PersistedModel<T extends BasePersistedModelData>
   extends Model<T>
   implements IPersistedModel<T>
 {
@@ -69,12 +78,26 @@ export abstract class PersistedModel<T extends BasePersistedModelData>
   static async create<
     D extends BasePersistedModelData,
     M extends IPersistedModel<D>
-  >(ctor: (data: D | Omit<D, "id">) => M, data: D): Promise<M> {
-    // assert cache consistency first!!!
-    const model = ctor(data);
-    // TODO: evalulate privacy policy in app layer? if we go that route.
+  >(ctor: IPersistedModelCtor<D, M>, data: D | Omit<D, "id">): Promise<M> {
+    // TODO: assert cache consistency first!!!
+    const model = new ctor(data, "create");
     cache.add(model);
     await persistor.create(model);
+    return model;
+  }
+
+  static hydrate<
+    D extends BasePersistedModelData,
+    M extends IPersistedModel<D>
+  >(ctor: IPersistedModelCtor<D, M>, data: D): M {
+    const existing = cache.get(ctor.dbName, ctor.typeName, data.id);
+    if (existing) {
+      cache.assertConsistent(existing, data);
+      return existing as M;
+    }
+
+    const model = new ctor(data, "hydrate");
+    cache.add(model);
     return model;
   }
 
@@ -103,23 +126,12 @@ export abstract class PersistedModel<T extends BasePersistedModelData>
     cache.remove(this);
     return persistor.delete(this);
   }
-
-  static hydrate<
-    D extends BasePersistedModelData,
-    M extends IPersistedModel<D>
-  >(
-    ctor: (data: D) => M, // add dbName and typeName props to ctor
-    data: D
-  ): M {
-    const existing = cache.get(data.id);
-    if (existing) {
-      cache.assertConsistent(existing, data);
-      return existing as M;
-    }
-
-    const model = ctor(data);
-    // TODO: evalulate privacy policy in app layer? if we go that route.
-    cache.add(model);
-    return model;
-  }
 }
+
+export abstract class SyncPersistedModel<
+  T extends BasePersistedModelData
+> extends PersistedModel<T> {}
+
+export abstract class AsyncPersistedModel<
+  T extends BasePersistedModelData
+> extends PersistedModel<T> {}
