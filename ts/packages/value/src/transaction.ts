@@ -6,6 +6,7 @@ import {
   PSD,
   ZonedPromise,
 } from "@vulcan.sh/context-provider";
+import { assert } from "@vulcan.sh/util";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
@@ -41,7 +42,7 @@ export type TxOptions = {
   // commit and at transaction submission. This mode
   // serializes all sibling transactions. Reduces throughput of your system.
   // E.g., `await Promise.all([a,b,c])` would turn into `await a; await b; await c;`
-  readonly concurrentModification: "fail"; // | "retry" | "serialize";
+  readonly concurrentModification: "fail" | "retry"; // | "serialize";
   readonly name?: string;
 
   // consistent read option as in the clojure dining philosophers example?
@@ -146,7 +147,16 @@ export function txAsync<T>(
   const resolved = (r: any) => {
     if (!parentTx) {
       inflight.remove(tx);
-      commit(tx);
+      try {
+        commit(tx);
+      } catch (e) {
+        if (e !== "retry") {
+          throw e;
+        }
+        // retry the transaction
+        // TODO: should you enqueue to next tick?
+        return Promise.resolve(txAsync(fn));
+      }
     }
     return r;
   };
@@ -204,7 +214,7 @@ export function tx<T>(
   }
 }
 
-function commit(tx: Transaction) {
+function commit<T>(tx: Transaction) {
   // If we're inside a parent transaction then the parent will handle the
   // commit for us
   const parentTx = (PSD as any).tx as Transaction | undefined;
@@ -225,6 +235,9 @@ function commit(tx: Transaction) {
               tx.options.name || "unnamed"
             } was reverted.`
           );
+        case "retry":
+          // will be caught and retried
+          throw "retry";
       }
 
       throw new Error("Should be unreachable");
@@ -253,6 +266,24 @@ function commit(tx: Transaction) {
   }
 }
 
+// TODO: what if someone writes a value you wrote
+// but not inside of transaction?
+// you should probs still retry the transactions impacted
+// by said write.
+// --
+// The solution here is to then instead use memory version?
+// Or wrap all single statements in a lw tx?
+// "single touches" while inflights were running...
+// or mem vers? --
+// 1. Look through everything you touched
+// 2. Check if it's memory version doesn't match what you'd expected it to be
+//
+// so for every touch you need to record the new memory version....
+// which is some offest from your current memory version...
+//
+// mem vers, if we can pull it off, would let us figure out
+// if the write was before or after our read. For stable
+// reads anyway
 function checkForConflictingWrites(tx: Transaction): string | undefined {
   const iTouched = [...tx.touched.keys()];
   // for each sibling

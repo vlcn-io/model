@@ -71,18 +71,21 @@ export class Value<T> implements IValue<T> {
    * @returns
    */
   set val(data: T) {
-    if (this.data === data) {
-      return;
-    }
-
     // @ts-ignore
     const tx = PSD.tx as Transaction;
     if (!tx) {
+      if (this.data === data) {
+        return;
+      }
       this.__commit(data);
       this.__transactionComplete("update");
       return;
     }
 
+    // even if it is the same we must register a touch
+    // so we can check for conflicts.
+    // i.e., a competing transaction could have set it to the same
+    // value.
     tx.touch(this, "update", data);
   }
 

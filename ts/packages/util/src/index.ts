@@ -14,3 +14,9 @@ export function isHex(h: string) {
 }
 
 export function noop() {}
+
+export function assert(condition: boolean) {
+  if (!condition) {
+    throw new Error("Assertion failed");
+  }
+}

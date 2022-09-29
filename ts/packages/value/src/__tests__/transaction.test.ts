@@ -38,7 +38,7 @@ test("async transaction leaves scope after being awaited", async () => {
   expect(inflight.length).toBe(0);
 });
 
-test("async transaction that contains inner awaits leaves scope after being awaited", async () => {
+test("async transaction that contains inner awaits loses", async () => {
   const currentPSD = PSD;
 
   await txAsync(async () => {
@@ -223,15 +223,95 @@ test("nested transactions are not treated as concurrent transactions", () => {
   expect(inflight.length).toBe(0);
 });
 
-test("sibling transactions throw if they modify the same data", async () => {});
+test("sibling transactions throw if they modify the same data concurrently", async () => {
+  const shared = value(1);
 
-test("sibling transactions commit without error if they do not modify the same data", async () => {});
+  const t1 = txAsync(async () => {
+    await promiseDelay(0);
+    shared.val = 2;
+  });
+
+  const t2 = txAsync(async () => {
+    await promiseDelay(0);
+    shared.val = 3;
+  });
+
+  const [r1, r2] = await Promise.allSettled([t1, t2]);
+
+  if (r1.status === "fulfilled") {
+    expect(r2.status).toBe("rejected");
+    expect(shared.val).toBe(2);
+  }
+  if (r2.status === "fulfilled") {
+    expect(r1.status).toBe("rejected");
+    expect(shared.val).toBe(3);
+  }
+});
+
+test("sibling transactions can be retried until success if they modify the same data concurrently", async () => {
+  const shared = value(1);
+
+  const t1 = txAsync(
+    async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    },
+    { concurrentModification: "retry" }
+  );
+
+  const t2 = txAsync(
+    async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    },
+    { concurrentModification: "retry" }
+  );
+
+  // run em concurrently
+  await Promise.all([t1, t2]);
+
+  // should have retried the loser and incremented to the correct value
+  expect(shared.val).toBe(3);
+});
+
+test("sibling transactions commit without error if they do not modify the same data", async () => {
+  const shared1 = value(1);
+  const shared2 = value(2);
+
+  const t1 = txAsync(async () => {
+    await promiseDelay(0);
+    shared1.val = 2;
+  });
+
+  const t2 = txAsync(async () => {
+    await promiseDelay(0);
+    shared2.val = 3;
+  });
+
+  await Promise.all([t1, t2]);
+
+  expect(shared1.val).toBe(2);
+  expect(shared2.val).toBe(3);
+});
+
+test("serialized siblings can never conflict", async () => {
+  const shared = value(1);
+
+  await txAsync(async () => {
+    await promiseDelay(0);
+    shared.val = shared.val + 1;
+  });
+
+  await txAsync(async () => {
+    await promiseDelay(0);
+    shared.val = shared.val + 1;
+  });
+
+  expect(shared.val).toBe(3);
+});
 
 test("sibling transactions can be automatically serialized if desired", async () => {});
 
 test("we do not lose track of the transaction we are in -- even across multiple promise and async function boundaries", async () => {});
 
-test("when leaving a transaction we're in the correct scope", () => {
-  // no more tx in scope as we're out of the top most tx
-});
 test("debit example", () => {});
