@@ -10,9 +10,6 @@
       "path": "../packages/cache"
     },
     {
-      "path": "../packages/codegen"
-    },
-    {
       "path": "../packages/codegen-api"
     },
     {

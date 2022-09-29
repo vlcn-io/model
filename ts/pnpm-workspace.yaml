@@ -1,6 +1,5 @@
 packages:
   - packages/cache
-  - packages/codegen
   - packages/codegen-api
   - packages/codegen-sql
   - packages/config

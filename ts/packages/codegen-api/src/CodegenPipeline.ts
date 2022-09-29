@@ -1,12 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { SchemaNode, SchemaEdge } from "@vulcan.sh/schema-api";
-import {
-  CodegenFile,
-  generatedDir,
-  GlobalStep,
-  Step,
-} from "@vulcan.sh/codegen-api";
+import { CodegenFile, generatedDir, GlobalStep, Step } from "./index.js";
 import {
   checkSignature,
   insertManualSections,

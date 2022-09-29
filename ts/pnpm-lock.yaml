@@ -37,7 +37,7 @@ importers:
       jest: 29.0.3
       typescript: 4.8.3
 
-  packages/codegen:
+  packages/codegen-api:
     specifiers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
@@ -45,16 +45,12 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen-api': workspace:*
-      '@vulcan.sh/schema': workspace:*
       '@vulcan.sh/schema-api': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       md5: ^2.3.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/codegen-api': link:../codegen-api
-      '@vulcan.sh/schema': link:../schema
       '@vulcan.sh/schema-api': link:../schema-api
       md5: 2.3.0
     devDependencies:
@@ -68,15 +64,6 @@ importers:
       jest: 29.0.3_@types+node@18.7.18
       typescript: 4.8.3
 
-  packages/codegen-api:
-    specifiers:
-      '@vulcan.sh/schema-api': workspace:*
-      typescript: ^4.8.2
-    dependencies:
-      '@vulcan.sh/schema-api': link:../schema-api
-    devDependencies:
-      typescript: 4.8.3
-
   packages/codegen-sql:
     specifiers:
       '@babel/core': ^7.18.13
@@ -85,7 +72,6 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen': workspace:*
       '@vulcan.sh/codegen-api': workspace:*
       '@vulcan.sh/schema': workspace:*
       '@vulcan.sh/schema-api': workspace:*
@@ -95,7 +81,6 @@ importers:
       sql-formatter: 10.0.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/codegen': link:../codegen
       '@vulcan.sh/codegen-api': link:../codegen-api
       '@vulcan.sh/schema': link:../schema
       '@vulcan.sh/schema-api': link:../schema-api

@@ -9,7 +9,6 @@
     "directory": "ts/packages/codegen-sql"
   },
   "dependencies": {
-    "@vulcan.sh/codegen": "workspace:*",
     "@vulcan.sh/codegen-api": "workspace:*",
     "@vulcan.sh/schema": "workspace:*",
     "@vulcan.sh/schema-api": "workspace:*",

@@ -10,7 +10,7 @@ import {
 // @ts-ignore
 import md5 from "md5";
 import fc from "fast-check";
-import { algolTemplates } from "@vulcan.sh/codegen-api";
+import { algolTemplates } from "../index.js";
 
 const templates = {
   signature: "<>",

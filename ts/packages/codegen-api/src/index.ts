@@ -1,5 +1,8 @@
 export * from "./CodegenFile.js";
 export { default as CodegenStep } from "./CodegenStep.js";
+export { default as CodegenPipeline } from "./CodegenPipeline.js";
+export { default as uniqueImports } from "./uniqueImports.js";
+
 import CodegenStep from "./CodegenStep.js";
 import { SchemaNode, SchemaEdge, SchemaFile } from "@vulcan.sh/schema-api";
 
