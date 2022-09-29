@@ -1,15 +1,12 @@
 {
-  "name": "@vulcan.sh/id",
-  "version": "0.0.2",
+  "name": "@vulcan.sh/sql",
+  "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/vulcan-sh/vulcan.git",
-    "directory": "ts/packages/id"
-  },
-  "dependencies": {
-    "@vulcan.sh/util": "workspace:*"
+    "directory": "ts/packages/sql"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
@@ -30,5 +27,9 @@
     "testMatch": [
       "**/__tests__/**/*.test.js"
     ]
+  },
+  "dependencies": {
+    "@databases/escape-identifier": "^1.0.3",
+    "@databases/sql": "^3.2.0"
   }
 }

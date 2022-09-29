@@ -1,7 +1,14 @@
 packages:
+  - packages/cache
+  - packages/codegen
+  - packages/codegen-api
   - packages/context-provider
+  - packages/grammar-extension-api
   - packages/id
   - packages/model
   - packages/model-persisted
+  - packages/schema
+  - packages/schema-api
+  - packages/sql
   - packages/util
   - packages/value

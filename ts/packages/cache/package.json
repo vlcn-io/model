@@ -1,15 +1,16 @@
 {
-  "name": "@vulcan.sh/id",
-  "version": "0.0.2",
+  "name": "@vulcan.sh/cache",
+  "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/vulcan-sh/vulcan.git",
-    "directory": "ts/packages/id"
+    "directory": "ts/packages/cache-runtime-ts"
   },
   "dependencies": {
-    "@vulcan.sh/util": "workspace:*"
+    "@vulcan.sh/util": "workspace:*",
+    "@vulcan.sh/id": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
@@ -23,7 +24,7 @@
     "clean": "tsc --build --clean",
     "build": "tsc --build",
     "watch": "tsc --build -w",
-    "test": "node ./node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules --expose-gc --allow-natives-syntax ./node_modules/jest/bin/jest.js",
     "deep-clean": "rm -rf ./lib || true && rm tsconfig.tsbuildinfo || true"
   },
   "jest": {
