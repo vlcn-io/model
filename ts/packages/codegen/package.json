@@ -5,8 +5,8 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/codegen"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/codegen"
   },
   "dependencies": {
     "@vulcan.sh/codegen-api": "workspace:*",

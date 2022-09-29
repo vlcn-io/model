@@ -9,5 +9,6 @@ packages:
   - packages/model-persisted
   - packages/schema
   - packages/schema-api
+  - packages/sql
   - packages/util
   - packages/value
