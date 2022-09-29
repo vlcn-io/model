@@ -30,7 +30,7 @@ This project brings that to `JavaScript` & `TypeScript`.
 ## Basic transaction and rollback:
 
 ```javascript
-import { value, tx } from "https://esm.sh/@vulcan.sh/value";
+import { value, tx } from "@vulcan.sh/value";
 
 // creating or updating a value outside a transaction commits the value immediately.
 // values can be anything. primitives, objects, arrays, etc.
@@ -54,12 +54,12 @@ try {
 }
 ```
 
-[fiddle](https://jsfiddle.net/jw3zc7fs/10/)
+[fiddle](https://jsfiddle.net/0ft4mqop/)
 
 ## Async transactions and transaction isolation:
 
 ```javascript
-import { value, tx } from "https://esm.sh/@vulcan.sh/value";
+import { value, tx } from "@vulcan.sh/value";
 
 // creating or updating a value outside a transaction commits the value immediately.
 const shared1 = value({ a: "initial-value" });
@@ -95,12 +95,12 @@ async function callWorker(v) {
 }
 ```
 
-[fiddle](https://jsfiddle.net/vec0h7zn/9/)
+[fiddle](https://jsfiddle.net/o63sbfgd/)
 
 ## Observable values:
 
 ```javascript
-import { observableValue, tx } from "https://esm.sh/@vulcan.sh/value";
+import { observableValue, tx } from "@vulcan.sh/value";
 
 const [shared1] = observableValue(100);
 const [shared2] = observableValue(200);
@@ -140,7 +140,7 @@ tx(() => {
 });
 ```
 
-[fiddle](https://jsfiddle.net/qncsafvh/14/)
+[fiddle](https://jsfiddle.net/w4rhk1ve/)
 
 ## Persisted (to disk) values:
 
