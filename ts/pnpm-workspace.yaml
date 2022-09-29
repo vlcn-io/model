@@ -4,6 +4,7 @@ packages:
   - packages/codegen-api
   - packages/codegen-sql
   - packages/config
+  - packages/feature-gates
   - packages/grammar-extension-api
   - packages/id
   - packages/model

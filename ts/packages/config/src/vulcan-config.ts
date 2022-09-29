@@ -1,7 +1,7 @@
 import Cache from "@vulcan.sh/cache";
 import { SQLQuery } from "@vulcan.sh/sql";
 
-export type StorageEngine = "memory" | "sqlite";
+export type StorageEngine = "ephemeral" | "memory" | "sqlite";
 
 export type ResolvedDB = SQLResolvedDB | MemoryResolvedDB;
 
@@ -24,9 +24,9 @@ export type MemoryWriteQuery = {
 export type MemoryQuery = MemoryReadQuery | MemoryWriteQuery;
 
 export type MemoryResolvedDB = {
-  read(q: MemoryReadQuery): Promise<any[]>;
-  write(q: MemoryWriteQuery): Promise<void>;
-  transact<T>(cb: (conn: MemoryResolvedDB) => Promise<T>): Promise<T>;
+  read(q: MemoryReadQuery): any[];
+  write(q: MemoryWriteQuery): void;
+  transact<T>(cb: (conn: MemoryResolvedDB) => T): T;
   dispose(): void;
 };
 
@@ -38,7 +38,7 @@ export type SQLResolvedDB = {
 };
 
 export type Config = {
-  storage(engine: string, dbName: string): ResolvedDB;
+  storage(engine: StorageEngine, dbName: string): ResolvedDB;
   readonly cache: Cache;
 };
 

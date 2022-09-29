@@ -22,6 +22,9 @@
       "path": "../packages/config"
     },
     {
+      "path": "../packages/feature-gates"
+    },
+    {
       "path": "../packages/id"
     },
     {
