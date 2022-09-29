@@ -4,6 +4,8 @@ export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;
   subscribe(c: () => void): () => void;
   subscribeTo(keys: (keyof T)[], c: () => void): () => void;
+
+  readonly data: T;
 }
 
 export class Model<T extends {}> implements IModel<T> {

@@ -20,20 +20,20 @@
  */
 
 import { invariant } from "@vulcan.sh/util";
-import { PersistedModel } from "./PersistedModel";
+import { IPersistedModel } from "./PersistedModel.js";
 
 export type Listener = (
-  pending: [PersistedModel<any>, "create" | "update" | "delete"][]
+  pending: [IPersistedModel<any>, "create" | "update" | "delete"][]
 ) => void;
 
-type ModelSet = Set<PersistedModel<any>>;
+type ModelSet = Set<IPersistedModel<any>>;
 class PersistTracker {
   // instead collect all events
   // in a list.
   // then collapse them
   // and incr causal length on create + deletes to figure out
   // final state (created or deleted) of a thing
-  #pendingEvents: [PersistedModel<any>, "create" | "update" | "delete"][] = [];
+  #pendingEvents: [IPersistedModel<any>, "create" | "update" | "delete"][] = [];
 
   #listeners = new Set<Listener>();
 
@@ -43,18 +43,18 @@ class PersistTracker {
 
   onBatchReady() {}
 
-  addCreate(m: PersistedModel<any>) {
+  addCreate(m: IPersistedModel<any>) {
     this.#pendingEvents.push([m, "create"]);
 
     this.#maybeQueueMicroTask();
   }
 
-  addUpdate(m: PersistedModel<any>) {
+  addUpdate(m: IPersistedModel<any>) {
     this.#pendingEvents.push([m, "update"]);
     this.#maybeQueueMicroTask();
   }
 
-  addDelete(m: PersistedModel<any>) {
+  addDelete(m: IPersistedModel<any>) {
     this.#pendingEvents.push([m, "delete"]);
     this.#maybeQueueMicroTask();
   }
@@ -78,7 +78,7 @@ class PersistTracker {
   }
 
   #notifyBackends(
-    pending: [PersistedModel<any>, "create" | "update" | "delete"][]
+    pending: [IPersistedModel<any>, "create" | "update" | "delete"][]
   ) {
     for (const l of this.#listeners) {
       try {

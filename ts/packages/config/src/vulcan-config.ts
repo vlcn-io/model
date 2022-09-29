@@ -1,3 +1,4 @@
+import Cache from "@vulcan.sh/cache";
 import { SQLQuery } from "@vulcan.sh/sql";
 
 export type StorageEngine = "memory" | "sqlite";
@@ -38,6 +39,7 @@ export type SQLResolvedDB = {
 
 export type Config = {
   storage(engine: string, dbName: string): ResolvedDB;
+  readonly cache: Cache;
 };
 
 let _config: Config | null = null;

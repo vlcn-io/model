@@ -6,9 +6,9 @@ import {
   IObservableValue,
   newPersistedValue_UNSAFE,
 } from "@vulcan.sh/value";
-import { invariant, staticImplements } from "@vulcan.sh/util";
+import { invariant } from "@vulcan.sh/util";
 import cache from "./cache.js";
-import persistor from "./persistor.js";
+import { syncPersistor, asyncPersistor } from "./persistor.js";
 
 type Cause = "create" | "hydrate" | "sync";
 
@@ -17,6 +17,9 @@ export type BasePersistedModelData = { id: ID_of<any> };
 export interface IPersistedModel<T extends BasePersistedModelData>
   extends IModel<T> {
   get id(): ID_of<T>;
+
+  readonly dbName: string;
+  readonly typeName: string;
 
   // delete(): Promise<void> | void;
   // update(): Promise<void> | void;
@@ -48,8 +51,6 @@ abstract class PersistedModel<T extends BasePersistedModelData>
     } else {
       super(data);
     }
-
-    // stick into cache on construct
   }
 
   get id(): ID_of<T> {
@@ -69,22 +70,7 @@ abstract class PersistedModel<T extends BasePersistedModelData>
     return [hydratePersistedValue_UNSAFE(frozen), false];
   }
 
-  protected onTransactionComplete(e: Event) {
-    if (e === "delete") {
-      // remove from cache
-    }
-  }
-
-  static async create<
-    D extends BasePersistedModelData,
-    M extends IPersistedModel<D>
-  >(ctor: IPersistedModelCtor<D, M>, data: D | Omit<D, "id">): Promise<M> {
-    // TODO: assert cache consistency first!!!
-    const model = new ctor(data, "create");
-    cache.add(model);
-    await persistor.create(model);
-    return model;
-  }
+  protected onTransactionComplete(e: Event) {}
 
   static hydrate<
     D extends BasePersistedModelData,
@@ -98,6 +84,65 @@ abstract class PersistedModel<T extends BasePersistedModelData>
 
     const model = new ctor(data, "hydrate");
     cache.add(model);
+    return model;
+  }
+}
+
+/**
+ * We have two types here -- sync and async -- depending on the storage backend
+ * used.
+ *
+ * If the model is served by in-memory storage than all methods (create, update, delete) and queries to it
+ * can be synchronous.
+ *
+ * Synchronous models may still have edges to asynchronous models. Those edge queries
+ * will be async as their "color" is determined by the thing being fetched.
+ */
+export abstract class SyncPersistedModel<
+  T extends BasePersistedModelData
+> extends PersistedModel<T> {
+  static create<D extends BasePersistedModelData, M extends IPersistedModel<D>>(
+    ctor: IPersistedModelCtor<D, M>,
+    data: D | Omit<D, "id">
+  ): M {
+    // TODO: assert cache consistency first!!!
+    const model = new ctor(data, "create");
+    cache.add(model);
+    syncPersistor.create(model);
+    return model;
+  }
+
+  update(updates: Partial<T>): void {
+    if (this.isNoop(updates)) {
+      return;
+    }
+
+    this.value.val = Object.freeze({
+      ...this.value.val,
+      ...updates,
+    });
+
+    syncPersistor.update(this);
+  }
+
+  delete(): void {
+    // GC will evict from the cache as needed.
+    // cache.remove(this);
+    return syncPersistor.delete(this);
+  }
+}
+
+export abstract class AsyncPersistedModel<
+  T extends BasePersistedModelData
+> extends PersistedModel<T> {
+  static async create<
+    D extends BasePersistedModelData,
+    M extends IPersistedModel<D>
+  >(ctor: IPersistedModelCtor<D, M>, data: D | Omit<D, "id">): Promise<M> {
+    // TODO: assert cache consistency first!!!
+    const model = new ctor(data, "create");
+    cache.add(model);
+    await asyncPersistor.create(model);
     return model;
   }
 
@@ -117,21 +162,13 @@ abstract class PersistedModel<T extends BasePersistedModelData>
       ...this.value.val,
       ...updates,
     });
+
+    return await asyncPersistor.update(this);
   }
 
   delete(): Promise<void> {
-    // TODO: notify cache
-    // issue delete operation to persist layer
-    // but we need to fold this into the current tx
-    cache.remove(this);
-    return persistor.delete(this);
+    // GC will evict from the cache as needed.
+    // cache.remove(this);
+    return asyncPersistor.delete(this);
   }
 }
-
-export abstract class SyncPersistedModel<
-  T extends BasePersistedModelData
-> extends PersistedModel<T> {}
-
-export abstract class AsyncPersistedModel<
-  T extends BasePersistedModelData
-> extends PersistedModel<T> {}

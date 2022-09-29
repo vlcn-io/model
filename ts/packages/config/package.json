@@ -9,7 +9,8 @@
     "directory": "ts/packages/config"
   },
   "dependencies": {
-    "@vulcan.sh/sql": "workspace:*"
+    "@vulcan.sh/sql": "workspace:*",
+    "@vulcan.sh/cache": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

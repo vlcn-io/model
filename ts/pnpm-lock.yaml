@@ -117,11 +117,13 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
+      '@vulcan.sh/cache': workspace:*
       '@vulcan.sh/sql': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
+      '@vulcan.sh/cache': link:../cache
       '@vulcan.sh/sql': link:../sql
     devDependencies:
       '@babel/core': 7.19.1
@@ -201,6 +203,7 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
+      '@vulcan.sh/config': workspace:*
       '@vulcan.sh/id': workspace:*
       '@vulcan.sh/model': workspace:*
       '@vulcan.sh/util': workspace:*
@@ -209,6 +212,7 @@ importers:
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
+      '@vulcan.sh/config': link:../config
       '@vulcan.sh/id': link:../id
       '@vulcan.sh/model': link:../model
       '@vulcan.sh/util': link:../util

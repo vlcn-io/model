@@ -6,7 +6,20 @@
 
 import { IPersistedModel } from "./PersistedModel";
 
-export default {
+// mem db must use transactional values then?
+export const syncPersistor = {
+  create(m: IPersistedModel<any>): void {
+    throw new Error("unimplemented");
+  },
+  update(m: IPersistedModel<any>): void {
+    throw new Error("unimplemented");
+  },
+  delete(m: IPersistedModel<any>): void {
+    throw new Error("unimplemented");
+  },
+};
+
+export const asyncPersistor = {
   create(m: IPersistedModel<any>): Promise<void> {
     throw new Error("unimplemented");
   },
