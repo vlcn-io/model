@@ -20,7 +20,7 @@ export interface IValue<T> {
 export class Value<T> implements IValue<T> {
   private history: History<T> = new History();
   private memVers: MemoryVersion;
-  // memVers can be passed as a parameter for hydration?
+  // memVers can be passed as a parameter for hydration.
   // hydrated objects would have minimum memory version.
   constructor(private data: T, memVers?: MemoryVersion) {
     const tx = (PSD as any).tx as Transaction | undefined;

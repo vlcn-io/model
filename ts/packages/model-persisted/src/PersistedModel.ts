@@ -1,6 +1,5 @@
 import { Model } from "@vulcan.sh/model";
-import { ID_of, newId } from "@vulcan.sh/id";
-import { config } from "./config.js";
+import { ID_of, newId, uuidv7 } from "@vulcan.sh/id";
 import {
   Event,
   hydratePersistedValue_UNSAFE,
@@ -20,7 +19,7 @@ export abstract class PersistedModel<
     if (!("id" in data)) {
       // @ts-ignore
       super({
-        id: newId(config.deviceId),
+        id: uuidv7(),
         ...data,
       });
     } else {
