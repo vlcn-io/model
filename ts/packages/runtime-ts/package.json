@@ -1,0 +1,31 @@
+{
+  "name": "@aphro/runtime-ts",
+  "version": "0.3.8",
+  "main": "lib/index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tantaman/aphrodite.git",
+    "directory": "packages/runtime-ts"
+  },
+  "dependencies": {
+    "@aphro/cache-runtime-ts": "workspace:*",
+    "@aphro/context-runtime-ts": "workspace:*",
+    "@aphro/migration-runtime-ts": "workspace:*",
+    "@aphro/model-runtime-ts": "workspace:*",
+    "@aphro/mutator-runtime-ts": "workspace:*",
+    "@aphro/query-runtime-ts": "workspace:*",
+    "@aphro/sql-ts": "workspace:*",
+    "@strut/sid": "^0.1.2",
+    "@strut/utils": "^0.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --build -w",
+    "deep-clean": "rm -rf ./lib || true && rm tsconfig.tsbuildinfo || true"
+  }
+}
