@@ -1,4 +1,5 @@
 packages:
+  - packages/cache
   - packages/codegen
   - packages/codegen-api
   - packages/context-provider
