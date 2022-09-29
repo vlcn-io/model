@@ -1,4 +1,4 @@
-import { PSD } from "@vulcan.sh/context-provider";
+import { PSD } from "@vulcan.sh/zone";
 import { inflight, tx, txAsync, txSerializedAsync } from "../transaction";
 import { value } from "../Value.js";
 
@@ -345,4 +345,35 @@ test("we do not lose track of the transaction we are in -- even across multiple 
 
 test("debit example", () => {});
 
-test("nested siblings are serializable", () => {});
+test("nested siblings are serializable", async () => {
+  await txSerializedAsync(async () => {
+    const shared = value(1);
+
+    const t1 = txSerializedAsync(async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    });
+    const t2 = txSerializedAsync(async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    });
+    await Promise.all([t1, t2]);
+
+    expect(shared.val).toBe(3);
+  });
+
+  const shared = value(1);
+  await txSerializedAsync(async () => {
+    const t1 = txSerializedAsync(async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    });
+    const t2 = txSerializedAsync(async () => {
+      await promiseDelay(0);
+      shared.val = shared.val + 1;
+    });
+    await Promise.all([t1, t2]);
+
+    expect(shared.val).toBe(3);
+  });
+});

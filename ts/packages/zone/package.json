@@ -1,12 +1,12 @@
 {
-  "name": "@vulcan.sh/context-provider",
+  "name": "@vulcan.sh/zone",
   "version": "0.0.2",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/vulcan-sh/vulcan.git",
-    "directory": "ts/packages/context-provider"
+    "directory": "ts/packages/zone"
   },
   "dependencies": {},
   "devDependencies": {

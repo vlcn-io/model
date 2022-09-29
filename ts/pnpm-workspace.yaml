@@ -4,7 +4,6 @@ packages:
   - packages/codegen-api
   - packages/codegen-sql
   - packages/config
-  - packages/context-provider
   - packages/grammar-extension-api
   - packages/id
   - packages/model
@@ -14,3 +13,4 @@ packages:
   - packages/sql
   - packages/util
   - packages/value
+  - packages/zone

@@ -1,6 +1,6 @@
 import { History } from "./History.js";
 import { memory, MemoryVersion } from "./memory.js";
-import { PSD } from "@vulcan.sh/context-provider";
+import { PSD } from "@vulcan.sh/zone";
 import { Transaction } from "./transaction.js";
 
 export type Event = "create" | "update" | "delete";

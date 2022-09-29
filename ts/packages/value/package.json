@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "@vulcan.sh/context-provider": "workspace:*",
+    "@vulcan.sh/zone": "workspace:*",
     "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {

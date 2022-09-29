@@ -5,8 +5,7 @@ import {
   newScope,
   PSD,
   ZonedPromise,
-} from "@vulcan.sh/context-provider";
-import { assert } from "@vulcan.sh/util";
+} from "@vulcan.sh/zone";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 
@@ -83,22 +82,24 @@ export function transaction(
   return ret;
 }
 
-// TODO: this queue should go on `PSD`
-// so we can serialize siblings in nested transactions if requested
 let serialTxQueue: Promise<any> = Promise.resolve();
 export function txSerializedAsync<T>(
   fn: () => Promise<T>,
   options: TxOptions = { concurrentModification: "fail" }
 ): Promise<T> {
   const parentTx = (PSD as any).tx as Transaction | undefined;
-  // If there's a parent, they've already serialized us
-  if (parentTx) {
-    return txAsync(fn, options);
-  }
 
-  const res = serialTxQueue.then(() => txAsync(fn, options));
-  serialTxQueue = res.catch(() => {});
-  return res;
+  // If there's a parent then we're serializing children of the parent that are siblings
+  if (parentTx) {
+    const res = (PSD as any).serialTxQueue.then(() => txAsync(fn, options));
+    (PSD as any).serialTxQueue = res.catch(() => {});
+    return res;
+  } else {
+    // else we're serializing top level siblings
+    const res = serialTxQueue.then(() => txAsync(fn, options));
+    serialTxQueue = res.catch(() => {});
+    return res;
+  }
 }
 
 let txid = 0;
@@ -132,6 +133,7 @@ export function txAsync<T>(
     {
       tx,
       txid: txid++,
+      serialTxQueue: Promise.resolve(),
     }
   );
 
@@ -182,6 +184,7 @@ export function tx<T>(
       {
         tx,
         txid: txid++,
+        serialTxQueue: Promise.resolve(),
       },
       null,
       null

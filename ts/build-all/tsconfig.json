@@ -22,9 +22,6 @@
       "path": "../packages/config"
     },
     {
-      "path": "../packages/context-provider"
-    },
-    {
       "path": "../packages/id"
     },
     {
@@ -47,6 +44,9 @@
     },
     {
       "path": "../packages/value"
+    },
+    {
+      "path": "../packages/zone"
     }
   ]
 }
