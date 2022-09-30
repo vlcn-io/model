@@ -1,5 +1,5 @@
 import { BaseChunkIterable } from "../ChunkIterable.js";
-import { invariant } from "@strut/utils";
+import { invariant } from "@vulcan.sh/util";
 import {
   Context,
   IModel,

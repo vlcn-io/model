@@ -15,9 +15,8 @@
     "@vulcan.sh/model-persisted": "workspace:*",
     "@vulcan.sh/schema-api": "workspace:*",
     "@vulcan.sh/sql": "workspace:*",
-    "@strut/counter": "^0.0.11",
-    "@strut/sid": "^0.1.2",
-    "@strut/utils": "^0.1.1"
+    "@vulcan.sh/id": "workspace:*",
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

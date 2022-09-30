@@ -1,6 +1,6 @@
 import { Context, Transaction } from "@vulcan.sh/config";
 import { observe, specToDatasetKey } from "@vulcan.sh/model-persisted";
-import { assertUnreachable } from "@strut/utils";
+import { assertUnreachable } from "@vulcan.sh/util";
 import { IPlan } from "../Plan.js";
 import { Query, UpdateType } from "../Query.js";
 

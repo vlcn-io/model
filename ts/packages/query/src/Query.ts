@@ -1,5 +1,5 @@
 import { Context } from "@vulcan.sh/config";
-import { invariant } from "@strut/utils";
+import { invariant } from "@vulcan.sh/util";
 import {
   count,
   EmptySourceExpression,

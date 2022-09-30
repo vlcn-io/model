@@ -1,4 +1,4 @@
-import { DBResolver } from "@vulcan.sh/config";
+import { DBResolver, SQLResolvedDB, StorageEngine } from "@vulcan.sh/config";
 import { sql } from "@vulcan.sh/sql";
 import { autoMigrate, CreateError } from "./autoMigrate.js";
 
@@ -126,31 +126,22 @@ async function createForEngine(
   db?: string
 ) {
   if (db != null) {
-    await createForDB(
-      resolver.engine(engine as any),
-      db,
-      dbs[db],
-      errorHandler
-    );
+    await createForDB(resolver, engine, db, dbs[db], errorHandler);
     return;
   }
   for (const [dbName, schemas] of Object.entries(dbs)) {
-    await createForDB(
-      resolver.engine(engine as any),
-      dbName,
-      schemas,
-      errorHandler
-    );
+    await createForDB(resolver, engine, dbName, schemas, errorHandler);
   }
 }
 
 async function createForDB(
-  engine: ReturnType<DBResolver["engine"]>,
+  resolver: DBResolver,
+  engine: StorageEngine,
   dbName: string,
   schemas: Schemas,
   errorHandler: (r: PromiseSettledResult<void>) => void
 ) {
-  const db = engine.db(dbName);
+  const db = resolver.storage(engine, dbName) as SQLResolvedDB;
 
   const settled = await Promise.allSettled(
     Object.entries(schemas).map(async ([name, s]) => {

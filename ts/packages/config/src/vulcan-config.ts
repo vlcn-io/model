@@ -3,6 +3,10 @@ import { SQLQuery } from "@vulcan.sh/sql";
 
 export type StorageEngine = "ephemeral" | "memory" | "sqlite";
 
+export type DBResolver = {
+  storage(engine: StorageEngine, dbName: string): ResolvedDB;
+};
+
 export type ResolvedDB = SQLResolvedDB | MemoryResolvedDB;
 
 export type MemoryReadQuery = {

@@ -1,4 +1,4 @@
-import { invariant } from "@strut/utils";
+import { invariant } from "@vulcan.sh/util";
 import { HopExpression } from "../Expression.js";
 import { HopQuery, Query } from "../Query.js";
 import { EdgeSpec } from "@vulcan.sh/schema-api";

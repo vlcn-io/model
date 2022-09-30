@@ -182,7 +182,7 @@
   },
   "9 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -276,7 +276,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -319,7 +319,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -394,7 +394,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "md5": "^2.3.0"
       },
@@ -434,7 +434,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -499,7 +499,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -536,7 +536,7 @@
         "@vulcan.sh/model-persisted": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "react": "^18.1.0"
       },
@@ -614,7 +614,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0",
         "md5": "^2.3.0",
@@ -696,7 +696,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "chalk": "^5.0.1",
         "command-line-args": "^5.2.1",
@@ -740,7 +740,7 @@
         "@vulcan.sh/model-persisted": "workspace:*",
         "@vulcan.sh/mutator-runtime-ts": "workspace:*",
         "@vulcan.sh/query": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@vscode/sqlite3": "^5.0.8",
         "class-validator": "^0.13.2",
         "graphql": "^16.4.0",
@@ -867,7 +867,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/schema",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -907,7 +907,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/model-runtime-ts",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -987,7 +987,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1043,7 +1043,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/integrations",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1131,7 +1131,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/query-runtime-ts",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1171,7 +1171,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/react",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1283,7 +1283,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1419,7 +1419,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1475,7 +1475,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -15230,7 +15230,7 @@
   "2175 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/mono/typescript/packages/sid",
     "updated": {
-      "name": "@strut/sid",
+      "name": "@vulcan.sh/id",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -15324,7 +15324,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15367,7 +15367,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15442,7 +15442,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "md5": "^2.3.0"
       },
@@ -15482,7 +15482,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15547,7 +15547,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -15584,7 +15584,7 @@
         "@vulcan.sh/model-persisted": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "react": "^18.1.0"
       },
@@ -15662,7 +15662,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0",
         "md5": "^2.3.0",
@@ -15744,7 +15744,7 @@
         "@vulcan.sh/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "chalk": "^5.0.1",
         "command-line-args": "^5.2.1",
@@ -15788,7 +15788,7 @@
         "@vulcan.sh/model-persisted": "workspace:*",
         "@vulcan.sh/mutator-runtime-ts": "workspace:*",
         "@vulcan.sh/query": "workspace:*",
-        "@strut/sid": "workspace:*",
+        "@vulcan.sh/id": "workspace:*",
         "@vscode/sqlite3": "^5.0.8",
         "class-validator": "^0.13.2",
         "graphql": "^16.4.0",

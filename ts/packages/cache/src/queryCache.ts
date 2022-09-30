@@ -46,7 +46,7 @@
  *   An optimistic payload while at the same time re-issuing the query...
  */
 
-import { ID_of } from "@strut/sid";
+import { ID_of } from "@vulcan.sh/id";
 
 /**
  * cache key format is determined by the user of the cache.

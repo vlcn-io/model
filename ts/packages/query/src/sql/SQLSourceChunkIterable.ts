@@ -1,11 +1,11 @@
 import { BaseChunkIterable } from "../ChunkIterable.js";
 import specAndOpsToQuery from "./specAndOpsToQuery.js";
 import { HoistedOperations } from "./SQLExpression.js";
-import { invariant } from "@strut/utils";
+import { invariant } from "@vulcan.sh/util";
 import { Context, IModel, SQLResolvedDB } from "@vulcan.sh/config";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 import { ModelFieldGetter } from "../Field.js";
-import { ID_of } from "@strut/sid";
+import { ID_of } from "@vulcan.sh/id";
 
 export default class SQLSourceChunkIterable<
   T extends IModel<Object>

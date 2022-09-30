@@ -1,6 +1,6 @@
 import { SQLResolvedDB } from "@vulcan.sh/config";
 import { sql, SQLQuery } from "@vulcan.sh/sql";
-import { nullthrows } from "@strut/utils";
+import { nullthrows } from "@vulcan.sh/util";
 
 export type CreateError = {
   cause: any;

@@ -187,7 +187,7 @@
 - Updated dependencies
   - @strut/counter@0.0.9
   - @strut/events@0.0.8
-  - @strut/sid@0.0.9
+  - @vulcan.sh/id@0.0.9
   - @strut/utils@0.0.9
   - @aphro/runtime-ts@0.0.6
 
@@ -199,7 +199,7 @@
 - Updated dependencies
   - @strut/counter@0.0.8
   - @strut/events@0.0.7
-  - @strut/sid@0.0.8
+  - @vulcan.sh/id@0.0.8
   - @strut/utils@0.0.8
   - @aphro/runtime-ts@0.0.5
 
@@ -217,7 +217,7 @@
 - Updated dependencies
   - @strut/counter@0.0.7
   - @strut/events@0.0.6
-  - @strut/sid@0.0.7
+  - @vulcan.sh/id@0.0.7
   - @strut/utils@0.0.7
   - @aphro/runtime-ts@0.0.3
 
@@ -229,4 +229,4 @@
   - @strut/counter@0.0.6
   - @strut/utils@0.0.6
   - @aphro/model-runtime-ts@0.0.6
-  - @strut/sid@0.0.6
+  - @vulcan.sh/id@0.0.6

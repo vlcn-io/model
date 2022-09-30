@@ -102,7 +102,7 @@
 
 - graphql support, 'create table if not exists' for easier bootstrapping, @databases connection support
 - Updated dependencies
-  - @strut/sid@0.0.9
+  - @vulcan.sh/id@0.0.9
   - @strut/utils@0.0.9
 
 ## 0.0.8
@@ -111,7 +111,7 @@
 
 - full todomvc example, no partiall generated mutators, removal of knexjs
 - Updated dependencies
-  - @strut/sid@0.0.8
+  - @vulcan.sh/id@0.0.8
   - @strut/utils@0.0.8
 
 ## 0.0.7
@@ -120,7 +120,7 @@
 
 - enable running in the browser, implement reactive queries
 - Updated dependencies
-  - @strut/sid@0.0.7
+  - @vulcan.sh/id@0.0.7
   - @strut/utils@0.0.7
 
 ## 0.0.6
@@ -130,4 +130,4 @@
 - Simplify interactions with changesets, get basic hop queries working
 - Updated dependencies
   - @strut/utils@0.0.6
-  - @strut/sid@0.0.6
+  - @vulcan.sh/id@0.0.6

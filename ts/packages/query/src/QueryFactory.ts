@@ -6,7 +6,7 @@ import {
   NodeSpecWithCreate,
 } from "@vulcan.sh/config";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
-import { assertUnreachable } from "@strut/utils";
+import { assertUnreachable } from "@vulcan.sh/util";
 import MemorySourceQuery from "./memory/MemorySourceQuery.js";
 import MemoryHopQuery from "./memory/MemoryHopQuery.js";
 import { DerivedQuery, HopQuery, Query } from "./Query.js";

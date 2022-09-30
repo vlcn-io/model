@@ -10,7 +10,7 @@ import {
 import SQLHopExpression from "./SQLHopExpression.js";
 import { ModelFieldGetter } from "../Field.js";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
-import { invariant } from "@strut/utils";
+import { invariant } from "@vulcan.sh/util";
 import { formatters, sql, SQLQuery } from "@vulcan.sh/sql";
 import tracer from "../trace.js";
 
