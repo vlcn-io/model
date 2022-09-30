@@ -1,7 +1,7 @@
-import { DBResolver, basicResolver, SQLResolvedDB, sql } from '@aphro/runtime-ts';
+import { DBResolver, basicSqliteResolver } from "@vulcan.sh/runtime";
 // @ts-ignore
-import initSqlJs from '@aphro/sql.js';
-import { Connection, createConnection } from './Connection.js';
+import initSqlJs from "@aphro/sql.js";
+import { Connection, createConnection } from "./Connection.js";
 
 /**
  * Convenience function to create a connection to absurd-sql and return
@@ -17,17 +17,17 @@ import { Connection, createConnection } from './Connection.js';
  */
 export async function openDbAndCreateResolver(
   dbName: string,
-  file: string | null,
+  file: string | null
 ): Promise<DBResolver> {
   const sqlPromise = initSqlJs({
     locateFile: (file: string) => {
-      return 'https://esm.sh/@aphro/sql.js/dist/sql-wasm.wasm';
+      return "https://esm.sh/@aphro/sql.js/dist/sql-wasm.wasm";
     },
   });
   let dataPromise: Promise<ArrayBuffer> | null = null;
   if (file != null) {
-    dataPromise = fetch(file).then(res => res.arrayBuffer());
+    dataPromise = fetch(file).then((res) => res.arrayBuffer());
   }
   const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
-  return basicResolver(dbName, createConnection(SQL, buf));
+  return basicSqliteResolver(dbName, createConnection(SQL, buf));
 }

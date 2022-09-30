@@ -1,5 +1,5 @@
-import { DBResolver, basicResolver } from '@aphro/runtime-ts';
-import createPool from './ConnectionPool.js';
+import { DBResolver, basicSqliteResolver } from "@vulcan.sh/runtime";
+import createPool from "./ConnectionPool.js";
 
 /**
  * Convenience function to create a connection to absurd-sql and return
@@ -13,7 +13,9 @@ import createPool from './ConnectionPool.js';
  *
  * @returns DBResolver
  */
-export async function openDbAndCreateResolver(dbName: string): Promise<DBResolver> {
+export async function openDbAndCreateResolver(
+  dbName: string
+): Promise<DBResolver> {
   const pool = await createPool(dbName);
-  return basicResolver(dbName, pool);
+  return basicSqliteResolver(dbName, pool);
 }

@@ -1,9 +1,9 @@
-import * as SQLite from 'wa-sqlite';
+import * as SQLite from "wa-sqlite";
 // import { OriginPrivateFileSystemVFS } from 'wa-sqlite/src/examples/OriginPrivateFileSystemVFS.js';
-import { formatters, sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
-import tracer from './trace.js';
-import { Span } from '@opentelemetry/api';
-import getSqliteApi from './sqliteInit.js';
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import tracer from "./trace.js";
+import { Span } from "@opentelemetry/api";
+import getSqliteApi from "./sqliteInit.js";
 
 export class Connection {
   private queue = Promise.resolve();
@@ -16,8 +16,8 @@ export class Connection {
     // Serialize all queries for the time being to prevent this.
     // TODO: file a bug report and/or fix it.
     const res = this.queue.then(() => {
-      return tracer.genStartActiveSpan('connection.query', (span: Span) =>
-        this.#queryImpl(span, sql),
+      return tracer.genStartActiveSpan("connection.query", (span: Span) =>
+        this.#queryImpl(span, sql)
       );
     });
     this.queue = res.catch(() => {});
@@ -50,25 +50,28 @@ export class Connection {
    */
   async transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>): Promise<T> {
     const res = this.txQueue.then(() => {
-      return tracer.genStartActiveSpan('connection.transact', async (span: Span) => {
-        await this.#query(sql`BEGIN`);
-        try {
-          const ret = await cb(this);
-          await this.#query(sql`COMMIT`);
-          return ret;
-        } catch (e) {
-          await this.#query(sql`ROLLBACK`);
-          throw e;
+      return tracer.genStartActiveSpan(
+        "connection.transact",
+        async (span: Span) => {
+          await this.#query(sql`BEGIN`);
+          try {
+            const ret = await cb(this);
+            await this.#query(sql`COMMIT`);
+            return ret;
+          } catch (e) {
+            await this.#query(sql`ROLLBACK`);
+            throw e;
+          }
         }
-      });
+      );
     });
     this.txQueue = res.catch(() => {});
     return res;
   }
 
   async #queryImpl(span: Span, sql: SQLQuery): Promise<any> {
-    const formatted = sql.format(formatters['sqlite']);
-    span.setAttribute('query', formatted.text);
+    const formatted = sql.format(formatters["sqlite"]);
+    span.setAttribute("query", formatted.text);
 
     const results: { columns: string[]; rows: any[] }[] = [];
     const sqlite3 = this.sqlite;
@@ -94,7 +97,7 @@ export class Connection {
     // TODO:... would be good to allow more...
     // you'd have to figure out how to re-map to the right type, however.
     if (results.length > 1) {
-      throw new Error('We currently only support 1 statement per query.');
+      throw new Error("We currently only support 1 statement per query.");
     }
     const returning = results[0];
     if (returning == null) return null;
@@ -110,15 +113,19 @@ export class Connection {
 
     // Note: convert `results` to objects.
     // also should only allow single statements
-    span.setAttribute('rows', objects.length);
+    span.setAttribute("rows", objects.length);
     return objects;
   }
 
   private bind(stmt: number, values: unknown[]) {
-    tracer.startActiveSpan('connection.bind', () => {
+    tracer.startActiveSpan("connection.bind", () => {
       for (let i = 0; i < values.length; ++i) {
         const v = values[i];
-        this.sqlite.bind(stmt, i + 1, typeof v === 'boolean' ? (v && 1) || 0 : (v as any));
+        this.sqlite.bind(
+          stmt,
+          i + 1,
+          typeof v === "boolean" ? (v && 1) || 0 : (v as any)
+        );
       }
     });
   }
@@ -128,12 +135,16 @@ export class Connection {
   }
 }
 
-export default async function createConnection(dbName: string): Promise<Connection> {
+export default async function createConnection(
+  dbName: string
+): Promise<Connection> {
   const sqlite3 = await getSqliteApi();
   const db = await sqlite3.open_v2(
     dbName,
-    SQLite.SQLITE_OPEN_CREATE | SQLite.SQLITE_OPEN_READWRITE | SQLite.SQLITE_OPEN_URI,
-    'idb-batch-atomic',
+    SQLite.SQLITE_OPEN_CREATE |
+      SQLite.SQLITE_OPEN_READWRITE |
+      SQLite.SQLITE_OPEN_URI,
+    "idb-batch-atomic"
   );
 
   return new Connection(sqlite3, db);

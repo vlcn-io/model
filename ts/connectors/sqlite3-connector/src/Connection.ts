@@ -1,7 +1,7 @@
 // @ts-ignore -- @types/sqlite3 is all wrong when it comes to import structure.
-import sqlite3 from 'sqlite3';
-import { formatters, sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
-import Mutex from './Mutex';
+import sqlite3 from "sqlite3";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import Mutex from "./Mutex";
 
 const Database = sqlite3.Database;
 
@@ -22,20 +22,27 @@ export class Connection {
   }
 
   #read(sql: SQLQuery, lock: boolean = true): Promise<any> {
-    return this.#readImpl(sql, lock ? fn => this._mutex.readLock(fn) : fn => fn());
+    return this.#readImpl(
+      sql,
+      lock ? (fn) => this._mutex.readLock(fn) : (fn) => fn()
+    );
   }
 
   #readImpl(sql: SQLQuery, lock: <T>(fn: () => Promise<T>) => Promise<T>) {
     return lock(() => {
-      const formatted = sql.format(formatters['sqlite']);
+      const formatted = sql.format(formatters["sqlite"]);
       return new Promise((resolve, reject) => {
-        this.db.all(formatted.text, formatted.values, (error: any, rows: any) => {
-          if (error != null) {
-            reject(error);
-          } else {
-            resolve(rows);
+        this.db.all(
+          formatted.text,
+          formatted.values,
+          (error: any, rows: any) => {
+            if (error != null) {
+              reject(error);
+            } else {
+              resolve(rows);
+            }
           }
-        });
+        );
       });
     });
   }
@@ -45,12 +52,15 @@ export class Connection {
   }
 
   #write(sql: SQLQuery, lock: boolean = true): Promise<void> {
-    return this.#writeImpl(sql, lock ? fn => this._mutex.readLock(fn) : fn => fn());
+    return this.#writeImpl(
+      sql,
+      lock ? (fn) => this._mutex.readLock(fn) : (fn) => fn()
+    );
   }
 
   #writeImpl(sql: SQLQuery, lock: (fn: () => Promise<void>) => Promise<void>) {
     return lock(() => {
-      const formatted = sql.format(formatters['sqlite']);
+      const formatted = sql.format(formatters["sqlite"]);
       return new Promise((resolve, reject) => {
         this.db.run(formatted.text, formatted.values, (error: any) => {
           if (error != null) {
@@ -83,7 +93,7 @@ export class Connection {
 
   #createLocklessConnectionForTransaction() {
     return {
-      type: 'sql',
+      type: "sql",
       read: (sql: SQLQuery): Promise<any> => {
         return this.#read(sql, false);
       },
@@ -91,11 +101,13 @@ export class Connection {
         return this.#write(sql, false);
       },
       transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>): Promise<T> {
-        throw new Error('Nested transactions are not yet supported for sqlite3 connector.');
+        throw new Error(
+          "Nested transactions are not yet supported for sqlite3 connector."
+        );
       },
       dispose() {
         throw new Error(
-          'You should not dispose a connection from within a transaction. Dispose the top level connection object.',
+          "You should not dispose a connection from within a transaction. Dispose the top level connection object."
         );
       },
     };
@@ -104,7 +116,7 @@ export class Connection {
 
 export function createConnection(file: string | null): Promise<Connection> {
   return new Promise((resolve, reject) => {
-    const db = new Database(file || ':memory:', (e: any) => {
+    const db = new Database(file || ":memory:", (e: any) => {
       if (e != null) {
         reject(e);
       } else {

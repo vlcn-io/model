@@ -1,11 +1,11 @@
-import { sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
-import createConnection, { Connection } from './Connection.js';
+import { sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import createConnection, { Connection } from "./Connection.js";
 
 // we should remove the connection pool for wa-sqlite
 // could be useful in other environments, however.
 // https://github.com/rhashimoto/wa-sqlite/discussions/52
 class ConnectionPool {
-  type = 'sql';
+  type = "sql";
   #writeConnection: Connection;
   #txConnection: Connection;
   #readConnections: Connection[];
@@ -17,7 +17,10 @@ class ConnectionPool {
   }
 
   read(q: SQLQuery): Promise<any[]> {
-    const conn = this.#readConnections[Math.floor(Math.random() * this.#readConnections.length)];
+    const conn =
+      this.#readConnections[
+        Math.floor(Math.random() * this.#readConnections.length)
+      ];
     return conn.read(q);
   }
 
@@ -32,15 +35,17 @@ class ConnectionPool {
   dispose(): void {
     this.#writeConnection.dispose();
     this.#txConnection.dispose();
-    this.#readConnections.forEach(rc => rc.dispose());
+    this.#readConnections.forEach((rc) => rc.dispose());
   }
 }
 
 // We create a pool so we can have a dedicated thread for transactions
 // rather than implementing and managing mutexes in JS
-export default async function createPool(dbName: string): Promise<SQLResolvedDB> {
+export default async function createPool(
+  dbName: string
+): Promise<SQLResolvedDB> {
   const connectons = await Promise.all(
-    Array.from({ length: 3 }).map(_ => createConnection(dbName)),
+    Array.from({ length: 3 }).map((_) => createConnection(dbName))
   );
 
   return new ConnectionPool(connectons);

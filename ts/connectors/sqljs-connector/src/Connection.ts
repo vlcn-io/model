@@ -1,4 +1,4 @@
-import { formatters, sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
 
 export class Connection {
   constructor(private db: any) {}
@@ -25,7 +25,7 @@ export class Connection {
 
   #query(sql: SQLQuery): any[] {
     const db = this.db;
-    const formatted = sql.format(formatters['sqlite']);
+    const formatted = sql.format(formatters["sqlite"]);
 
     if (formatted.values) {
       let stmt;

@@ -1,14 +1,14 @@
-import count from '@strut/counter';
-import thisPackage from '../pkg.js';
+import count from "@strut/counter";
+import thisPackage from "../pkg.js";
 // @ts-ignore -- no type on imported pkg
-import { initBackend } from '@aphro/absurd-sql/dist/indexeddb-main-thread.js';
-import { formatters, sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
-import tracer from '../tracer.js';
-import Mutex from './Mutex.js';
+import { initBackend } from "@aphro/absurd-sql/dist/indexeddb-main-thread.js";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import tracer from "../tracer.js";
+import Mutex from "./Mutex.js";
 
 let queryId = 0;
 
-const counter = count('@aphro/absurd-sql/Connection');
+const counter = count("@aphro/absurd-sql/Connection");
 
 /**
  * Absurd-sql runs in a web-worker. I.e., outside the main thread of the browser.
@@ -34,32 +34,36 @@ export default class Connection {
   private readonly _mutex = new Mutex();
 
   constructor(dbName: string) {
-    counter.bump('create');
-    this.#worker = new Worker(new URL('../worker/worker.js', import.meta.url), { type: 'module' });
+    counter.bump("create");
+    this.#worker = new Worker(new URL("../worker/worker.js", import.meta.url), {
+      type: "module",
+    });
     initBackend(this.#worker);
 
-    this.ready = new Promise(resolve => {
+    this.ready = new Promise((resolve) => {
       const setReady = ({ data }: any) => {
         const { pkg, event } = data;
         if (pkg !== thisPackage) {
           return;
         }
-        if (event !== 'ready') {
+        if (event !== "ready") {
           return;
         }
         resolve(true);
-        this.#worker.removeEventListener('message', setReady);
+        this.#worker.removeEventListener("message", setReady);
       };
-      this.#worker.addEventListener('message', setReady);
+      this.#worker.addEventListener("message", setReady);
     });
 
     this.#worker.postMessage({
-      event: 'init',
+      event: "init",
       dbName,
     });
 
-    this.#worker.addEventListener('message', m => {
-      tracer.startActiveSpan('connection.receive-message', () => this.#messageListener(m));
+    this.#worker.addEventListener("message", (m) => {
+      tracer.startActiveSpan("connection.receive-message", () =>
+        this.#messageListener(m)
+      );
     });
   }
 
@@ -97,7 +101,7 @@ export default class Connection {
    */
   #createLocklessConnectionForTransaction() {
     return {
-      type: 'sql',
+      type: "sql",
       read: (sql: SQLQuery) => {
         return this.#query(sql, false);
       },
@@ -105,19 +109,24 @@ export default class Connection {
         return this.#query(sql, false);
       },
       transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>): Promise<T> {
-        throw new Error('Nested transactions are not yet supported for absurd-sql.');
+        throw new Error(
+          "Nested transactions are not yet supported for absurd-sql."
+        );
       },
       dispose() {
         throw new Error(
-          'You should not dispose a connection from within a transaction. Dispose the top level connection object.',
+          "You should not dispose a connection from within a transaction. Dispose the top level connection object."
         );
       },
     };
   }
 
   #query(sql: SQLQuery, acquireLock: boolean = true): Promise<any> {
-    return tracer.genStartActiveSpan('connection.query', () => {
-      return this.runQuery(sql, acquireLock ? fn => this._mutex.readLock(fn) : fn => fn());
+    return tracer.genStartActiveSpan("connection.query", () => {
+      return this.runQuery(
+        sql,
+        acquireLock ? (fn) => this._mutex.readLock(fn) : (fn) => fn()
+      );
     });
   }
 
@@ -126,19 +135,19 @@ export default class Connection {
     if (pkg !== thisPackage) {
       return;
     }
-    if (event !== 'query-response') {
+    if (event !== "query-response") {
       return;
     }
-    counter.bump('query-response');
+    counter.bump("query-response");
 
     if (id == null) {
-      counter.bump('no-id');
+      counter.bump("no-id");
       return;
     }
 
-    const index = this.#pending.findIndex(p => p.id === id);
+    const index = this.#pending.findIndex((p) => p.id === id);
     if (index === -1) {
-      counter.bump('no-matching-id');
+      counter.bump("no-matching-id");
       return;
     }
     const pending = this.#pending[index];
@@ -152,13 +161,16 @@ export default class Connection {
   };
 
   dispose() {
-    counter.bump('destroy');
-    this.#worker.removeEventListener('message', this.#messageListener);
+    counter.bump("destroy");
+    this.#worker.removeEventListener("message", this.#messageListener);
   }
 
-  private runQuery(sql: SQLQuery, lock: <T>(fn: () => Promise<T>) => Promise<T>) {
+  private runQuery(
+    sql: SQLQuery,
+    lock: <T>(fn: () => Promise<T>) => Promise<T>
+  ) {
     return lock(() => {
-      counter.bump('query');
+      counter.bump("query");
       const id = queryId++;
 
       let resolvePending: (v: unknown) => void;
@@ -176,11 +188,11 @@ export default class Connection {
         reject: rejectPending,
       });
 
-      const formatted = sql.format(formatters['sqlite']);
+      const formatted = sql.format(formatters["sqlite"]);
 
       this.#worker.postMessage({
         pkg: thisPackage,
-        event: 'query',
+        event: "query",
         queryObj: { sql: formatted.text, bindings: formatted.values },
         id,
       });

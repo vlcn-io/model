@@ -1,5 +1,5 @@
-import { formatters, sql, SQLQuery, SQLResolvedDB } from '@aphro/runtime-ts';
-import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite';
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { SQLite, SQLiteObject } from "@awesome-cordova-plugins/sqlite";
 
 class Connection {
   constructor(private db: SQLiteObject) {}
@@ -13,7 +13,7 @@ class Connection {
   }
 
   #query(sql: SQLQuery): Promise<any> {
-    const formatted = sql.format(formatters['sqlite']);
+    const formatted = sql.format(formatters["sqlite"]);
     return this.db.executeSql(formatted.text, formatted.values);
   }
 
@@ -37,7 +37,10 @@ class Connection {
   }
 }
 
-export default async function createConnection(dbName: string, location: string | null) {
+export default async function createConnection(
+  dbName: string,
+  location: string | undefined
+) {
   const db = await SQLite.create({
     name: dbName,
     location,
