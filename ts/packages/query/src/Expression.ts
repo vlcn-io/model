@@ -26,13 +26,16 @@ import {
   StaticSourceChunkIterable,
   TakeChunkIterable,
 } from "./ChunkIterable.js";
-import P, { Predicate } from "./Predicate.js";
+import { Predicate } from "./Predicate.js";
 import { FieldGetter } from "./Field.js";
 import HopPlan from "./HopPlan.js";
 import ModelLoadExpression from "./ModelLoadExpression.js";
-import { Context, IModel } from "@vulcan.sh/config";
 import CountLoadExpression from "./CountLoadExpression.js";
 import { Query } from "./Query.js";
+import {
+  BasePersistedModelData,
+  IPersistedModel,
+} from "@vulcan.sh/model-persisted";
 
 export type ExpressionType =
   | "take"
@@ -129,9 +132,9 @@ export function filter<Tm, Tv>(
     getter,
     predicate,
     chainAfter(iterable) {
-      // TODO:
-      // @ts-ignore
       return iterable.filter((m) =>
+        // TODO: throw if an async predicate is used where a sync is required
+        // @ts-ignore
         predicate.call(getter == null ? m : getter.get(m))
       );
     },
@@ -153,9 +156,9 @@ export function filterAsync<Tm, Tv>(
     getter,
     predicate,
     chainAfter(iterable) {
-      // TODO:
-      // @ts-ignore
       return iterable.filterAsync((m) =>
+        // TODO: throw if an async predicate is used where a sync is required
+        // @ts-ignore
         predicate.call(getter == null ? m : getter.get(m))
       );
     },
@@ -238,11 +241,11 @@ export function hop<TIn, TOut>(): HopExpression<TIn, TOut> {
   throw new Error();
 }
 
-export function modelLoad<TData extends {}, TModel extends IModel<TData>>(
-  ctx: Context,
-  factory: (ctx: Context, data: TData) => TModel
-): ModelLoadExpression<TData, TModel> {
-  return new ModelLoadExpression(ctx, factory);
+export function modelLoad<
+  TData extends BasePersistedModelData,
+  TModel extends IPersistedModel<TData>
+>(factory: (data: TData) => TModel): ModelLoadExpression<TData, TModel> {
+  return new ModelLoadExpression(factory);
 }
 
 export function union<TOut>(

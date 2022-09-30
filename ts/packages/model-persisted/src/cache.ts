@@ -1,6 +1,7 @@
 import { ID_of } from "@vulcan.sh/id";
-import { BasePersistedModelData, IPersistedModel } from "./PersistedModel.js";
+import { IPersistedModel } from "./PersistedModel.js";
 import { config } from "@vulcan.sh/config";
+import { BasePersistedModelData } from "./spec.js";
 
 /**
  * This class exists to isolate the concern of looking up what cache to use.
@@ -29,7 +30,11 @@ export default {
     );
   },
 
-  get(dbName: string, typeName: string, id: ID_of<any>): IPersistedModel<any> {
+  get<T extends IPersistedModel<any>>(
+    dbName: string,
+    typeName: string,
+    id: ID_of<T>
+  ): T | null {
     return config.cache.get(id, dbName, typeName);
   },
 };

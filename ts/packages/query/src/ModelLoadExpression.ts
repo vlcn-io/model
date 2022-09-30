@@ -1,4 +1,7 @@
-import { Context, IModel, INode } from "@vulcan.sh/config";
+import {
+  BasePersistedModelData,
+  IPersistedModel,
+} from "@vulcan.sh/model-persisted";
 import { ChunkIterable, SyncMappedChunkIterable } from "./ChunkIterable";
 import { DerivedExpression } from "./Expression";
 
@@ -12,17 +15,16 @@ import { DerivedExpression } from "./Expression";
  * a `ModelLoadExpression` is added to this query to convert the rows to `Todo` instances.
  */
 export default class ModelLoadExpression<
-  TData extends {},
-  TModel extends IModel<TData>
+  TData extends BasePersistedModelData,
+  TModel extends IPersistedModel<TData>
 > implements DerivedExpression<TData, TModel>
 {
   readonly type = "modelLoad";
-  constructor(
-    private ctx: Context,
-    private factory: (ctx: Context, data: TData) => TModel
-  ) {}
+  constructor(private factory: (data: TData) => TModel) {}
 
   chainAfter(iterable: ChunkIterable<TData>) {
-    return iterable.map((d) => this.factory(this.ctx, d));
+    // TODO: this factory better had call hydrate.
+    throw new Error("Are you calling hydrate?");
+    return iterable.map((d) => this.factory(d));
   }
 }

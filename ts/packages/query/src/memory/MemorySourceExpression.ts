@@ -2,8 +2,11 @@ import { SourceExpression } from "../Expression.js";
 import Plan from "../Plan.js";
 import { ChunkIterable } from "../ChunkIterable.js";
 import HopPlan from "../HopPlan.js";
-import { specToDatasetKey } from "@vulcan.sh/model-persisted";
-import { Context, IModel, INode } from "@vulcan.sh/config";
+import {
+  BasePersistedModelData,
+  IPersistedModel,
+  specToDatasetKey,
+} from "@vulcan.sh/model-persisted";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 import MemorySourceChunkIterable from "./MemorySourceChunkIterable.js";
 
@@ -13,8 +16,9 @@ export type HoistedOperations = {
   what: "model" | "ids" | "edges" | "count";
   roots?: any[];
 };
-export default class MemorySourceExpression<T extends IModel<Object>>
-  implements SourceExpression<T>
+export default class MemorySourceExpression<
+  T extends IPersistedModel<BasePersistedModelData>
+> implements SourceExpression<T>
 {
   constructor(
     // we should take a schema instead of db

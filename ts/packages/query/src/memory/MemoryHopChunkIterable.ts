@@ -31,7 +31,7 @@ export default class MemoryHopChunkIterable<
             type: "read",
             tablish: this.edge.dest.storage.tablish,
             // @ts-ignore
-            roots: chunk.map((c) => c._d()[this.edge.sourceField]),
+            roots: chunk.map((c) => c.data[this.edge.sourceField]),
           });
           break;
         case "foreignKey":
@@ -42,10 +42,10 @@ export default class MemoryHopChunkIterable<
           });
           const chunkPrimaryKeys = new Set(
             // @ts-ignore
-            chunk.map((c) => c._d()[this.edge.source.primaryKey])
+            chunk.map((c) => c.data[this.edge.source.primaryKey])
           );
           yield all.filter((x) => {
-            return chunkPrimaryKeys.has(x._d()[this.edge.destField]);
+            return chunkPrimaryKeys.has(x.data[this.edge.destField]);
           });
           break;
         case "junction":

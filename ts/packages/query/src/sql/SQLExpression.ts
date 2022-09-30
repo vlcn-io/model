@@ -1,4 +1,3 @@
-import { Context } from "@vulcan.sh/config";
 import HopPlan from "../HopPlan.js";
 import Plan, { IPlan } from "../Plan.js";
 import {
@@ -33,7 +32,7 @@ export type HoistedOperations = {
 };
 
 export default abstract class SQLExpression<T> {
-  constructor(protected ctx: Context, public readonly ops: HoistedOperations) {}
+  constructor(public readonly ops: HoistedOperations) {}
 
   protected hoist(
     plan: IPlan,
@@ -96,7 +95,7 @@ export default abstract class SQLExpression<T> {
             remainingExpressions.push(derivation);
           } else {
             what = "count";
-            remainingExpressions.push(new CountLoadExpression(this.ctx));
+            remainingExpressions.push(new CountLoadExpression());
           }
           break;
         case "union":

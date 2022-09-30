@@ -23,7 +23,7 @@ export default class SQLHopQuery<TIn, TOut> extends HopQuery<TIn, TOut> {
       if (edge.source.storage.db === edge.dest.storage.db) {
         return new SQLHopQuery<TIn, TOut>(
           sourceQuery,
-          new SQLHopExpression(ctx, edge, { what: "model" })
+          new SQLHopExpression(edge, { what: "model" })
         );
       }
     }

@@ -1,5 +1,4 @@
-import { observe, specToDatasetKey } from "@vulcan.sh/model-persisted";
-import { assertUnreachable } from "@vulcan.sh/util";
+import { observe } from "@vulcan.sh/util";
 import { IPlan } from "../Plan.js";
 import { Query, UpdateType } from "../Query.js";
 
@@ -52,48 +51,54 @@ export default class LiveResult<T> {
     // commitLog is observed thru weak references.
     // This will automatically clean itself
     // as soon as there are no more references to the live query.
-    this.#disposables.push(ctx.commitLog.observe(this.#observeCommitLog));
+    // this.#disposables.push(ctx.commitLog.observe(this.#observeCommitLog));
 
     // We invoke this in order to kick off the initial query.
     this.__currentHandle = this.#react();
   }
 
-  #observeCommitLog = (tx: Transaction) => {
-    if (this.#matters(tx)) {
-      // TODO: we have a divergence in optimistic results and db results.
-      // I.e., the optimistic layer could succeed and persist layer fail.
-      // We need to reoncile this for our users.
-      this.__currentHandle = tx.persistHandle.then(this.#react);
-    }
+  #observeCommitLog = () => {
+    throw new Error(
+      "Re-implement commit log now that changesets do not exist!!!! We can push to commit log from... persistor? Since persistor is invoked on tx commit? We also need a re-capture live result. `makeLive(() => qProvider)`"
+    );
+    // if (this.#matters(tx)) {
+    //   // TODO: we have a divergence in optimistic results and db results.
+    //   // I.e., the optimistic layer could succeed and persist layer fail.
+    //   // We need to reoncile this for our users.
+    //   this.__currentHandle = tx.persistHandle.then(this.#react);
+    // }
   };
 
-  #matters(tx: Transaction): boolean {
-    for (const cs of tx.changes.values()) {
-      const changesetType = cs.type;
-      switch (changesetType) {
-        case "create":
-          if ((this.#on & UpdateType.CREATE) === 0) {
-            continue;
-          }
-          break;
-        case "update":
-          if ((this.#on & UpdateType.UPDATE) === 0) {
-            continue;
-          }
-          break;
-        case "delete":
-          if ((this.#on & UpdateType.DELETE) === 0) {
-            continue;
-          }
-          break;
-        default:
-          assertUnreachable(changesetType);
-      }
-      if (this.#implicatedDatasets.has(specToDatasetKey(cs.spec))) {
-        return true;
-      }
-    }
-    return false;
+  #matters(/*tx: Transaction*/): boolean {
+    throw new Error(
+      "Re-implement commit log now that changesets do not exist!!!! We can push to commit log from... persistor? Since persistor is invoked on tx commit?"
+    );
+    // for (const cs of tx.changes.values()) {
+    //   const changesetType = cs.type;
+    //   switch (changesetType) {
+    //     case "create":
+    //       if ((this.#on & UpdateType.CREATE) === 0) {
+    //         continue;
+    //       }
+    //       break;
+    //     case "update":
+    //       if ((this.#on & UpdateType.UPDATE) === 0) {
+    //         continue;
+    //       }
+    //       break;
+    //     case "delete":
+    //       if ((this.#on & UpdateType.DELETE) === 0) {
+    //         continue;
+    //       }
+    //       break;
+    //     default:
+    //       assertUnreachable(changesetType);
+    //   }
+    //   if (this.#implicatedDatasets.has(specToDatasetKey(cs.spec))) {
+    //     return true;
+    //   }
+    // }
+    // return false;
   }
 
   #react = () => {

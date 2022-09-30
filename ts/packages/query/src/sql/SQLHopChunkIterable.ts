@@ -21,17 +21,12 @@
  * - Non followed inverse jx edges
  */
 
-import { Context } from "@vulcan.sh/config";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
 import { BaseChunkIterable } from "../ChunkIterable.js";
 import { HoistedOperations } from "./SQLExpression.js";
 
 export default class SQLHopChunkIterable<T> extends BaseChunkIterable<T> {
-  constructor(
-    private ctx: Context,
-    private edge: EdgeSpec,
-    private ops: HoistedOperations
-  ) {
+  constructor(private edge: EdgeSpec, private ops: HoistedOperations) {
     super();
   }
 

@@ -1,5 +1,4 @@
-import { Context, INode } from "@vulcan.sh/config";
-import { ChunkIterable, SyncMappedChunkIterable } from "./ChunkIterable";
+import { ChunkIterable } from "./ChunkIterable";
 import { DerivedExpression } from "./Expression";
 
 /**
@@ -15,7 +14,7 @@ export default class CountLoadExpression<TData>
   implements DerivedExpression<TData, number>
 {
   readonly type = "countLoad";
-  constructor(private ctx: Context) {}
+  constructor() {}
 
   chainAfter(iterable: ChunkIterable<TData>) {
     return iterable.map((d) => (d as any)["count(*)"]);

@@ -1,4 +1,7 @@
-import { IModel, INode } from "@vulcan.sh/config";
+import {
+  BasePersistedModelData,
+  IPersistedModel,
+} from "@vulcan.sh/model-persisted";
 
 export interface FieldGetter<Tm, Tv> {
   readonly get: (m: Tm) => Tv;
@@ -17,13 +20,13 @@ export interface FieldGetter<Tm, Tv> {
  */
 export class ModelFieldGetter<
   Tk extends keyof Td,
-  Td extends {},
-  Tm extends IModel<Td>
+  Td extends BasePersistedModelData,
+  Tm extends IPersistedModel<Td>
 > implements FieldGetter<Tm, Td[Tk]>
 {
   constructor(public readonly fieldName: Tk) {}
 
   get(model: Tm): Td[Tk] {
-    return model._get(this.fieldName);
+    return model.data[this.fieldName];
   }
 }

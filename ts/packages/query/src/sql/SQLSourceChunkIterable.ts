@@ -6,9 +6,14 @@ import { SQLResolvedDB, config } from "@vulcan.sh/config";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 import { ModelFieldGetter } from "../Field.js";
 import { ID_of } from "@vulcan.sh/id";
+import {
+  BasePersistedModelData,
+  cache,
+  IPersistedModel,
+} from "@vulcan.sh/model-persisted";
 
 export default class SQLSourceChunkIterable<
-  T extends IModel<Object>
+  T extends IPersistedModel<BasePersistedModelData>
 > extends BaseChunkIterable<T> {
   constructor(
     private spec: NodeSpec | JunctionEdgeSpec,
@@ -46,13 +51,13 @@ export default class SQLSourceChunkIterable<
     // 2. modelLoad checks the cache which can be checked wither either a `Model` or `Data` instance
     const directLoad = this.isDirectLoad();
     if (directLoad !== null) {
-      const cached = this.ctx.cache.get(
-        directLoad,
+      const cached = cache.get(
         this.spec.storage.db,
-        this.spec.storage.tablish
+        this.spec.storage.tablish,
+        directLoad
       );
       if (cached != null) {
-        yield [cached];
+        yield [cached as any];
         return;
       }
     }

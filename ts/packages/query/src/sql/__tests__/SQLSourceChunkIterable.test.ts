@@ -29,8 +29,8 @@ type Data = {
   x: string;
 };
 class TestModel extends SyncPersistedModel<Data> {
-  static readonly spec = spec;
-  readonly spec = spec;
+  static readonly spec = spec as any;
+  readonly spec = spec as any;
 }
 
 beforeEach(() => {

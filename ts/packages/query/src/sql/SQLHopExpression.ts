@@ -1,4 +1,3 @@
-import { Context } from "@vulcan.sh/config";
 import { specToDatasetKey } from "@vulcan.sh/model-persisted";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
 import { ChunkIterable } from "../ChunkIterable.js";
@@ -12,16 +11,12 @@ export default class SQLHopExpression<TIn, TOut>
   extends SQLExpression<TOut>
   implements HopExpression<TIn, TOut>
 {
-  constructor(
-    ctx: Context,
-    public readonly edge: EdgeSpec,
-    ops: HoistedOperations
-  ) {
-    super(ctx, ops);
+  constructor(public readonly edge: EdgeSpec, ops: HoistedOperations) {
+    super(ops);
   }
 
   chainAfter(iterable: ChunkIterable<TIn>): ChunkIterable<TOut> {
-    return new SQLHopChunkIterable(this.ctx, this.edge, this.ops);
+    return new SQLHopChunkIterable(this.edge, this.ops);
   }
 
   /**
@@ -35,7 +30,7 @@ export default class SQLHopExpression<TIn, TOut>
     );
     return new HopPlan(
       sourcePlan,
-      new SQLHopExpression(this.ctx, this.edge, hoistedExpressions),
+      new SQLHopExpression(this.edge, hoistedExpressions),
       remainingExpressions
     );
   }

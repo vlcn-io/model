@@ -1,3 +1,4 @@
+export { default as observe } from "./observe.js";
 export { staticImplements } from "./static.js";
 
 export function assertUnreachable(x: never): never {
