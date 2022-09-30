@@ -10,10 +10,9 @@ import { invariant } from "@vulcan.sh/util";
 import cache from "./cache.js";
 import { syncPersistor, asyncPersistor } from "./persistor.js";
 import { NodeSpec, JunctionEdgeSpec } from "@vulcan.sh/schema-api";
+import { BasePersistedModelData, ModelSpecWithCreate } from "./spec.js";
 
 type Cause = "create" | "hydrate" | "sync";
-
-export type BasePersistedModelData = { id: ID_of<any> };
 
 export interface IPersistedModel<T extends BasePersistedModelData>
   extends IModel<T> {
@@ -29,7 +28,7 @@ interface IPersistedModelCtor<
   M extends IPersistedModel<D>
 > {
   new (data: D | Omit<D, "id">, cause: Cause): M;
-  readonly spec: NodeSpec | JunctionEdgeSpec;
+  readonly spec: ModelSpecWithCreate<M, D>;
 }
 
 abstract class PersistedModel<T extends BasePersistedModelData>

@@ -1,5 +1,4 @@
-import { Context, IModel } from "@vulcan.sh/config";
-import { specToDatasetKey } from "@vulcan.sh/model-persisted";
+import { IPersistedModel, specToDatasetKey } from "@vulcan.sh/model-persisted";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
 import { ChunkIterable } from "../ChunkIterable.js";
 import { HopExpression } from "../Expression.js";
@@ -8,19 +7,15 @@ import { IPlan } from "../Plan.js";
 import MemoryHopChunkIterable from "./MemoryHopChunkIterable.js";
 import { HoistedOperations } from "./MemorySourceExpression.js";
 
-export default class MemoryHopExpression<TIn extends IModel, TOut>
+export default class MemoryHopExpression<TIn extends IPersistedModel<any>, TOut>
   implements HopExpression<TIn, TOut>
 {
-  constructor(
-    public readonly ctx: Context,
-    public readonly edge: EdgeSpec,
-    private ops: HoistedOperations
-  ) {}
+  constructor(public readonly edge: EdgeSpec, private ops: HoistedOperations) {}
 
   chainAfter(iterable: ChunkIterable<TIn>): ChunkIterable<TOut> {
     // We have an implicit join condition going on.
     // "chain after" will have roots populated from "iterable"
-    return new MemoryHopChunkIterable(this.ctx, this.edge, this.ops, iterable);
+    return new MemoryHopChunkIterable(this.edge, this.ops, iterable);
   }
 
   /**
@@ -37,7 +32,7 @@ export default class MemoryHopExpression<TIn extends IModel, TOut>
     }
     return new HopPlan(
       sourcePlan,
-      new MemoryHopExpression(this.ctx, this.edge, this.ops),
+      new MemoryHopExpression(this.edge, this.ops),
       derivs
     );
     // return plan;

@@ -1,15 +1,14 @@
 import { HopExpression } from "../Expression.js";
 import { HopQuery, Query } from "../Query.js";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
-import { Context, IModel } from "@vulcan.sh/config";
+import { IPersistedModel } from "@vulcan.sh/model-persisted";
 import MemoryHopExpression from "./MemoryHopExpression.js";
 
-export default class MemoryHopQuery<TIn extends IModel, TOut> extends HopQuery<
-  TIn,
+export default class MemoryHopQuery<
+  TIn extends IPersistedModel<any>,
   TOut
-> {
-  static create<TIn extends IModel, TOut>(
-    ctx: Context,
+> extends HopQuery<TIn, TOut> {
+  static create<TIn extends IPersistedModel<any>, TOut>(
     sourceQuery: Query<TIn>,
     edge: EdgeSpec
   ) {
@@ -17,9 +16,8 @@ export default class MemoryHopQuery<TIn extends IModel, TOut> extends HopQuery<
     // dest is memory.
     // standalone edge could be memory or sql...
     return new MemoryHopQuery<TIn, TOut>(
-      ctx,
       sourceQuery,
-      new MemoryHopExpression(ctx, edge, { what: "model" })
+      new MemoryHopExpression(edge, { what: "model" })
     );
   }
 }

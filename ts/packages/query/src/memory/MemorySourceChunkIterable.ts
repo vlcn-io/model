@@ -1,18 +1,13 @@
 import { BaseChunkIterable } from "../ChunkIterable.js";
 import { invariant } from "@vulcan.sh/util";
-import {
-  Context,
-  IModel,
-  MemoryReadQuery,
-  MemoryResolvedDB,
-} from "@vulcan.sh/config";
+import { config, MemoryReadQuery, MemoryResolvedDB } from "@vulcan.sh/config";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { IPersistedModel } from "@vulcan.sh/model-persisted";
 
 export default class MemorySourceChunkIterable<
-  T extends IModel<Object>
+  T extends IPersistedModel<any>
 > extends BaseChunkIterable<T> {
   constructor(
-    private ctx: Context,
     private spec: NodeSpec | JunctionEdgeSpec,
     private query: MemoryReadQuery
   ) {
@@ -30,9 +25,10 @@ export default class MemorySourceChunkIterable<
     // also... this is pretty generic and would apply to non-sql data sources too.
     // given the actual query execution happens in the resolver.
     // also -- should we chunk it at all?
-    const resolvedDb = this.ctx.dbResolver
-      .engine(this.spec.storage.engine)
-      .db(this.spec.storage.db) as MemoryResolvedDB;
+    const resolvedDb = config.storage(
+      this.spec.storage.engine,
+      this.spec.storage.db
+    ) as MemoryResolvedDB;
     yield await resolvedDb.read(this.query);
   }
 }

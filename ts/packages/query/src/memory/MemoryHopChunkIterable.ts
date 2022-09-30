@@ -1,14 +1,14 @@
-import { Context, IModel, MemoryResolvedDB } from "@vulcan.sh/config";
+import { MemoryResolvedDB, config } from "@vulcan.sh/config";
+import { IPersistedModel } from "@vulcan.sh/model-persisted";
 import { EdgeSpec } from "@vulcan.sh/schema-api";
 import { BaseChunkIterable, ChunkIterable } from "../ChunkIterable.js";
 import { HoistedOperations } from "./MemorySourceExpression.js";
 
 export default class MemoryHopChunkIterable<
-  TIn extends IModel,
+  TIn extends IPersistedModel<any>,
   TOut
 > extends BaseChunkIterable<TOut> {
   constructor(
-    private readonly ctx: Context,
     private readonly edge: EdgeSpec,
     private readonly ops: HoistedOperations,
     private readonly source: ChunkIterable<TIn>
@@ -17,9 +17,10 @@ export default class MemoryHopChunkIterable<
   }
 
   async *[Symbol.asyncIterator](): AsyncIterator<readonly TOut[]> {
-    const db = this.ctx.dbResolver
-      .engine(this.edge.dest.storage.engine)
-      .db(this.edge.dest.storage.db) as MemoryResolvedDB;
+    const db = config.storage(
+      this.edge.dest.storage.engine,
+      this.edge.dest.storage.db
+    ) as MemoryResolvedDB;
     for await (const chunk of this.source) {
       // field edge -> roots
       // fk edge -> no roots, filter

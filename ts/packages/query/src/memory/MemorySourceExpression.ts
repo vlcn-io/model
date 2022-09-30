@@ -17,7 +17,6 @@ export default class MemorySourceExpression<T extends IModel<Object>>
   implements SourceExpression<T>
 {
   constructor(
-    public readonly ctx: Context,
     // we should take a schema instead of db
     // we'd need the schema to know if we can hoist certain fields or not
     public readonly spec: NodeSpec | JunctionEdgeSpec,
@@ -36,15 +35,12 @@ export default class MemorySourceExpression<T extends IModel<Object>>
       derivs.push(nextHop.hop);
       derivs = derivs.concat(nextHop.derivations);
     }
-    return new Plan(
-      new MemorySourceExpression(this.ctx, this.spec, this.ops),
-      derivs
-    );
+    return new Plan(new MemorySourceExpression(this.spec, this.ops), derivs);
     // return plan;
   }
 
   get iterable(): ChunkIterable<T> {
-    return new MemorySourceChunkIterable(this.ctx, this.spec, {
+    return new MemorySourceChunkIterable(this.spec, {
       type: "read",
       tablish: this.spec.storage.tablish,
       roots: this.ops.roots,

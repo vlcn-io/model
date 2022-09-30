@@ -29,10 +29,8 @@ type Data = {
   x: string;
 };
 class TestModel extends SyncPersistedModel<Data> {
-  static readonly dbName = "test";
-  static readonly typeName = "testModel";
-  readonly dbName = "test";
-  readonly typeName = "testModel";
+  static readonly spec = spec;
+  readonly spec = spec;
 }
 
 beforeEach(() => {
@@ -54,7 +52,7 @@ beforeEach(() => {
 
 test("does a direct load if possible and the thing is cached", async () => {
   const id = "1" as ID_of<TestModel>;
-  const iterable = new SQLSourceChunkIterable(ctx, spec, {
+  const iterable = new SQLSourceChunkIterable(spec, {
     filters: [
       filter(new ModelFieldGetter<"id", Data, TestModel>("id"), P.equals(id)),
     ],
@@ -80,13 +78,13 @@ test("does a direct load if possible and the thing is cached", async () => {
 
 test("does not direct load if possible but the thing is not cached", async () => {
   const id = "2" as ID_of<TestModel>;
-  const iterable = new SQLSourceChunkIterable(ctx, spec, {
+  const iterable = new SQLSourceChunkIterable(spec, {
     filters: [
       filter(new ModelFieldGetter<"id", Data, TestModel>("id"), P.equals(id)),
     ],
     what: "model",
   });
-  const m = new TestModel({ id, x: "x" });
+  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
 
   // thing should not be in cache
   expect(cache.get(id, spec.storage.db, spec.storage.tablish)).toEqual(null);
@@ -103,13 +101,13 @@ test("does not direct load if possible but the thing is not cached", async () =>
 
 test("does not direct load if not possible (but the thing is cached)", async () => {
   const id = "3" as ID_of<TestModel>;
-  const m = new TestModel({ id, x: "x" });
+  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
 
   // thing should be in cache
   cache.set(id, m, spec.storage.db, spec.storage.tablish);
   expect(cache.get(id, spec.storage.db, spec.storage.tablish)).toBe(m);
 
-  let iterable = new SQLSourceChunkIterable(ctx, spec, {
+  let iterable = new SQLSourceChunkIterable(spec, {
     filters: [],
     what: "model",
   });
@@ -117,7 +115,7 @@ test("does not direct load if not possible (but the thing is cached)", async () 
   // should be 0 -- we kept the db empty
   expect(results.length).toBe(0);
 
-  iterable = new SQLSourceChunkIterable(ctx, spec, {
+  iterable = new SQLSourceChunkIterable(spec, {
     filters: [
       filter(new ModelFieldGetter<"x", Data, TestModel>("x"), P.equals("x")),
     ],
