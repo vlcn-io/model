@@ -68,20 +68,20 @@ import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
 import { modelGenMemo } from "@vulcan.sh/runtime";
 import { Node } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import IDOnlyQuery from "./IDOnlyQuery.js";
 import { Context } from "@vulcan.sh/runtime";
 
 export type Data = {
-  id: SID_of<IDOnly>;
+  id: ID_of<IDOnly>;
 };
 
 // @Sealed(IDOnly)
 export default abstract class IDOnlyBase extends Node<Data> {
   readonly spec = s as unknown as NodeSpecWithCreate<this, Data>;
 
-  get id(): SID_of<this> {
-    return this.data.id as unknown as SID_of<this>;
+  get id(): ID_of<this> {
+    return this.data.id as unknown as ID_of<this>;
   }
 
   static queryAll(ctx: Context): IDOnlyQuery {
@@ -91,14 +91,14 @@ export default abstract class IDOnlyBase extends Node<Data> {
   static genx = modelGenMemo(
     "test",
     "idonly",
-    (ctx: Context, id: SID_of<IDOnly>): Promise<IDOnly> =>
+    (ctx: Context, id: ID_of<IDOnly>): Promise<IDOnly> =>
       this.queryAll(ctx).whereId(P.equals(id)).genxOnlyValue()
   );
 
   static gen = modelGenMemo(
     "test",
     "idonly",
-    (ctx: Context, id: SID_of<IDOnly>): Promise<IDOnly | null> =>
+    (ctx: Context, id: ID_of<IDOnly>): Promise<IDOnly | null> =>
       this.queryAll(ctx).whereId(P.equals(id)).genOnlyValue()
   );
 
@@ -140,12 +140,12 @@ import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
 import { modelGenMemo } from "@vulcan.sh/runtime";
 import { Node } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import PrimitiveFieldsQuery from "./PrimitiveFieldsQuery.js";
 import { Context } from "@vulcan.sh/runtime";
 
 export type Data = {
-  id: SID_of<PrimitiveFields>;
+  id: ID_of<PrimitiveFields>;
   mrBool: boolean;
   mrInt32: number;
   mrInt64: string;
@@ -158,8 +158,8 @@ export type Data = {
 export default abstract class PrimitiveFieldsBase extends Node<Data> {
   readonly spec = s as unknown as NodeSpecWithCreate<this, Data>;
 
-  get id(): SID_of<this> {
-    return this.data.id as unknown as SID_of<this>;
+  get id(): ID_of<this> {
+    return this.data.id as unknown as ID_of<this>;
   }
 
   get mrBool(): boolean {
@@ -193,7 +193,7 @@ export default abstract class PrimitiveFieldsBase extends Node<Data> {
   static genx = modelGenMemo(
     "test",
     "primitivefields",
-    (ctx: Context, id: SID_of<PrimitiveFields>): Promise<PrimitiveFields> =>
+    (ctx: Context, id: ID_of<PrimitiveFields>): Promise<PrimitiveFields> =>
       this.queryAll(ctx).whereId(P.equals(id)).genxOnlyValue()
   );
 
@@ -202,7 +202,7 @@ export default abstract class PrimitiveFieldsBase extends Node<Data> {
     "primitivefields",
     (
       ctx: Context,
-      id: SID_of<PrimitiveFields>
+      id: ID_of<PrimitiveFields>
     ): Promise<PrimitiveFields | null> =>
       this.queryAll(ctx).whereId(P.equals(id)).genOnlyValue()
   );
@@ -242,20 +242,20 @@ import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
 import { modelGenMemo } from "@vulcan.sh/runtime";
 import { Node } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import FooQuery from "./FooQuery.js";
 import { Context } from "@vulcan.sh/runtime";
 import FooSpec from "./FooSpec.js";
 
 export type Data = {
-  fooId: SID_of<Foo>;
+  fooId: ID_of<Foo>;
 };
 
 // @Sealed(Foo)
 export default abstract class FooBase extends Node<Data> {
   readonly spec = s as unknown as NodeSpecWithCreate<this, Data>;
 
-  get fooId(): SID_of<Foo> {
+  get fooId(): ID_of<Foo> {
     return this.data.fooId;
   }
 
@@ -282,14 +282,14 @@ export default abstract class FooBase extends Node<Data> {
   static genx = modelGenMemo(
     "test",
     "foo",
-    (ctx: Context, id: SID_of<Foo>): Promise<Foo> =>
+    (ctx: Context, id: ID_of<Foo>): Promise<Foo> =>
       this.queryAll(ctx).whereId(P.equals(id)).genxOnlyValue()
   );
 
   static gen = modelGenMemo(
     "test",
     "foo",
-    (ctx: Context, id: SID_of<Foo>): Promise<Foo | null> =>
+    (ctx: Context, id: ID_of<Foo>): Promise<Foo | null> =>
       this.queryAll(ctx).whereId(P.equals(id)).genOnlyValue()
   );
 
@@ -328,7 +328,7 @@ import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
 import { modelGenMemo } from "@vulcan.sh/runtime";
 import { Node } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import BarQuery from "./BarQuery.js";
 import { Context } from "@vulcan.sh/runtime";
 import FooQuery from "./FooQuery.js";
@@ -351,14 +351,14 @@ export default abstract class BarBase extends Node<Data> {
   static genx = modelGenMemo(
     "test",
     "bar",
-    (ctx: Context, id: SID_of<Bar>): Promise<Bar> =>
+    (ctx: Context, id: ID_of<Bar>): Promise<Bar> =>
       this.queryAll(ctx).whereId(P.equals(id)).genxOnlyValue()
   );
 
   static gen = modelGenMemo(
     "test",
     "bar",
-    (ctx: Context, id: SID_of<Bar>): Promise<Bar | null> =>
+    (ctx: Context, id: ID_of<Bar>): Promise<Bar | null> =>
       this.queryAll(ctx).whereId(P.equals(id)).genOnlyValue()
   );
 

@@ -179,7 +179,7 @@ export default abstract class ${this.schema.name}Base
       this.schema.type === "node"
         ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
         : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
+      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
       ...(this.schema.storage.type !== "ephemeral"
         ? [
             tsImport(
@@ -295,8 +295,8 @@ export default abstract class ${this.schema.name}Base
     const ret = Object.values(this.schema.fields).map((field) => {
       if (field.name === "id") {
         return `${field.decorators?.join("\n") || ""}
-            get ${field.name}(): SID_of<this> {
-              return this.data.${field.name} as unknown as SID_of<this>;
+            get ${field.name}(): ID_of<this> {
+              return this.data.${field.name} as unknown as ID_of<this>;
             }
           `;
       }
@@ -308,8 +308,8 @@ export default abstract class ${this.schema.name}Base
     });
 
     if (this.schema.type == "standaloneEdge") {
-      ret.push(`get id(): SID_of<this> {
-        return (this.data.id1 + '-' + this.data.id2) as SID_of<this>;
+      ret.push(`get id(): ID_of<this> {
+        return (this.data.id1 + '-' + this.data.id2) as ID_of<this>;
       }`);
     }
 
@@ -487,7 +487,7 @@ export default abstract class ${this.schema.name}Base
     return `static gen = modelGenMemo<${this.schema.name}, ${this.schema.name} | null>(
       "${this.schema.storage.db}",
       "${this.schema.storage.tablish}",
-      (ctx: Context, id: SID_of<${this.schema.name}>): Promise<${this.schema.name} | null> => this
+      (ctx: Context, id: ID_of<${this.schema.name}>): Promise<${this.schema.name} | null> => this
             .queryAll(ctx)
             .whereId(P.equals(id)).genOnlyValue()
     );`;
@@ -503,7 +503,7 @@ export default abstract class ${this.schema.name}Base
     return `static genx = modelGenMemo(
       "${this.schema.storage.db}",
       "${this.schema.storage.tablish}",
-      (ctx: Context, id: SID_of<${this.schema.name}>): Promise<${this.schema.name}> => this
+      (ctx: Context, id: ID_of<${this.schema.name}>): Promise<${this.schema.name}> => this
             .queryAll(ctx)
             .whereId(P.equals(id)).genxOnlyValue(),
     );`;

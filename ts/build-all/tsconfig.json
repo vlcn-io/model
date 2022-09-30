@@ -25,13 +25,25 @@
       "path": "../packages/feature-gates"
     },
     {
+      "path": "../packages/grammar-extension-api"
+    },
+    {
       "path": "../packages/id"
+    },
+    {
+      "path": "../packages/instrument"
+    },
+    {
+      "path": "../packages/migration"
     },
     {
       "path": "../packages/model"
     },
     {
       "path": "../packages/model-persisted"
+    },
+    {
+      "path": "../packages/query"
     },
     {
       "path": "../packages/schema"

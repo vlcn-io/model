@@ -10,7 +10,7 @@ import {
 import { MemoryDB, Node } from "@vulcan.sh/model-persisted";
 import { NodeSpec } from "@vulcan.sh/schema-api";
 import { sql, SQLQuery } from "@vulcan.sh/sql";
-import { asId, SID_of } from "@strut/sid";
+import { asId, ID_of } from "@strut/sid";
 import { filter } from "../../Expression";
 import { ModelFieldGetter } from "../../Field";
 import P from "../../Predicate";
@@ -33,7 +33,7 @@ const spec: NodeSpec = {
   outboundEdges: {},
 };
 type Data = {
-  id: SID_of<TestModel>;
+  id: ID_of<TestModel>;
   x: string;
 };
 class TestModel extends Node<Data> {
@@ -42,8 +42,8 @@ class TestModel extends Node<Data> {
     super(ctx, data);
   }
 
-  get id(): SID_of<this> {
-    return this.data.id as SID_of<this>;
+  get id(): ID_of<this> {
+    return this.data.id as ID_of<this>;
   }
 }
 
@@ -67,7 +67,7 @@ beforeEach(() => {
 });
 
 test("does a direct load if possible and the thing is cached", async () => {
-  const id = "1" as SID_of<TestModel>;
+  const id = "1" as ID_of<TestModel>;
   const iterable = new SQLSourceChunkIterable(ctx, spec, {
     filters: [
       filter(new ModelFieldGetter<"id", Data, TestModel>("id"), P.equals(id)),
@@ -93,7 +93,7 @@ test("does a direct load if possible and the thing is cached", async () => {
 });
 
 test("does not direct load if possible but the thing is not cached", async () => {
-  const id = "2" as SID_of<TestModel>;
+  const id = "2" as ID_of<TestModel>;
   const iterable = new SQLSourceChunkIterable(ctx, spec, {
     filters: [
       filter(new ModelFieldGetter<"id", Data, TestModel>("id"), P.equals(id)),
@@ -116,7 +116,7 @@ test("does not direct load if possible but the thing is not cached", async () =>
 });
 
 test("does not direct load if not possible (but the thing is cached)", async () => {
-  const id = "3" as SID_of<TestModel>;
+  const id = "3" as ID_of<TestModel>;
   const m = new TestModel({ id, x: "x" });
 
   // thing should be in cache

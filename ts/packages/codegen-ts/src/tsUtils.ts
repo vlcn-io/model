@@ -22,7 +22,7 @@ export function atomToTsType(a: TypeAtom): string {
   const kind = a.type;
   switch (kind) {
     case "id":
-      return `SID_of<${a.of}>`;
+      return `ID_of<${a.of}>`;
     case "naturalLanguage":
       return "string";
     case "enumeration":

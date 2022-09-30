@@ -50,7 +50,7 @@ ${this.getSpecCode()}
       primaryKeyCode = `primaryKey: '${this.schema.primaryKey}',`;
       cacheKey = `data['${this.schema.primaryKey}']`;
     } else {
-      cacheKey = `(data.id1 + '-' + data.id2) as SID_of<${this.schema.name}>`;
+      cacheKey = `(data.id1 + '-' + data.id2) as ID_of<${this.schema.name}>`;
       sourceDestFields = `
         sourceField: "id1",
         destField: "id2",
@@ -110,7 +110,7 @@ export default ${nodeFn.specName(this.schema.name)};
       tsImport("{Context}", null, "@vulcan.sh/runtime"),
       tsImport("{decodeModelData}", null, "@vulcan.sh/runtime"),
       tsImport("{encodeModelData}", null, "@vulcan.sh/runtime"),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
+      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
         ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
         : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),

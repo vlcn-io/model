@@ -46,7 +46,7 @@
  *   An optimistic payload while at the same time re-issuing the query...
  */
 
-import { SID_of } from '@strut/sid';
+import { ID_of } from "@strut/sid";
 
 /**
  * cache key format is determined by the user of the cache.
@@ -73,7 +73,7 @@ export default class QueryCache {
    */
   constructor(public readonly sizeInQueries: number) {}
 
-  get(key: string): SID_of<any>[] | null {
+  get(key: string): ID_of<any>[] | null {
     return null;
   }
 

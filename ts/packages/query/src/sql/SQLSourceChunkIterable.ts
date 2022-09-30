@@ -5,7 +5,7 @@ import { invariant } from "@strut/utils";
 import { Context, IModel, SQLResolvedDB } from "@vulcan.sh/config";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 import { ModelFieldGetter } from "../Field.js";
-import { SID_of } from "@strut/sid";
+import { ID_of } from "@strut/sid";
 
 export default class SQLSourceChunkIterable<
   T extends IModel<Object>
@@ -69,7 +69,7 @@ export default class SQLSourceChunkIterable<
    * Being here, each data source would have to implement similar logic.
    * @returns
    */
-  private isDirectLoad(): SID_of<any> | null {
+  private isDirectLoad(): ID_of<any> | null {
     const spec = this.spec;
     if (
       spec.type !== "node" ||
@@ -104,6 +104,6 @@ export default class SQLSourceChunkIterable<
       return null;
     }
 
-    return filter.predicate.value as SID_of<any>;
+    return filter.predicate.value as ID_of<any>;
   }
 }

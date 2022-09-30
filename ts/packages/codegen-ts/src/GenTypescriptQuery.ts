@@ -107,7 +107,7 @@ export default class ${nodeFn.queryTypeName(
         "Expression",
         "EmptyQuery",
       ].map((i) => tsImport(`{${i}}`, null, "@vulcan.sh/runtime")),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
+      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
       tsImport("{Data}", null, `./${this.schema.name}Base.js`),
       tsImport(
@@ -168,7 +168,7 @@ export default class ${nodeFn.queryTypeName(
       return "";
     }
     return `
-static fromId(ctx: Context, id: SID_of<${this.schema.name}>) {
+static fromId(ctx: Context, id: ID_of<${this.schema.name}>) {
   return this.create(ctx).whereId(P.equals(id));
 }
 `;
@@ -206,7 +206,7 @@ static fromId(ctx: Context, id: SID_of<${this.schema.name}>) {
     }
 
     return `
-static from${upcaseAt(column, 0)}(ctx: Context, id: SID_of<${idParts[0].of}>) {
+static from${upcaseAt(column, 0)}(ctx: Context, id: ID_of<${idParts[0].of}>) {
   return this.create(ctx).where${upcaseAt(field.name, 0)}(P.equals(id));
 }
 `;

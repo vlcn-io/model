@@ -110,7 +110,7 @@ import { P } from "@vulcan.sh/runtime";
 import { ModelFieldGetter } from "@vulcan.sh/runtime";
 import { Expression } from "@vulcan.sh/runtime";
 import { EmptyQuery } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";
@@ -132,7 +132,7 @@ export default class FooQuery extends DerivedQuery<Foo> {
     return new FooQuery(this.ctx, this, expression);
   }
 
-  static fromId(ctx: Context, id: SID_of<Foo>) {
+  static fromId(ctx: Context, id: ID_of<Foo>) {
     return this.create(ctx).whereId(P.equals(id));
   }
 
@@ -165,7 +165,7 @@ import { P } from "@vulcan.sh/runtime";
 import { ModelFieldGetter } from "@vulcan.sh/runtime";
 import { Expression } from "@vulcan.sh/runtime";
 import { EmptyQuery } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";
@@ -190,7 +190,7 @@ export default class FooQuery extends DerivedQuery<Foo> {
     return new FooQuery(this.ctx, this, expression);
   }
 
-  static fromId(ctx: Context, id: SID_of<Foo>) {
+  static fromId(ctx: Context, id: ID_of<Foo>) {
     return this.create(ctx).whereId(P.equals(id));
   }
 
@@ -244,7 +244,7 @@ import { P } from "@vulcan.sh/runtime";
 import { ModelFieldGetter } from "@vulcan.sh/runtime";
 import { Expression } from "@vulcan.sh/runtime";
 import { EmptyQuery } from "@vulcan.sh/runtime";
-import { SID_of } from "@vulcan.sh/runtime";
+import { ID_of } from "@vulcan.sh/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";
@@ -268,7 +268,7 @@ export default class FooQuery extends DerivedQuery<Foo> {
     return new FooQuery(this.ctx, this, expression);
   }
 
-  static fromId(ctx: Context, id: SID_of<Foo>) {
+  static fromId(ctx: Context, id: ID_of<Foo>) {
     return this.create(ctx).whereId(P.equals(id));
   }
 
