@@ -272,6 +272,7 @@ importers:
       '@vulcan.sh/config': workspace:*
       '@vulcan.sh/id': workspace:*
       '@vulcan.sh/model': workspace:*
+      '@vulcan.sh/schema-api': workspace:*
       '@vulcan.sh/util': workspace:*
       '@vulcan.sh/value': workspace:*
       fast-check: ^3.1.2
@@ -281,6 +282,7 @@ importers:
       '@vulcan.sh/config': link:../config
       '@vulcan.sh/id': link:../id
       '@vulcan.sh/model': link:../model
+      '@vulcan.sh/schema-api': link:../schema-api
       '@vulcan.sh/util': link:../util
       '@vulcan.sh/value': link:../value
     devDependencies:

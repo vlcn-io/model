@@ -314,7 +314,6 @@ function condenseExtensionsFor<T, R extends { name: string }>(
 function engineToType(engine: StorageEngine): StorageType {
   switch (engine) {
     case "sqlite":
-    case "postgres":
       return "sql";
     case "memory":
       return "memory";

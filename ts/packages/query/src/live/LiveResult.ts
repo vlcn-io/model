@@ -1,4 +1,3 @@
-import { Context, Transaction } from "@vulcan.sh/config";
 import { observe, specToDatasetKey } from "@vulcan.sh/model-persisted";
 import { assertUnreachable } from "@vulcan.sh/util";
 import { IPlan } from "../Plan.js";
@@ -45,7 +44,7 @@ export default class LiveResult<T> {
   // Exposed to allow tests to await results before exiting.
   __currentHandle: Promise<unknown>;
 
-  constructor(ctx: Context, on: UpdateType, query: Query<T>) {
+  constructor(on: UpdateType, query: Query<T>) {
     this.#on = on;
     this.#optimizedQueryPlan = query.plan().optimize();
     this.#implicatedDatasets = query.implicatedDatasets();

@@ -13,7 +13,8 @@
     "@vulcan.sh/model": "workspace:*",
     "@vulcan.sh/id": "workspace:*",
     "@vulcan.sh/util": "workspace:*",
-    "@vulcan.sh/value": "workspace:*"
+    "@vulcan.sh/value": "workspace:*",
+    "@vulcan.sh/schema-api": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

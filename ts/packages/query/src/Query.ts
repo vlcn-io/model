@@ -1,4 +1,3 @@
-import { Context } from "@vulcan.sh/config";
 import { invariant } from "@vulcan.sh/util";
 import {
   count,
@@ -63,10 +62,7 @@ export interface Query<T> {
 }
 
 abstract class BaseQuery<T> implements Query<T> {
-  protected readonly ctx: Context;
-  constructor(ctx: Context) {
-    this.ctx = ctx;
-  }
+  constructor() {}
 
   gen(): Promise<T[]> {
     return tracer.genStartActiveSpan(this.constructor.name + ".gen", (span) => {
@@ -94,17 +90,17 @@ abstract class BaseQuery<T> implements Query<T> {
   }
 
   live(on: UpdateType): LiveResult<T> {
-    return new LiveResult(this.ctx, on, this);
+    return new LiveResult(on, this);
   }
 
   async genLive(on: UpdateType = UpdateType.ANY): Promise<LiveResult<T>> {
-    const ret = new LiveResult(this.ctx, on, this);
+    const ret = new LiveResult(on, this);
     await ret.__currentHandle;
     return ret;
   }
 
   count(): IterableDerivedQuery<number> {
-    return new IterableDerivedQuery(this.ctx, this, count());
+    return new IterableDerivedQuery(this, count());
   }
 
   // map<R>(fn: (t: T) => R): Query<R> {
@@ -121,8 +117,8 @@ export abstract class SourceQuery<T> extends BaseQuery<T> {
   // make a recursive data structure of queries and expressions.
   // then convert to plan which will collapse expression as needed.
   // How do expressions convert themselves to SQL or whatever?
-  constructor(ctx: Context, public readonly expression: SourceExpression<T>) {
-    super(ctx);
+  constructor(public readonly expression: SourceExpression<T>) {
+    super();
   }
 
   // Expression could be null if we're hopping an edge?
@@ -143,11 +139,10 @@ export abstract class SourceQuery<T> extends BaseQuery<T> {
 
 export abstract class HopQuery<TIn, TOut> extends BaseQuery<TOut> {
   constructor(
-    ctx: Context,
     private priorQuery: Query<TIn>,
     public readonly expression: HopExpression<TIn, TOut>
   ) {
-    super(ctx);
+    super();
   }
 
   plan() {
@@ -165,8 +160,8 @@ export abstract class DerivedQuery<TOut> extends BaseQuery<TOut> {
   #priorQuery: Query<any>;
   #expression?: Expression;
 
-  constructor(ctx: Context, priorQuery: Query<any>, expression?: Expression) {
-    super(ctx);
+  constructor(priorQuery: Query<any>, expression?: Expression) {
+    super();
     this.#priorQuery = priorQuery;
     this.#expression = expression;
   }
@@ -231,12 +226,12 @@ export abstract class DerivedQuery<TOut> extends BaseQuery<TOut> {
 }
 
 export class IterableDerivedQuery<TOut> extends DerivedQuery<TOut> {
-  constructor(ctx: Context, priorQuery: Query<any>, expression: Expression) {
-    super(ctx, priorQuery, expression);
+  constructor(priorQuery: Query<any>, expression: Expression) {
+    super(priorQuery, expression);
   }
 
   protected derive<TNOut>(expression: Expression): IterableDerivedQuery<TNOut> {
-    return new IterableDerivedQuery(this.ctx, this, expression);
+    return new IterableDerivedQuery(this, expression);
   }
 }
 
@@ -244,7 +239,7 @@ export class IterableDerivedQuery<TOut> extends DerivedQuery<TOut> {
 // into a query
 
 export class EmptyQuery extends SourceQuery<void> {
-  constructor(ctx: Context) {
-    super(ctx, new EmptySourceExpression());
+  constructor() {
+    super(new EmptySourceExpression());
   }
 }

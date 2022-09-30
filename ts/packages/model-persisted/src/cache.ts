@@ -10,11 +10,11 @@ import { config } from "@vulcan.sh/config";
  */
 export default {
   remove(m: IPersistedModel<any>) {
-    config.cache.remove(m.id, m.dbName, m.typeName);
+    config.cache.remove(m.id, m.spec.storage.db, m.spec.storage.tablish);
   },
 
   add(m: IPersistedModel<any>) {
-    config.cache.set(m.id, m, m.dbName, m.typeName);
+    config.cache.set(m.id, m, m.spec.storage.db, m.spec.storage.tablish);
   },
 
   assertConsistent<D extends BasePersistedModelData>(

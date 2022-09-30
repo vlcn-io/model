@@ -1,5 +1,4 @@
 import {
-  Context,
   IModel,
   INode,
   ModelSpecWithCreate,
@@ -17,14 +16,13 @@ import SQLSourceQuery from "./sql/SQLSourceQuery.js";
 // the native platform.
 const factory = {
   createSourceQueryFor<T extends IModel<{}>>(
-    ctx: Context,
     spec: ModelSpecWithCreate<T, {}>
   ): Query<T> {
     switch (spec.storage.type) {
       case "sql":
-        return new SQLSourceQuery(ctx, spec);
+        return new SQLSourceQuery(spec);
       case "memory":
-        return new MemorySourceQuery(ctx, spec);
+        return new MemorySourceQuery(spec);
       default:
         throw new Error(spec.storage.type + " is not yet supported");
     }
@@ -32,16 +30,15 @@ const factory = {
 
   // TODO: get types into the edge specs so our hop and have types?
   createHopQueryFor<TDest>(
-    ctx: Context,
     priorQuery: DerivedQuery<any>,
     edge: EdgeSpec
   ): HopQuery<any, any> {
     const type = edge.dest.storage.type;
     switch (type) {
       case "sql":
-        return SQLHopQuery.create(ctx, priorQuery, edge);
+        return SQLHopQuery.create(priorQuery, edge);
       case "memory":
-        return MemoryHopQuery.create(ctx, priorQuery, edge);
+        return MemoryHopQuery.create(priorQuery, edge);
       case "ephemeral":
         throw new Error(`Hops for ${type} are not implemented yet`);
     }

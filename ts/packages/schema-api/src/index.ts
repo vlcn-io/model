@@ -1,20 +1,20 @@
 export type ValidationError = {
   message: string;
-  severity: 'warning' | 'advice' | 'error';
+  severity: "warning" | "advice" | "error";
   type:
-    | 'duplicate-nodes'
-    | 'duplicate-edges'
-    | 'duplicate-fields'
-    | 'duplicate-ob-edges'
-    | 'duplicate-ib-edges'
-    | 'duplicate-extensions'
-    | 'duplicate-traits';
+    | "duplicate-nodes"
+    | "duplicate-edges"
+    | "duplicate-fields"
+    | "duplicate-ob-edges"
+    | "duplicate-ib-edges"
+    | "duplicate-extensions"
+    | "duplicate-traits";
 };
 
 // "memory" nodes get stored into an in-memory DB and never cleared until they are deleted.
 // "ephemeral" nodes are in-memory only as well but not stored anywhere.
-export type StorageEngine = 'sqlite' | 'postgres' | 'memory' | 'ephemeral';
-export type StorageType = 'sql' | 'memory' | 'ephemeral';
+export type StorageEngine = "sqlite" | "memory" | "ephemeral";
+export type StorageType = "sql" | "memory" | "ephemeral";
 
 export type SchemaFileAst = {
   preamble: {
@@ -55,8 +55,8 @@ export interface NodeAstExtensions {
 }
 
 export type SchemaNode = {
-  type: 'node';
-  name: NodeAst['name'];
+  type: "node";
+  name: NodeAst["name"];
   primaryKey: string;
   fields: {
     [key: UnqalifiedFieldReference]: FieldDeclaration;
@@ -66,7 +66,7 @@ export type SchemaNode = {
 };
 
 export type NodeSpec = {
-  readonly type: 'node';
+  readonly type: "node";
   readonly primaryKey: string;
   readonly storage: RemoveNameField<StorageConfig>;
   readonly outboundEdges: { [key: string]: EdgeSpec };
@@ -76,7 +76,7 @@ export type NodeSpec = {
 
 export type FieldsSpec = {
   [key: string]: {
-    readonly encoding: 'json' | 'none';
+    readonly encoding: "json" | "none";
   };
 };
 
@@ -88,18 +88,18 @@ type EdgeSpecBase = {
 export type EdgeSpec =
   | JunctionEdgeSpec
   | ({
-      type: 'field';
+      type: "field";
       sourceField: string;
       destField: string;
     } & EdgeSpecBase)
   | ({
-      type: 'foreignKey';
+      type: "foreignKey";
       sourceField: string;
       destField: string;
     } & EdgeSpecBase);
 
 export type JunctionEdgeSpec = {
-  readonly type: 'junction';
+  readonly type: "junction";
   readonly storage: RemoveNameField<StorageConfig>;
   readonly sourceField: string;
   readonly destField: string;
@@ -107,14 +107,14 @@ export type JunctionEdgeSpec = {
   readonly fields: FieldsSpec;
 } & EdgeSpecBase;
 
-export type EdgeType = EdgeSpec['type'];
+export type EdgeType = EdgeSpec["type"];
 
 type TypeConfig = {
-  name: 'typeConfig';
+  name: "typeConfig";
 } & MaybeDecoratored;
 
 type ModuleConfig = {
-  name: 'moduleConfig';
+  name: "moduleConfig";
   imports: Map<string, Import>;
 };
 
@@ -125,7 +125,7 @@ export type Import = {
 };
 
 export type StorageConfig = {
-  name: 'storage';
+  name: "storage";
   type: StorageType;
   db: string;
   tablish: string;
@@ -134,14 +134,14 @@ export type StorageConfig = {
 }; // | { type: "opencypher" } ...;
 
 export type ReplicationConfig = {
-  name: 'replication';
+  name: "replication";
   replicated: boolean;
   // other replication settings
 };
 
 export type SchemaEdge = {
-  type: 'standaloneEdge';
-  name: EdgeAst['name'];
+  type: "standaloneEdge";
+  name: EdgeAst["name"];
   src: NodeReferenceOrQualifiedColumn;
   dest: NodeReferenceOrQualifiedColumn;
   fields: {
@@ -152,7 +152,7 @@ export type SchemaEdge = {
 };
 
 export type RemoveNameField<Type> = {
-  [Property in keyof Type as Exclude<Property, 'name'>]: Type[Property];
+  [Property in keyof Type as Exclude<Property, "name">]: Type[Property];
 };
 
 export type NodeReference = string;
@@ -165,7 +165,8 @@ type ComplexField = MapField | ArrayField;
 
 export type Field = NonComplexField | ComplexField;
 export type NodeAstExtension = NodeAstExtensions[keyof NodeAstExtensions];
-export type NodeExtension = SchemaNode['extensions'][keyof SchemaNode['extensions']];
+export type NodeExtension =
+  SchemaNode["extensions"][keyof SchemaNode["extensions"]];
 export type FieldDeclaration = {
   num?: number;
   name: string;
@@ -174,12 +175,12 @@ export type FieldDeclaration = {
 };
 
 export type NodeAst = {
-  type: 'node';
-  as: 'Node' | 'UnmanagedNode';
+  type: "node";
+  as: "Node" | "UnmanagedNode";
 } & NodeAstCommon;
 
 export type NodeTraitAst = {
-  type: 'nodeTrait';
+  type: "nodeTrait";
 } & NodeAstCommon;
 
 export type NodeAstCommon = {
@@ -204,10 +205,11 @@ export interface EdgeExtensions {
 // }
 
 // export type EdgeAstExtension = EdgeAstExtensions[keyof EdgeAstExtensions];
-export type EdgeExtension = SchemaEdge['extensions'][keyof SchemaEdge['extensions']];
+export type EdgeExtension =
+  SchemaEdge["extensions"][keyof SchemaEdge["extensions"]];
 
 export type EdgeAst = {
-  type: 'edge';
+  type: "edge";
   name: string;
   src: NodeReferenceOrQualifiedColumn;
   dest: NodeReferenceOrQualifiedColumn;
@@ -216,12 +218,12 @@ export type EdgeAst = {
 };
 
 type Invert = {
-  name: 'invert';
+  name: "invert";
   as: string;
 };
 
 type Constrain = {
-  name: 'constrain';
+  name: "constrain";
 };
 
 type NodeReferenceOrQualifiedColumn = {
@@ -230,13 +232,13 @@ type NodeReferenceOrQualifiedColumn = {
 };
 
 export type EdgeDeclaration = {
-  type: 'edge';
+  type: "edge";
   name: string;
   throughOrTo: NodeReferenceOrQualifiedColumn;
 };
 
 export type EdgeReferenceDeclaration = {
-  type: 'edgeReference';
+  type: "edgeReference";
   name: string;
   reference: EdgeReference;
 };
@@ -252,49 +254,49 @@ type FieldBase = {
 
 export type ID = {
   name: string;
-  type: 'id';
+  type: "id";
   of: NodeReference;
 } & FieldBase;
 
 type NaturalLanguage = {
   name: string;
-  type: 'naturalLanguage';
+  type: "naturalLanguage";
 } & FieldBase;
 
 export type Enum = {
   name: string;
-  type: 'enumeration';
+  type: "enumeration";
   keys: string[];
 } & FieldBase;
 
 type Time = {
   name: string;
-  type: 'timestamp';
+  type: "timestamp";
 } & FieldBase;
 
 export const primitives = [
-  'bool',
-  'int32',
-  'int64',
-  'float32',
-  'float64',
-  'uint32',
-  'uint64',
-  'string',
-  'null',
-  'any',
+  "bool",
+  "int32",
+  "int64",
+  "float32",
+  "float64",
+  "uint32",
+  "uint64",
+  "string",
+  "null",
+  "any",
 ] as const;
 
 export type PrimitiveSubtype = typeof primitives[number];
 type Primitive = {
   name: string;
-  type: 'primitive';
+  type: "primitive";
   subtype: PrimitiveSubtype;
 } & FieldBase;
 
 type MapField = {
   name: string;
-  type: 'map';
+  type: "map";
   // Ideally we use `Omit` on name but see https://github.com/microsoft/TypeScript/issues/31501
   keys: RemoveNameField<NonComplexField>;
   values: RemoveNameField<Field>;
@@ -302,42 +304,42 @@ type MapField = {
 
 type ArrayField = {
   name: string;
-  type: 'array';
+  type: "array";
   // Ideally we use `Omit` on name but see https://github.com/microsoft/TypeScript/issues/31501
   values: RemoveNameField<Field> | string;
 } & FieldBase;
 
 export type OutboundEdgesAst = {
-  name: 'outboundEdges';
+  name: "outboundEdges";
   declarations: (EdgeDeclaration | EdgeReferenceDeclaration)[];
 };
 
 export type OutboundEdges = {
-  name: OutboundEdgesAst['name'];
+  name: OutboundEdgesAst["name"];
   edges: {
     [key: EdgeReference]: EdgeDeclaration | EdgeReferenceDeclaration;
   };
 };
 
 export type InboundEdgesAst = {
-  name: 'inboundEdges';
+  name: "inboundEdges";
   declarations: (EdgeDeclaration | EdgeReferenceDeclaration)[];
 };
 
 export type InboundEdges = {
-  name: InboundEdgesAst['name'];
+  name: InboundEdgesAst["name"];
   edges: {
     [key: EdgeReference]: EdgeDeclaration | EdgeReferenceDeclaration;
   };
 };
 
 type Index = {
-  name: 'index';
+  name: "index";
   declarations: (Unique | NonUnique)[];
 };
 
 type Traits = {
-  name: 'traits';
+  name: "traits";
   declarations: string[];
 };
 
@@ -345,18 +347,18 @@ export type TypeAtom =
   | RemoveNameField<Field>
   | string
   | {
-      type: 'intersection';
+      type: "intersection";
     }
-  | { type: 'union' };
+  | { type: "union" };
 
 type Unique = {
   name: string;
-  type: 'unique';
+  type: "unique";
   columns: UnqalifiedFieldReference[];
 };
 
 type NonUnique = {
   name: string;
-  type: 'nonUnique';
+  type: "nonUnique";
   columns: UnqalifiedFieldReference[];
 };

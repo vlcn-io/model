@@ -33,9 +33,6 @@ export default class GenSqlTableSchema extends CodegenStep {
       case "sqlite":
         str = this.getSqliteString();
         break;
-      case "postgres":
-        str = this.getPostgresString();
-        break;
       case "memory":
       case "ephemeral":
         throw new Error(

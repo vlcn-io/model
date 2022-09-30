@@ -4,7 +4,7 @@ import Plan from "../Plan.js";
 import { ChunkIterable } from "../ChunkIterable.js";
 import HopPlan from "../HopPlan.js";
 import { specToDatasetKey } from "@vulcan.sh/model-persisted";
-import { Context, IModel, INode } from "@vulcan.sh/config";
+import { IModel, INode } from "@vulcan.sh/config";
 import SQLExpression, { HoistedOperations } from "./SQLExpression.js";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 
@@ -15,13 +15,12 @@ export default class SQLSourceExpression<T extends IModel<Object>>
   implements SourceExpression<T>
 {
   constructor(
-    ctx: Context,
     // we should take a schema instead of db
     // we'd need the schema to know if we can hoist certain fields or not
     public readonly spec: NodeSpec | JunctionEdgeSpec,
     ops: HoistedOperations
   ) {
-    super(ctx, ops);
+    super(ops);
   }
 
   optimize(plan: Plan, nextHop?: HopPlan): Plan {
@@ -30,13 +29,13 @@ export default class SQLSourceExpression<T extends IModel<Object>>
       nextHop
     );
     return new Plan(
-      new SQLSourceExpression(this.ctx, this.spec, hoistedExpressions),
+      new SQLSourceExpression(this.spec, hoistedExpressions),
       remainingExpressions
     );
   }
 
   get iterable(): ChunkIterable<T> {
-    return new SQLSourceChunkIterable(this.ctx, this.spec, this.ops);
+    return new SQLSourceChunkIterable(this.spec, this.ops);
   }
 
   implicatedDataset(): string {

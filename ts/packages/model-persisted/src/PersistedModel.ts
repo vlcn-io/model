@@ -9,6 +9,7 @@ import {
 import { invariant } from "@vulcan.sh/util";
 import cache from "./cache.js";
 import { syncPersistor, asyncPersistor } from "./persistor.js";
+import { NodeSpec, JunctionEdgeSpec } from "@vulcan.sh/schema-api";
 
 type Cause = "create" | "hydrate" | "sync";
 
@@ -17,9 +18,7 @@ export type BasePersistedModelData = { id: ID_of<any> };
 export interface IPersistedModel<T extends BasePersistedModelData>
   extends IModel<T> {
   get id(): ID_of<T>;
-
-  readonly dbName: string;
-  readonly typeName: string;
+  readonly spec: NodeSpec | JunctionEdgeSpec;
 
   // delete(): Promise<void> | void;
   // update(): Promise<void> | void;
@@ -30,16 +29,14 @@ interface IPersistedModelCtor<
   M extends IPersistedModel<D>
 > {
   new (data: D | Omit<D, "id">, cause: Cause): M;
-  readonly dbName: string;
-  readonly typeName: string;
+  readonly spec: NodeSpec | JunctionEdgeSpec;
 }
 
 abstract class PersistedModel<T extends BasePersistedModelData>
   extends Model<T>
   implements IPersistedModel<T>
 {
-  abstract readonly dbName: string;
-  abstract readonly typeName: string;
+  abstract readonly spec: NodeSpec | JunctionEdgeSpec;
 
   constructor(data: T | Omit<T, "id">, private cause: Cause) {
     if (!("id" in data)) {
@@ -76,7 +73,11 @@ abstract class PersistedModel<T extends BasePersistedModelData>
     D extends BasePersistedModelData,
     M extends IPersistedModel<D>
   >(ctor: IPersistedModelCtor<D, M>, data: D): M {
-    const existing = cache.get(ctor.dbName, ctor.typeName, data.id);
+    const existing = cache.get(
+      ctor.spec.storage.db,
+      ctor.spec.storage.tablish,
+      data.id
+    );
     if (existing) {
       cache.assertConsistent(existing, data);
       return existing as M;

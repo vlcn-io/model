@@ -1,6 +1,5 @@
 import { SQLResolvedDB } from "@vulcan.sh/config";
 import { sql, SQLQuery } from "@vulcan.sh/sql";
-import { nullthrows } from "@vulcan.sh/util";
 
 export type CreateError = {
   cause: any;
@@ -163,7 +162,7 @@ export function extractColumnDefs(sql: string): ColumnDef[] {
 
       return {
         num: maybeNum != null ? parseInt(maybeNum) : null,
-        name: nullthrows(match?.groups?.name),
+        name: match?.groups?.name!,
         type: match?.groups?.type || null,
         notnull: match?.groups?.nonnull === "NOT NULL",
       };
@@ -190,7 +189,7 @@ export function findRemovedColumns(
     return setDifference(left, right, (x) => x.name);
   }
 
-  return setDifference(left, right, (x) => nullthrows(x.num));
+  return setDifference(left, right, (x) => x.num!);
 }
 
 /**
@@ -212,7 +211,7 @@ export function findAddedColumns(
     return setDifference(right, left, (x) => x.name);
   }
 
-  return setDifference(right, left, (x) => nullthrows(x.num));
+  return setDifference(right, left, (x) => x.num!);
 }
 
 export function findAlteredColumns(
@@ -230,7 +229,7 @@ export function findAlteredColumns(
     // for each in right, find its correspond in left (or omit it if not exists).
     // see if it matches its correspond in left. omit it if so.
   } else {
-    ret = innerJoin(left, right, (x) => nullthrows(x.num));
+    ret = innerJoin(left, right, (x) => x.num!);
   }
 
   // Only keep joined pairs the have differences
