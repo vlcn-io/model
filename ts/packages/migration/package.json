@@ -12,7 +12,7 @@
     "@vulcan.sh/config": "workspace:*",
     "@vulcan.sh/sql": "workspace:*",
     "@databases/sqlite": "^4.0.1",
-    "@vulcan.sh/util": "^0.1.1"
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

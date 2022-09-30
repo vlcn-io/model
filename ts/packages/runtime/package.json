@@ -15,8 +15,8 @@
     "@vulcan.sh/model-persisted": "workspace:*",
     "@vulcan.sh/query": "workspace:*",
     "@vulcan.sh/sql": "workspace:*",
-    "@vulcan.sh/id": "^0.1.2",
-    "@vulcan.sh/util": "^0.1.1"
+    "@vulcan.sh/id": "workspace:*",
+    "@vulcan.sh/util": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.8.2"
