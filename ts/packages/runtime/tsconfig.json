@@ -1,17 +1,17 @@
 {
-  "extends": "../../tsconfig-templates/lib.json",
+  "extends": "../../tsconfig-lib.json",
   "compilerOptions": {
     "outDir": "./lib/",
     "rootDir": "./src"
   },
   "include": ["./src/"],
   "references": [
-    { "path": "../cache-runtime-ts" },
-    { "path": "../context-runtime-ts" },
-    { "path": "../model-runtime-ts" },
-    { "path": "../mutator-runtime-ts" },
-    { "path": "../query-runtime-ts" },
-    { "path": "../migration-runtime-ts" },
-    { "path": "../sql-ts" }
+    { "path": "../cache" },
+    { "path": "../config" },
+    { "path": "../id" },
+    { "path": "../model-persisted" },
+    { "path": "../query" },
+    { "path": "../migration" },
+    { "path": "../sql" }
   ]
 }

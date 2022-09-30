@@ -1,12 +1,12 @@
 {
-  "name": "@vulcan.sh/migration-runtime-ts",
+  "name": "@vulcan.sh/migration",
   "version": "0.1.7",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/migration-runtime-ts"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/migration"
   },
   "dependencies": {
     "@vulcan.sh/config": "workspace:*",

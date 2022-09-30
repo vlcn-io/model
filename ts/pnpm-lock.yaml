@@ -358,7 +358,7 @@ importers:
       '@vulcan.sh/cache': workspace:*
       '@vulcan.sh/config': workspace:*
       '@vulcan.sh/id': workspace:*
-      '@vulcan.sh/migration-runtime-ts': workspace:*
+      '@vulcan.sh/migration': workspace:*
       '@vulcan.sh/model-persisted': workspace:*
       '@vulcan.sh/query': workspace:*
       '@vulcan.sh/sql': workspace:*
@@ -368,7 +368,7 @@ importers:
       '@vulcan.sh/cache': link:../cache
       '@vulcan.sh/config': link:../config
       '@vulcan.sh/id': link:../id
-      '@vulcan.sh/migration-runtime-ts': link:../migration
+      '@vulcan.sh/migration': link:../migration
       '@vulcan.sh/model-persisted': link:../model-persisted
       '@vulcan.sh/query': link:../query
       '@vulcan.sh/sql': link:../sql

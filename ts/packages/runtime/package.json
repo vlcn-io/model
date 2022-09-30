@@ -11,7 +11,7 @@
   "dependencies": {
     "@vulcan.sh/cache": "workspace:*",
     "@vulcan.sh/config": "workspace:*",
-    "@vulcan.sh/migration-runtime-ts": "workspace:*",
+    "@vulcan.sh/migration": "workspace:*",
     "@vulcan.sh/model-persisted": "workspace:*",
     "@vulcan.sh/query": "workspace:*",
     "@vulcan.sh/sql": "workspace:*",
