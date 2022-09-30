@@ -1,0 +1,36 @@
+{
+  "name": "@aphro/wa-sqlite-connector",
+  "version": "0.3.3",
+  "main": "lib/index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tantaman/aphrodite.git",
+    "directory": "packages/wa-sqlite-connector"
+  },
+  "dependencies": {
+    "@vulcan.sh/instrument": "workspace:*",
+    "@vulcan.sh/runtime": "workspace:*",
+    "@opentelemetry/api": "^1.1.0",
+    "@strut/counter": "^0.0.11",
+    "wa-sqlite": "github:rhashimoto/wa-sqlite#buildless"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10",
+    "@types/jest": "^28.1.8",
+    "jest": "^29.0.1",
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --build -w",
+    "deep-clean": "rm -rf ./lib || true && rm tsconfig.tsbuildinfo || true"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
+  }
+}

@@ -21,3 +21,8 @@ packages:
   - packages/util
   - packages/value
   - packages/zone
+  - connectors/absurd-sql-connector
+  - connectors/capacitor-sqlite-connector
+  - connectors/sqlite3-connector
+  - connectors/sqljs-connector
+  - connectors/wa-sqlite-connector

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig-templates/lib.json",
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "rootDir": "./src",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["./src/"],
+  "references": [{ "path": "../../packages/runtime-ts" }, { "path": "../../packages/instrument" }]
+}
