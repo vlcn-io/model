@@ -16,6 +16,12 @@ importers:
       turbo: 1.4.7
       typescript: 4.8.3
 
+  build-all:
+    specifiers:
+      typescript: ^4.8.2
+    devDependencies:
+      typescript: 4.8.3
+
   packages/cache:
     specifiers:
       '@babel/core': ^7.18.13

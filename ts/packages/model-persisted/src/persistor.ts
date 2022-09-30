@@ -19,6 +19,7 @@ export const syncPersistor = {
   },
 };
 
+// persistor will need to check if in tx and do appropriate things.
 export const asyncPersistor = {
   create(m: IPersistedModel<any>): Promise<void> {
     throw new Error("unimplemented");

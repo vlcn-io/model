@@ -11,7 +11,6 @@ import SQLSourceChunkIterable from "../SQLSourceChunkIterable";
 
 let db: SQLResolvedDB;
 let cache: Cache;
-let ctx: Context;
 let data: any[];
 const spec: NodeSpec = {
   type: "node",
@@ -29,15 +28,11 @@ type Data = {
   id: ID_of<TestModel>;
   x: string;
 };
-class TestModel extends Node<Data> {
-  readonly spec = {} as any;
-  constructor(data: Data) {
-    super(ctx, data);
-  }
-
-  get id(): ID_of<this> {
-    return this.data.id as ID_of<this>;
-  }
+class TestModel extends SyncPersistedModel<Data> {
+  static readonly dbName = "test";
+  static readonly typeName = "testModel";
+  readonly dbName = "test";
+  readonly typeName = "testModel";
 }
 
 beforeEach(() => {
@@ -55,8 +50,6 @@ beforeEach(() => {
 
     dispose() {},
   };
-
-  ctx = context(anonymous(), basicResolver("test", db), cache);
 });
 
 test("does a direct load if possible and the thing is cached", async () => {
@@ -67,7 +60,7 @@ test("does a direct load if possible and the thing is cached", async () => {
     ],
     what: "model",
   });
-  const m = new TestModel({ id, x: "x" });
+  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
 
   // thing should not be in cache yet
   expect(cache.get(id, spec.storage.db, spec.storage.tablish)).toEqual(null);

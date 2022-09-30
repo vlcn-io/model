@@ -1,4 +1,5 @@
 packages:
+  - build-all
   - packages/cache
   - packages/codegen-api
   - packages/codegen-sql

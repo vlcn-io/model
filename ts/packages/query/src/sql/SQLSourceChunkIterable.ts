@@ -2,7 +2,7 @@ import { BaseChunkIterable } from "../ChunkIterable.js";
 import specAndOpsToQuery from "./specAndOpsToQuery.js";
 import { HoistedOperations } from "./SQLExpression.js";
 import { invariant } from "@vulcan.sh/util";
-import { Context, IModel, SQLResolvedDB } from "@vulcan.sh/config";
+import { SQLResolvedDB, config } from "@vulcan.sh/config";
 import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 import { ModelFieldGetter } from "../Field.js";
 import { ID_of } from "@vulcan.sh/id";
@@ -11,7 +11,6 @@ export default class SQLSourceChunkIterable<
   T extends IModel<Object>
 > extends BaseChunkIterable<T> {
   constructor(
-    private ctx: Context,
     private spec: NodeSpec | JunctionEdgeSpec,
     private hoistedOperations: HoistedOperations
   ) {
@@ -32,9 +31,10 @@ export default class SQLSourceChunkIterable<
     // also... this is pretty generic and would apply to non-sql data sources too.
     // given the actual query execution happens in the resolver.
     // also -- should we chunk it at all?
-    const resolvedDb = this.ctx.dbResolver
-      .engine(this.spec.storage.engine)
-      .db(this.spec.storage.db) as SQLResolvedDB;
+    const resolvedDb = config.storage(
+      this.spec.storage.engine,
+      this.spec.storage.db
+    ) as SQLResolvedDB;
 
     if (this.hoistedOperations.limit && this.hoistedOperations.limit.num < 1) {
       yield [];
