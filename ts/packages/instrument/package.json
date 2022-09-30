@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/instrument",
+  "name": "@vulcan.sh/instrument",
   "version": "0.0.6",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/instrument"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/instrument"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.1.0"

@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/query-runtime-ts",
+  "name": "@vulcan.sh/query",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/query-runtime-ts"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/query"
   },
   "dependencies": {
     "@aphro/cache-runtime-ts": "workspace:*",

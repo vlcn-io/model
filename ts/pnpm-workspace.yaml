@@ -7,8 +7,13 @@ packages:
   - packages/feature-gates
   - packages/grammar-extension-api
   - packages/id
+  - packages/instrument
+  - packages/migration
   - packages/model
   - packages/model-persisted
+  - packages/query
+  - packages/react
+  - packages/runtime
   - packages/schema
   - packages/schema-api
   - packages/sql

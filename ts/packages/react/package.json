@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/react",
+  "name": "@vulcan.sh/react",
   "version": "1.2.3",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/react"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/packages/react"
   },
   "dependencies": {
     "@strut/counter": "^0.0.11",
