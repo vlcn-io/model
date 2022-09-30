@@ -2,6 +2,7 @@ packages:
   - build-all
   - packages/cache
   - packages/codegen-api
+  - packages/codegen-cli
   - packages/codegen-sql
   - packages/codegen-ts
   - packages/config

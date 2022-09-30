@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/wa-sqlite-connector",
+  "name": "@vulcan.sh/wa-sqlite-connector",
   "version": "0.3.3",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/wa-sqlite-connector"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/connectors/wa-sqlite-connector"
   },
   "dependencies": {
     "@vulcan.sh/instrument": "workspace:*",

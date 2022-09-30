@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/sqljs-connector",
+  "name": "@vulcan.sh/sqljs-connector",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/sqljs-connector"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/connectors/sqljs-connector"
   },
   "dependencies": {
     "@vulcan.sh/runtime": "workspace:*",

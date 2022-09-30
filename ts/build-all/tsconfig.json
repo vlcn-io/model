@@ -13,6 +13,9 @@
       "path": "../packages/codegen-api"
     },
     {
+      "path": "../packages/codegen-cli"
+    },
+    {
       "path": "../packages/codegen-sql"
     },
     {

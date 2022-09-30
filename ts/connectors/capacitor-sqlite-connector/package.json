@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/capacitor-sqlite-connector",
+  "name": "@vulcan.sh/capacitor-sqlite-connector",
   "version": "0.0.3",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/capacitor-sqlite-connector"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/connectors/capacitor-sqlite-connector"
   },
   "dependencies": {
     "@vulcan.sh/runtime": "workspace:*",

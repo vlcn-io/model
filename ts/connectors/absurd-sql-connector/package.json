@@ -1,12 +1,12 @@
 {
-  "name": "@aphro/absurd-sql-connector",
+  "name": "@vulcan.sh/absurd-sql-connector",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
-    "directory": "packages/absurd-sql-connector"
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "ts/connectors/absurd-sql-connector"
   },
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
