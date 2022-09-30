@@ -7,10 +7,10 @@ import {
   findRemovedColumns,
   getOldSql,
   setDifference,
-} from '../autoMigrate.js';
-import connect from '@databases/sqlite';
-import { sql, SQLQuery } from '@aphro/sql-ts';
-import { SQLResolvedDB } from '@aphro/context-runtime-ts';
+} from "../autoMigrate.js";
+import connect from "@databases/sqlite";
+import { sql, SQLQuery } from "@vulcan.sh/sql";
+import { SQLResolvedDB } from "@vulcan.sh/config";
 
 const conn = connect();
 
@@ -55,44 +55,44 @@ CREATE TABLE
   )`;
 
 const case3 =
-  '-- SIGNED-SOURCE: <39e0ffa72e52ff465fbd19ef78209317>\n' +
-  'CREATE TABLE\n' +
+  "-- SIGNED-SOURCE: <39e0ffa72e52ff465fbd19ef78209317>\n" +
+  "CREATE TABLE\n" +
   '  "decktoeditorsedge" ("id1" NOT NULL, "id2" NOT NULL)';
 
 const cases = [case1, case2, case3];
 
-test('extract table name', () => {
+test("extract table name", () => {
   [
-    [case1, 'user'],
-    [case2, 'decktoeditorsedge'],
-    [case3, 'decktoeditorsedge'],
+    [case1, "user"],
+    [case2, "decktoeditorsedge"],
+    [case3, "decktoeditorsedge"],
   ].forEach(([s, expected]) => {
-    const sql = s.replaceAll('\n', '');
+    const sql = s.replaceAll("\n", "");
 
     expect(extractTableName(sql)).toBe(expected);
   });
 });
 
-test('get old sql', async () => {
+test("get old sql", async () => {
   await memdb.write(sql`CREATE TABLE foo (a)`);
-  const s = await getOldSql(memdb, 'foo');
-  expect(s).toBe('CREATE TABLE foo (a)');
+  const s = await getOldSql(memdb, "foo");
+  expect(s).toBe("CREATE TABLE foo (a)");
 });
 
-test('extract column defs', () => {
+test("extract column defs", () => {
   const tests: [string, ColumnDef[]][] = [
     [
       case1,
       [
         {
           num: 1,
-          name: 'id',
+          name: "id",
           type: null,
           notnull: true,
         },
         {
           num: 2,
-          name: 'name',
+          name: "name",
           type: null,
           notnull: false,
         },
@@ -103,13 +103,13 @@ test('extract column defs', () => {
       [
         {
           num: 1,
-          name: 'id1',
+          name: "id1",
           type: null,
           notnull: true,
         },
         {
           num: 2,
-          name: 'id2',
+          name: "id2",
           type: null,
           notnull: true,
         },
@@ -120,13 +120,13 @@ test('extract column defs', () => {
       [
         {
           num: null,
-          name: 'id1',
+          name: "id1",
           type: null,
           notnull: true,
         },
         {
           num: null,
-          name: 'id2',
+          name: "id2",
           type: null,
           notnull: true,
         },
@@ -135,35 +135,35 @@ test('extract column defs', () => {
   ];
 
   tests.forEach(([c, expected]) => {
-    expect(extractColumnDefs(c.replaceAll('\n', ''))).toEqual(expected);
+    expect(extractColumnDefs(c.replaceAll("\n", ""))).toEqual(expected);
   });
 });
 
-test('set difference', () => {
-  expect(setDifference([1, 2, 3], [1, 2, 3], x => x)).toEqual([]);
-  expect(setDifference([1, 2, 3], [], x => x)).toEqual([1, 2, 3]);
-  expect(setDifference([], [1, 2, 3], x => x)).toEqual([]);
-  expect(setDifference([1, 2, 3, 4], [1, 2, 3], x => x)).toEqual([4]);
+test("set difference", () => {
+  expect(setDifference([1, 2, 3], [1, 2, 3], (x) => x)).toEqual([]);
+  expect(setDifference([1, 2, 3], [], (x) => x)).toEqual([1, 2, 3]);
+  expect(setDifference([], [1, 2, 3], (x) => x)).toEqual([]);
+  expect(setDifference([1, 2, 3, 4], [1, 2, 3], (x) => x)).toEqual([4]);
 });
 
-test('find added columns', () => {
+test("find added columns", () => {
   expect(
     findAddedColumns(
       [],
       [
         {
           num: null,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([
     {
       num: null,
-      name: 'id',
-      type: 'bigint',
+      name: "id",
+      type: "bigint",
       notnull: true,
     },
   ]);
@@ -173,20 +173,20 @@ test('find added columns', () => {
       [
         {
           num: null,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
       [
         {
           num: null,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([]);
 
   expect(
@@ -194,43 +194,43 @@ test('find added columns', () => {
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
       [
         {
           num: 1,
-          name: 'xid',
-          type: 'bigint',
+          name: "xid",
+          type: "bigint",
           notnull: true,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([]);
 });
 
-test('find removed columns', () => {
+test("find removed columns", () => {
   expect(
     findRemovedColumns(
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([]);
 
   expect(
@@ -238,55 +238,55 @@ test('find removed columns', () => {
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
-      [],
-    ),
+      []
+    )
   ).toEqual([
     {
       num: 1,
-      name: 'id',
-      type: 'bigint',
+      name: "id",
+      type: "bigint",
       notnull: true,
     },
   ]);
 });
 
-test('find altered columns', () => {
+test("find altered columns", () => {
   expect(
     findAlteredColumns(
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
       [
         {
           num: 1,
-          name: 'xid',
-          type: 'bigint',
+          name: "xid",
+          type: "bigint",
           notnull: false,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([
     [
       {
         num: 1,
-        name: 'id',
-        type: 'bigint',
+        name: "id",
+        type: "bigint",
         notnull: true,
       },
       {
         num: 1,
-        name: 'xid',
-        type: 'bigint',
+        name: "xid",
+        type: "bigint",
         notnull: false,
       },
     ],
@@ -297,19 +297,19 @@ test('find altered columns', () => {
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
       ],
       [
         {
           num: 1,
-          name: 'id',
-          type: 'bigint',
+          name: "id",
+          type: "bigint",
           notnull: true,
         },
-      ],
-    ),
+      ]
+    )
   ).toEqual([]);
 });

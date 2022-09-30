@@ -20,33 +20,37 @@
  * https://tantaman.com/2022-05-26-query-builder.html
  */
 
-import Plan, { IPlan } from './Plan.js';
-import { ChunkIterable, StaticSourceChunkIterable, TakeChunkIterable } from './ChunkIterable.js';
-import P, { Predicate } from './Predicate.js';
-import { FieldGetter } from './Field.js';
-import HopPlan from './HopPlan.js';
-import ModelLoadExpression from './ModelLoadExpression.js';
-import { Context, IModel } from '@aphro/context-runtime-ts';
-import CountLoadExpression from './CountLoadExpression.js';
-import { Query } from './Query.js';
+import Plan, { IPlan } from "./Plan.js";
+import {
+  ChunkIterable,
+  StaticSourceChunkIterable,
+  TakeChunkIterable,
+} from "./ChunkIterable.js";
+import P, { Predicate } from "./Predicate.js";
+import { FieldGetter } from "./Field.js";
+import HopPlan from "./HopPlan.js";
+import ModelLoadExpression from "./ModelLoadExpression.js";
+import { Context, IModel } from "@vulcan.sh/config";
+import CountLoadExpression from "./CountLoadExpression.js";
+import { Query } from "./Query.js";
 
 export type ExpressionType =
-  | 'take'
-  | 'before'
-  | 'after'
-  | 'filter'
-  | 'filterAsync'
-  | 'orderBy'
-  | 'orderByLambda'
-  | 'hop'
-  | 'modelLoad'
-  | 'count'
-  | 'countLoad'
-  | 'map'
-  | 'mapAsync'
-  | 'union';
+  | "take"
+  | "before"
+  | "after"
+  | "filter"
+  | "filterAsync"
+  | "orderBy"
+  | "orderByLambda"
+  | "hop"
+  | "modelLoad"
+  | "count"
+  | "countLoad"
+  | "map"
+  | "mapAsync"
+  | "union";
 
-export type Direction = 'asc' | 'desc';
+export type Direction = "asc" | "desc";
 export type Expression =
   | ReturnType<typeof take<any>>
   | ReturnType<typeof before<any>>
@@ -74,11 +78,11 @@ export type Expression = // union of the mapping of return types of the members 
 */
 
 export function take<T>(num: number): {
-  type: 'take';
+  type: "take";
   num: number;
 } & DerivedExpression<T, T> {
   return {
-    type: 'take',
+    type: "take",
     num,
     chainAfter(iterable) {
       return new TakeChunkIterable(iterable, num);
@@ -87,25 +91,25 @@ export function take<T>(num: number): {
 }
 
 export function before<T>(
-  cursor: string,
-): { type: 'before'; cursor: string } & DerivedExpression<T, T> {
+  cursor: string
+): { type: "before"; cursor: string } & DerivedExpression<T, T> {
   return {
-    type: 'before',
+    type: "before",
     cursor,
     chainAfter(_) {
-      throw new Error('Cursor must be consumed in plan optimization');
+      throw new Error("Cursor must be consumed in plan optimization");
     },
   };
 }
 
 export function after<T>(
-  cursor: string,
-): { type: 'after'; cursor: string } & DerivedExpression<T, T> {
+  cursor: string
+): { type: "after"; cursor: string } & DerivedExpression<T, T> {
   return {
-    type: 'after',
+    type: "after",
     cursor,
     chainAfter(_) {
-      throw new Error('Cursor must be consumed in plan optimization');
+      throw new Error("Cursor must be consumed in plan optimization");
     },
   };
 }
@@ -114,20 +118,22 @@ export function after<T>(
 // So this should be some spec that references the schema in some way.
 export function filter<Tm, Tv>(
   getter: FieldGetter<Tm, Tv> | null,
-  predicate: Predicate<Tv>,
+  predicate: Predicate<Tv>
 ): {
-  type: 'filter';
+  type: "filter";
   getter: FieldGetter<Tm, Tv> | null;
   predicate: Predicate<Tv>;
 } & DerivedExpression<Tm, Tm> {
   return {
-    type: 'filter',
+    type: "filter",
     getter,
     predicate,
     chainAfter(iterable) {
       // TODO:
       // @ts-ignore
-      return iterable.filter(m => predicate.call(getter == null ? m : getter.get(m)));
+      return iterable.filter((m) =>
+        predicate.call(getter == null ? m : getter.get(m))
+      );
     },
   };
 }
@@ -136,27 +142,31 @@ export function exists() {}
 
 export function filterAsync<Tm, Tv>(
   getter: FieldGetter<Tm, Tv> | null,
-  predicate: Predicate<Tv>,
+  predicate: Predicate<Tv>
 ): {
-  type: 'filterAsync';
+  type: "filterAsync";
   getter: FieldGetter<Tm, Tv> | null;
   predicate: Predicate<Tv>;
 } & DerivedExpression<Tm, Tm> {
   return {
-    type: 'filterAsync',
+    type: "filterAsync",
     getter,
     predicate,
     chainAfter(iterable) {
       // TODO:
       // @ts-ignore
-      return iterable.filterAsync(m => predicate.call(getter == null ? m : getter.get(m)));
+      return iterable.filterAsync((m) =>
+        predicate.call(getter == null ? m : getter.get(m))
+      );
     },
   };
 }
 
-export function map<T, R>(fn: (f: T) => R): { type: 'map' } & DerivedExpression<T, R> {
+export function map<T, R>(
+  fn: (f: T) => R
+): { type: "map" } & DerivedExpression<T, R> {
   return {
-    type: 'map',
+    type: "map",
     chainAfter(iterable) {
       return iterable.map(fn);
     },
@@ -164,10 +174,10 @@ export function map<T, R>(fn: (f: T) => R): { type: 'map' } & DerivedExpression<
 }
 
 export function mapAsync<T, R>(
-  fn: (f: T) => Promise<R>,
-): { type: 'mapAsync' } & DerivedExpression<T, R> {
+  fn: (f: T) => Promise<R>
+): { type: "mapAsync" } & DerivedExpression<T, R> {
   return {
-    type: 'mapAsync',
+    type: "mapAsync",
     chainAfter(iterable) {
       return iterable.mapAsync(fn);
     },
@@ -176,13 +186,14 @@ export function mapAsync<T, R>(
 
 export function orderBy<Tm, Tv>(
   getter: FieldGetter<Tm, Tv>,
-  direction: Direction,
-): { type: 'orderBy'; getter: FieldGetter<Tm, Tv>; direction: Direction } & DerivedExpression<
-  Tm,
-  Tm
-> {
+  direction: Direction
+): {
+  type: "orderBy";
+  getter: FieldGetter<Tm, Tv>;
+  direction: Direction;
+} & DerivedExpression<Tm, Tm> {
   return {
-    type: 'orderBy',
+    type: "orderBy",
     getter,
     direction,
     chainAfter(iterable) {
@@ -195,28 +206,28 @@ export function orderBy<Tm, Tv>(
         }
 
         if (leftValue > rightValue) {
-          return direction === 'asc' ? 1 : -1;
+          return direction === "asc" ? 1 : -1;
         }
-        return direction === 'asc' ? -1 : 1;
+        return direction === "asc" ? -1 : 1;
       });
     },
   };
 }
 
 export function orderByLambda<Tm>(fn: (l: Tm, r: Tm) => number): {
-  type: 'orderByLambda';
+  type: "orderByLambda";
 } & DerivedExpression<Tm, Tm> {
   return {
-    type: 'orderByLambda',
+    type: "orderByLambda",
     chainAfter(iterable) {
       return iterable.orderBy(fn);
     },
   };
 }
 
-export function count<Tm>(): { type: 'count' } & DerivedExpression<Tm, number> {
+export function count<Tm>(): { type: "count" } & DerivedExpression<Tm, number> {
   return {
-    type: 'count',
+    type: "count",
     chainAfter(iterable) {
       return iterable.count();
     },
@@ -229,16 +240,16 @@ export function hop<TIn, TOut>(): HopExpression<TIn, TOut> {
 
 export function modelLoad<TData extends {}, TModel extends IModel<TData>>(
   ctx: Context,
-  factory: (ctx: Context, data: TData) => TModel,
+  factory: (ctx: Context, data: TData) => TModel
 ): ModelLoadExpression<TData, TModel> {
   return new ModelLoadExpression(ctx, factory);
 }
 
 export function union<TOut>(
-  q: Query<TOut>,
-): { type: 'union'; query: Query<TOut> } & DerivedExpression<TOut, TOut> {
+  q: Query<TOut>
+): { type: "union"; query: Query<TOut> } & DerivedExpression<TOut, TOut> {
   return {
-    type: 'union',
+    type: "union",
     query: q,
     chainAfter(iterable) {
       const otherIterable = q.plan().optimize().iterable;
@@ -278,7 +289,7 @@ export interface HopExpression<TIn, TOut> {
    */
   optimize(sourcePlan: IPlan, plan: HopPlan, nextHop?: HopPlan): HopPlan;
   implicatedDataset(): string;
-  type: 'hop';
+  type: "hop";
 }
 
 export class EmptySourceExpression implements SourceExpression<void> {
@@ -287,7 +298,7 @@ export class EmptySourceExpression implements SourceExpression<void> {
   }
 
   implicatedDataset(): string {
-    return '';
+    return "";
   }
 
   get iterable(): ChunkIterable<void> {

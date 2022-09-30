@@ -8,13 +8,13 @@
     "errno": "ENOENT",
     "syscall": "spawn",
     "file": "sh",
-    "pkgid": "@aphro/schema-api@0.0.1",
+    "pkgid": "@vulcan.sh/schema-api@0.0.1",
     "stage": "build",
     "script": "rm -rf ./lib && tsc",
-    "pkgname": "@aphro/schema-api",
+    "pkgname": "@vulcan.sh/schema-api",
     "err": {
       "name": "pnpm",
-      "message": "@aphro/schema-api@0.0.1 build: `rm -rf ./lib && tsc`\nspawn ENOENT",
+      "message": "@vulcan.sh/schema-api@0.0.1 build: `rm -rf ./lib && tsc`\nspawn ENOENT",
       "code": "ELIFECYCLE",
       "stack": "pnpm: @aphro/schema-api@0.0.1 build: `rm -rf ./lib && tsc`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/Users/tantaman/.nvm/versions/node/v17.5.0/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:92290:22)\n    at ChildProcess.emit (node:events:526:28)\n    at maybeClose (node:internal/child_process:1090:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:302:5)"
     }

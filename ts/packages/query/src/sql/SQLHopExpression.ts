@@ -1,18 +1,22 @@
-import { Context } from '@aphro/context-runtime-ts';
-import { specToDatasetKey } from '@aphro/model-runtime-ts';
-import { EdgeSpec } from '@aphro/schema-api';
-import { ChunkIterable } from '../ChunkIterable.js';
-import { HopExpression } from '../Expression.js';
-import HopPlan from '../HopPlan.js';
-import { IPlan } from '../Plan.js';
-import SQLExpression, { HoistedOperations } from './SQLExpression.js';
-import SQLHopChunkIterable from './SQLHopChunkIterable.js';
+import { Context } from "@vulcan.sh/config";
+import { specToDatasetKey } from "@vulcan.sh/model-persisted";
+import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { ChunkIterable } from "../ChunkIterable.js";
+import { HopExpression } from "../Expression.js";
+import HopPlan from "../HopPlan.js";
+import { IPlan } from "../Plan.js";
+import SQLExpression, { HoistedOperations } from "./SQLExpression.js";
+import SQLHopChunkIterable from "./SQLHopChunkIterable.js";
 
 export default class SQLHopExpression<TIn, TOut>
   extends SQLExpression<TOut>
   implements HopExpression<TIn, TOut>
 {
-  constructor(ctx: Context, public readonly edge: EdgeSpec, ops: HoistedOperations) {
+  constructor(
+    ctx: Context,
+    public readonly edge: EdgeSpec,
+    ops: HoistedOperations
+  ) {
     super(ctx, ops);
   }
 
@@ -25,15 +29,18 @@ export default class SQLHopExpression<TIn, TOut>
    * SourcePlan is retained in case we need to chain after source.
    */
   optimize(sourcePlan: IPlan, plan: HopPlan, nextHop?: HopPlan): HopPlan {
-    const [hoistedExpressions, remainingExpressions] = this.hoist(plan, nextHop);
+    const [hoistedExpressions, remainingExpressions] = this.hoist(
+      plan,
+      nextHop
+    );
     return new HopPlan(
       sourcePlan,
       new SQLHopExpression(this.ctx, this.edge, hoistedExpressions),
-      remainingExpressions,
+      remainingExpressions
     );
   }
 
-  type: 'hop' = 'hop';
+  type: "hop" = "hop";
 
   get destSpec() {
     return this.edge.dest;

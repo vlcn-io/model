@@ -1,20 +1,25 @@
-import { BaseChunkIterable } from '../ChunkIterable.js';
-import specAndOpsToQuery from './specAndOpsToQuery.js';
-import { HoistedOperations } from './SQLExpression.js';
-import { invariant } from '@strut/utils';
-import { Context, IModel, SQLResolvedDB } from '@aphro/context-runtime-ts';
-import { JunctionEdgeSpec, NodeSpec } from '@aphro/schema-api';
-import { ModelFieldGetter } from '../Field.js';
-import { SID_of } from '@strut/sid';
+import { BaseChunkIterable } from "../ChunkIterable.js";
+import specAndOpsToQuery from "./specAndOpsToQuery.js";
+import { HoistedOperations } from "./SQLExpression.js";
+import { invariant } from "@strut/utils";
+import { Context, IModel, SQLResolvedDB } from "@vulcan.sh/config";
+import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { ModelFieldGetter } from "../Field.js";
+import { SID_of } from "@strut/sid";
 
-export default class SQLSourceChunkIterable<T extends IModel<Object>> extends BaseChunkIterable<T> {
+export default class SQLSourceChunkIterable<
+  T extends IModel<Object>
+> extends BaseChunkIterable<T> {
   constructor(
     private ctx: Context,
     private spec: NodeSpec | JunctionEdgeSpec,
-    private hoistedOperations: HoistedOperations,
+    private hoistedOperations: HoistedOperations
   ) {
     super();
-    invariant(this.spec.storage.type === 'sql', 'SQL source used for non-SQL model!');
+    invariant(
+      this.spec.storage.type === "sql",
+      "SQL source used for non-SQL model!"
+    );
   }
 
   // TODO: Should you even do direct load check here?
@@ -44,7 +49,7 @@ export default class SQLSourceChunkIterable<T extends IModel<Object>> extends Ba
       const cached = this.ctx.cache.get(
         directLoad,
         this.spec.storage.db,
-        this.spec.storage.tablish,
+        this.spec.storage.tablish
       );
       if (cached != null) {
         yield [cached];
@@ -67,7 +72,7 @@ export default class SQLSourceChunkIterable<T extends IModel<Object>> extends Ba
   private isDirectLoad(): SID_of<any> | null {
     const spec = this.spec;
     if (
-      spec.type !== 'node' ||
+      spec.type !== "node" ||
       this.hoistedOperations.filters?.length !== 1 ||
       this.hoistedOperations.after != null ||
       this.hoistedOperations.before != null ||
@@ -81,7 +86,7 @@ export default class SQLSourceChunkIterable<T extends IModel<Object>> extends Ba
 
     // select ids when provoding ids wouldn't make sense
     // Future: resolving a count could be done if cache has all ids
-    if (this.hoistedOperations.what !== 'model') {
+    if (this.hoistedOperations.what !== "model") {
       return null;
     }
 
@@ -95,7 +100,7 @@ export default class SQLSourceChunkIterable<T extends IModel<Object>> extends Ba
     }
 
     // future: maybe support `in`
-    if (filter.predicate.type !== 'equal') {
+    if (filter.predicate.type !== "equal") {
       return null;
     }
 

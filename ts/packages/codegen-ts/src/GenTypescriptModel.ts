@@ -167,19 +167,19 @@ export default abstract class ${this.schema.name}Base
         "s",
         "./" + nodeFn.specName(this.schema.name) + ".js"
       ),
-      tsImport("{P}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{UpdateMutationBuilder}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{CreateMutationBuilder}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{DeleteMutationBuilder}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{makeSavable}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{modelGenMemo}", null, "@vulcan.sh/runtime-ts"),
+      tsImport("{P}", null, "@vulcan.sh/runtime"),
+      tsImport("{UpdateMutationBuilder}", null, "@vulcan.sh/runtime"),
+      tsImport("{CreateMutationBuilder}", null, "@vulcan.sh/runtime"),
+      tsImport("{DeleteMutationBuilder}", null, "@vulcan.sh/runtime"),
+      tsImport("{makeSavable}", null, "@vulcan.sh/runtime"),
+      tsImport("{modelGenMemo}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
-        ? tsImport("{Node}", null, "@vulcan.sh/runtime-ts")
-        : tsImport("{Edge}", null, "@vulcan.sh/runtime-ts"),
+        ? tsImport("{Node}", null, "@vulcan.sh/runtime")
+        : tsImport("{Edge}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
-        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime-ts")
-        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime-ts"),
+        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
+        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
+      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
       ...(this.schema.storage.type !== "ephemeral"
         ? [
             tsImport(
@@ -189,7 +189,7 @@ export default abstract class ${this.schema.name}Base
             ),
           ]
         : []),
-      tsImport("{Context}", null, "@vulcan.sh/runtime-ts"),
+      tsImport("{Context}", null, "@vulcan.sh/runtime"),
       ...(this.schema.type === "node"
         ? this.schema.extensions.module?.imports.values() || []
         : []),

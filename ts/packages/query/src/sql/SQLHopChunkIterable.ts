@@ -21,19 +21,23 @@
  * - Non followed inverse jx edges
  */
 
-import { Context } from '@aphro/context-runtime-ts';
-import { EdgeSpec } from '@aphro/schema-api';
-import { BaseChunkIterable } from '../ChunkIterable.js';
-import { HoistedOperations } from './SQLExpression.js';
+import { Context } from "@vulcan.sh/config";
+import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { BaseChunkIterable } from "../ChunkIterable.js";
+import { HoistedOperations } from "./SQLExpression.js";
 
 export default class SQLHopChunkIterable<T> extends BaseChunkIterable<T> {
-  constructor(private ctx: Context, private edge: EdgeSpec, private ops: HoistedOperations) {
+  constructor(
+    private ctx: Context,
+    private edge: EdgeSpec,
+    private ops: HoistedOperations
+  ) {
     super();
   }
 
   async *[Symbol.asyncIterator](): AsyncIterator<readonly T[]> {
     throw new Error(
-      'Unimplemented -- see comments at the top of this file for implementation path',
+      "Unimplemented -- see comments at the top of this file for implementation path"
     );
     // yield await specAndOpsToQuery();
   }

@@ -1,4 +1,4 @@
-import { IModel, INode } from '@aphro/context-runtime-ts';
+import { IModel, INode } from "@vulcan.sh/config";
 
 export interface FieldGetter<Tm, Tv> {
   readonly get: (m: Tm) => Tv;
@@ -15,8 +15,11 @@ export interface FieldGetter<Tm, Tv> {
  *
  * Read more about query optimization here: https://tantaman.com/2022-05-26-query-plan-optimization.html
  */
-export class ModelFieldGetter<Tk extends keyof Td, Td extends {}, Tm extends IModel<Td>>
-  implements FieldGetter<Tm, Td[Tk]>
+export class ModelFieldGetter<
+  Tk extends keyof Td,
+  Td extends {},
+  Tm extends IModel<Td>
+> implements FieldGetter<Tm, Td[Tk]>
 {
   constructor(public readonly fieldName: Tk) {}
 

@@ -1,12 +1,12 @@
-import { Context, IModel } from '@aphro/context-runtime-ts';
-import { specToDatasetKey } from '@aphro/model-runtime-ts';
-import { EdgeSpec } from '@aphro/schema-api';
-import { ChunkIterable } from '../ChunkIterable.js';
-import { HopExpression } from '../Expression.js';
-import HopPlan from '../HopPlan.js';
-import { IPlan } from '../Plan.js';
-import MemoryHopChunkIterable from './MemoryHopChunkIterable.js';
-import { HoistedOperations } from './MemorySourceExpression.js';
+import { Context, IModel } from "@vulcan.sh/config";
+import { specToDatasetKey } from "@vulcan.sh/model-persisted";
+import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { ChunkIterable } from "../ChunkIterable.js";
+import { HopExpression } from "../Expression.js";
+import HopPlan from "../HopPlan.js";
+import { IPlan } from "../Plan.js";
+import MemoryHopChunkIterable from "./MemoryHopChunkIterable.js";
+import { HoistedOperations } from "./MemorySourceExpression.js";
 
 export default class MemoryHopExpression<TIn extends IModel, TOut>
   implements HopExpression<TIn, TOut>
@@ -14,7 +14,7 @@ export default class MemoryHopExpression<TIn extends IModel, TOut>
   constructor(
     public readonly ctx: Context,
     public readonly edge: EdgeSpec,
-    private ops: HoistedOperations,
+    private ops: HoistedOperations
   ) {}
 
   chainAfter(iterable: ChunkIterable<TIn>): ChunkIterable<TOut> {
@@ -35,11 +35,15 @@ export default class MemoryHopExpression<TIn extends IModel, TOut>
       derivs.push(nextHop.hop);
       derivs = derivs.concat(nextHop.derivations);
     }
-    return new HopPlan(sourcePlan, new MemoryHopExpression(this.ctx, this.edge, this.ops), derivs);
+    return new HopPlan(
+      sourcePlan,
+      new MemoryHopExpression(this.ctx, this.edge, this.ops),
+      derivs
+    );
     // return plan;
   }
 
-  type: 'hop' = 'hop';
+  type: "hop" = "hop";
 
   get destSpec() {
     return this.edge.dest;

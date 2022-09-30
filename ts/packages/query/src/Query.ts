@@ -1,5 +1,5 @@
-import { Context } from '@aphro/context-runtime-ts';
-import { invariant } from '@strut/utils';
+import { Context } from "@vulcan.sh/config";
+import { invariant } from "@strut/utils";
 import {
   count,
   EmptySourceExpression,
@@ -13,12 +13,12 @@ import {
   orderByLambda,
   SourceExpression,
   union,
-} from './Expression.js';
-import HopPlan from './HopPlan.js';
-import LiveResult from './live/LiveResult.js';
-import Plan, { IPlan } from './Plan.js';
-import P from './Predicate.js';
-import tracer from './trace.js';
+} from "./Expression.js";
+import HopPlan from "./HopPlan.js";
+import LiveResult from "./live/LiveResult.js";
+import Plan, { IPlan } from "./Plan.js";
+import P from "./Predicate.js";
+import tracer from "./trace.js";
 
 export enum UpdateType {
   CREATE = 1,
@@ -69,14 +69,17 @@ abstract class BaseQuery<T> implements Query<T> {
   }
 
   gen(): Promise<T[]> {
-    return tracer.genStartActiveSpan(this.constructor.name + '.gen', span => {
+    return tracer.genStartActiveSpan(this.constructor.name + ".gen", (span) => {
       return this.plan().optimize().gen();
     });
   }
 
   async genOnlyValue(): Promise<T | null> {
     const values = await this.gen();
-    invariant(values.length <= 1, 'genOnlyValue returned more values than expected.');
+    invariant(
+      values.length <= 1,
+      "genOnlyValue returned more values than expected."
+    );
 
     return values[0] || null;
   }
@@ -84,7 +87,7 @@ abstract class BaseQuery<T> implements Query<T> {
   async genxOnlyValue(): Promise<T> {
     const ret = await this.genOnlyValue();
     if (ret == null) {
-      throw new Error('genxOnlyValue did not return a value');
+      throw new Error("genxOnlyValue did not return a value");
     }
 
     return ret;
@@ -142,7 +145,7 @@ export abstract class HopQuery<TIn, TOut> extends BaseQuery<TOut> {
   constructor(
     ctx: Context,
     private priorQuery: Query<TIn>,
-    public readonly expression: HopExpression<TIn, TOut>,
+    public readonly expression: HopExpression<TIn, TOut>
   ) {
     super(ctx);
   }

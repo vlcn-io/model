@@ -61,16 +61,16 @@ test("Generating an ID only model", async () => {
  */
 import IDOnly from "../IDOnly.js";
 import { default as s } from "./IDOnlySpec.js";
-import { P } from "@aphro/runtime-ts";
-import { UpdateMutationBuilder } from "@aphro/runtime-ts";
-import { CreateMutationBuilder } from "@aphro/runtime-ts";
-import { DeleteMutationBuilder } from "@aphro/runtime-ts";
-import { modelGenMemo } from "@aphro/runtime-ts";
-import { Node } from "@aphro/runtime-ts";
-import { NodeSpecWithCreate } from "@aphro/runtime-ts";
-import { SID_of } from "@aphro/runtime-ts";
+import { P } from "@vulcan.sh/runtime";
+import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
+import { CreateMutationBuilder } from "@vulcan.sh/runtime";
+import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
+import { modelGenMemo } from "@vulcan.sh/runtime";
+import { Node } from "@vulcan.sh/runtime";
+import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
+import { SID_of } from "@vulcan.sh/runtime";
 import IDOnlyQuery from "./IDOnlyQuery.js";
-import { Context } from "@aphro/runtime-ts";
+import { Context } from "@vulcan.sh/runtime";
 
 export type Data = {
   id: SID_of<IDOnly>;
@@ -133,16 +133,16 @@ test("Generating all primitive fields", async () => {
  */
 import PrimitiveFields from "../PrimitiveFields.js";
 import { default as s } from "./PrimitiveFieldsSpec.js";
-import { P } from "@aphro/runtime-ts";
-import { UpdateMutationBuilder } from "@aphro/runtime-ts";
-import { CreateMutationBuilder } from "@aphro/runtime-ts";
-import { DeleteMutationBuilder } from "@aphro/runtime-ts";
-import { modelGenMemo } from "@aphro/runtime-ts";
-import { Node } from "@aphro/runtime-ts";
-import { NodeSpecWithCreate } from "@aphro/runtime-ts";
-import { SID_of } from "@aphro/runtime-ts";
+import { P } from "@vulcan.sh/runtime";
+import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
+import { CreateMutationBuilder } from "@vulcan.sh/runtime";
+import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
+import { modelGenMemo } from "@vulcan.sh/runtime";
+import { Node } from "@vulcan.sh/runtime";
+import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
+import { SID_of } from "@vulcan.sh/runtime";
 import PrimitiveFieldsQuery from "./PrimitiveFieldsQuery.js";
-import { Context } from "@aphro/runtime-ts";
+import { Context } from "@vulcan.sh/runtime";
 
 export type Data = {
   id: SID_of<PrimitiveFields>;
@@ -235,16 +235,16 @@ test("Outbound field edge", async () => {
  */
 import Foo from "../Foo.js";
 import { default as s } from "./FooSpec.js";
-import { P } from "@aphro/runtime-ts";
-import { UpdateMutationBuilder } from "@aphro/runtime-ts";
-import { CreateMutationBuilder } from "@aphro/runtime-ts";
-import { DeleteMutationBuilder } from "@aphro/runtime-ts";
-import { modelGenMemo } from "@aphro/runtime-ts";
-import { Node } from "@aphro/runtime-ts";
-import { NodeSpecWithCreate } from "@aphro/runtime-ts";
-import { SID_of } from "@aphro/runtime-ts";
+import { P } from "@vulcan.sh/runtime";
+import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
+import { CreateMutationBuilder } from "@vulcan.sh/runtime";
+import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
+import { modelGenMemo } from "@vulcan.sh/runtime";
+import { Node } from "@vulcan.sh/runtime";
+import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
+import { SID_of } from "@vulcan.sh/runtime";
 import FooQuery from "./FooQuery.js";
-import { Context } from "@aphro/runtime-ts";
+import { Context } from "@vulcan.sh/runtime";
 import FooSpec from "./FooSpec.js";
 
 export type Data = {
@@ -321,16 +321,16 @@ test("Outbound foreign key edge", async () => {
  */
 import Bar from "../Bar.js";
 import { default as s } from "./BarSpec.js";
-import { P } from "@aphro/runtime-ts";
-import { UpdateMutationBuilder } from "@aphro/runtime-ts";
-import { CreateMutationBuilder } from "@aphro/runtime-ts";
-import { DeleteMutationBuilder } from "@aphro/runtime-ts";
-import { modelGenMemo } from "@aphro/runtime-ts";
-import { Node } from "@aphro/runtime-ts";
-import { NodeSpecWithCreate } from "@aphro/runtime-ts";
-import { SID_of } from "@aphro/runtime-ts";
+import { P } from "@vulcan.sh/runtime";
+import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
+import { CreateMutationBuilder } from "@vulcan.sh/runtime";
+import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
+import { modelGenMemo } from "@vulcan.sh/runtime";
+import { Node } from "@vulcan.sh/runtime";
+import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
+import { SID_of } from "@vulcan.sh/runtime";
 import BarQuery from "./BarQuery.js";
-import { Context } from "@aphro/runtime-ts";
+import { Context } from "@vulcan.sh/runtime";
 import FooQuery from "./FooQuery.js";
 import Foo from "../Foo.js";
 

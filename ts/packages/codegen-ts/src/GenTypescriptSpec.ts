@@ -107,13 +107,13 @@ export default ${nodeFn.specName(this.schema.name)};
 
   private collectImports(): Import[] {
     return [
-      tsImport("{Context}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{decodeModelData}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{encodeModelData}", null, "@vulcan.sh/runtime-ts"),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime-ts"),
+      tsImport("{Context}", null, "@vulcan.sh/runtime"),
+      tsImport("{decodeModelData}", null, "@vulcan.sh/runtime"),
+      tsImport("{encodeModelData}", null, "@vulcan.sh/runtime"),
+      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
-        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime-ts")
-        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime-ts"),
+        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
+        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
       ...this.getEdgeImports(),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
       tsImport("{Data}", null, `./${this.schema.name}Base.js`),

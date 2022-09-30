@@ -4,29 +4,29 @@ import {
   INode,
   ModelSpecWithCreate,
   NodeSpecWithCreate,
-} from '@aphro/context-runtime-ts';
-import { EdgeSpec } from '@aphro/schema-api';
-import { assertUnreachable } from '@strut/utils';
-import MemorySourceQuery from './memory/MemorySourceQuery.js';
-import MemoryHopQuery from './memory/MemoryHopQuery.js';
-import { DerivedQuery, HopQuery, Query } from './Query.js';
-import SQLHopQuery from './sql/SQLHopQuery.js';
-import SQLSourceQuery from './sql/SQLSourceQuery.js';
+} from "@vulcan.sh/config";
+import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { assertUnreachable } from "@strut/utils";
+import MemorySourceQuery from "./memory/MemorySourceQuery.js";
+import MemoryHopQuery from "./memory/MemoryHopQuery.js";
+import { DerivedQuery, HopQuery, Query } from "./Query.js";
+import SQLHopQuery from "./sql/SQLHopQuery.js";
+import SQLSourceQuery from "./sql/SQLSourceQuery.js";
 
 // Runtime factory so we can swap to `Wire` when running on a client vs
 // the native platform.
 const factory = {
   createSourceQueryFor<T extends IModel<{}>>(
     ctx: Context,
-    spec: ModelSpecWithCreate<T, {}>,
+    spec: ModelSpecWithCreate<T, {}>
   ): Query<T> {
     switch (spec.storage.type) {
-      case 'sql':
+      case "sql":
         return new SQLSourceQuery(ctx, spec);
-      case 'memory':
+      case "memory":
         return new MemorySourceQuery(ctx, spec);
       default:
-        throw new Error(spec.storage.type + ' is not yet supported');
+        throw new Error(spec.storage.type + " is not yet supported");
     }
   },
 
@@ -34,15 +34,15 @@ const factory = {
   createHopQueryFor<TDest>(
     ctx: Context,
     priorQuery: DerivedQuery<any>,
-    edge: EdgeSpec,
+    edge: EdgeSpec
   ): HopQuery<any, any> {
     const type = edge.dest.storage.type;
     switch (type) {
-      case 'sql':
+      case "sql":
         return SQLHopQuery.create(ctx, priorQuery, edge);
-      case 'memory':
+      case "memory":
         return MemoryHopQuery.create(ctx, priorQuery, edge);
-      case 'ephemeral':
+      case "ephemeral":
         throw new Error(`Hops for ${type} are not implemented yet`);
     }
     assertUnreachable(type);

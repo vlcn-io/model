@@ -93,7 +93,7 @@ export default class ${nodeFn.queryTypeName(
 
   private collectImports(): Import[] {
     return [
-      tsImport("{Context}", null, "@vulcan.sh/runtime-ts"),
+      tsImport("{Context}", null, "@vulcan.sh/runtime"),
       ...[
         "DerivedQuery",
         "QueryFactory",
@@ -106,8 +106,8 @@ export default class ${nodeFn.queryTypeName(
         "ModelFieldGetter",
         "Expression",
         "EmptyQuery",
-      ].map((i) => tsImport(`{${i}}`, null, "@vulcan.sh/runtime-ts")),
-      tsImport("{SID_of}", null, "@vulcan.sh/runtime-ts"),
+      ].map((i) => tsImport(`{${i}}`, null, "@vulcan.sh/runtime")),
+      tsImport("{SID_of}", null, "@vulcan.sh/runtime"),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
       tsImport("{Data}", null, `./${this.schema.name}Base.js`),
       tsImport(

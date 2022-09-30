@@ -1,5 +1,5 @@
-import { tracer, Tracer } from '@aphro/instrument';
+import { tracer, Tracer } from "@vulcan.sh/instrument";
 
-const t: Tracer = tracer('@aphro/query-runtime-ts', '0.2.3');
+const t: Tracer = tracer("@vulcan.sh/query", "0.2.3");
 
 export default t;

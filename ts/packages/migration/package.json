@@ -1,5 +1,5 @@
 {
-  "name": "@aphro/migration-runtime-ts",
+  "name": "@vulcan.sh/migration-runtime-ts",
   "version": "0.1.7",
   "main": "lib/index.js",
   "type": "module",
@@ -9,8 +9,8 @@
     "directory": "packages/migration-runtime-ts"
   },
   "dependencies": {
-    "@aphro/context-runtime-ts": "workspace:*",
-    "@aphro/sql-ts": "workspace:*",
+    "@vulcan.sh/config": "workspace:*",
+    "@vulcan.sh/sql": "workspace:*",
     "@databases/sqlite": "^4.0.1",
     "@strut/utils": "^0.1.1"
   },
@@ -24,7 +24,6 @@
     "md5": "^2.3.0",
     "prettier": "^2.7.1",
     "sql-formatter": "^10.0.0",
-    "ts-jest": "^28.0.8",
     "typescript": "^4.8.2"
   },
   "scripts": {

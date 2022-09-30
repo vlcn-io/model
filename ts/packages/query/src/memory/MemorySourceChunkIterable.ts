@@ -1,18 +1,26 @@
-import { BaseChunkIterable } from '../ChunkIterable.js';
-import { invariant } from '@strut/utils';
-import { Context, IModel, MemoryReadQuery, MemoryResolvedDB } from '@aphro/context-runtime-ts';
-import { JunctionEdgeSpec, NodeSpec } from '@aphro/schema-api';
+import { BaseChunkIterable } from "../ChunkIterable.js";
+import { invariant } from "@strut/utils";
+import {
+  Context,
+  IModel,
+  MemoryReadQuery,
+  MemoryResolvedDB,
+} from "@vulcan.sh/config";
+import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
 
 export default class MemorySourceChunkIterable<
-  T extends IModel<Object>,
+  T extends IModel<Object>
 > extends BaseChunkIterable<T> {
   constructor(
     private ctx: Context,
     private spec: NodeSpec | JunctionEdgeSpec,
-    private query: MemoryReadQuery,
+    private query: MemoryReadQuery
   ) {
     super();
-    invariant(this.spec.storage.type === 'memory', 'Memory source used for non-memory model!');
+    invariant(
+      this.spec.storage.type === "memory",
+      "Memory source used for non-memory model!"
+    );
   }
 
   async *[Symbol.asyncIterator](): AsyncIterator<readonly T[]> {

@@ -1,33 +1,45 @@
-import { HoistedOperations } from './SQLExpression.js';
-import { after, before, filter, HopExpression, orderBy, take } from '../Expression.js';
-import SQLHopExpression from './SQLHopExpression.js';
-import { ModelFieldGetter } from '../Field.js';
-import { JunctionEdgeSpec, NodeSpec } from '@aphro/schema-api';
-import { invariant } from '@strut/utils';
-import { formatters, sql, SQLQuery } from '@aphro/sql-ts';
-import tracer from '../trace.js';
+import { HoistedOperations } from "./SQLExpression.js";
+import {
+  after,
+  before,
+  filter,
+  HopExpression,
+  orderBy,
+  take,
+} from "../Expression.js";
+import SQLHopExpression from "./SQLHopExpression.js";
+import { ModelFieldGetter } from "../Field.js";
+import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { invariant } from "@strut/utils";
+import { formatters, sql, SQLQuery } from "@vulcan.sh/sql";
+import tracer from "../trace.js";
 
 // given a model spec and hoisted operations, return the SQL query
 export default function specAndOpsToQuery(
   spec: NodeSpec | JunctionEdgeSpec,
-  ops: HoistedOperations,
+  ops: HoistedOperations
 ): SQLQuery {
-  return tracer.startActiveSpan('specAndOpsToQuery', span => {
-    span.setAttribute('tablish', spec.storage.tablish);
+  return tracer.startActiveSpan("specAndOpsToQuery", (span) => {
+    span.setAttribute("tablish", spec.storage.tablish);
     const [lastSpec, lastWhat] = getLastSpecAndProjection(spec, ops);
     const tableAliases = createTableAliases(spec, ops.hop, []);
     const projection = (() => {
       switch (lastWhat) {
-        case 'count':
+        case "count":
           return sql`count(*)`;
-        case 'edges':
-          throw new Error('edge projection not yet supported');
-        case 'ids':
-          if (lastSpec.type === 'junction') {
-            throw new Error('id projection not yet supported on junction edges');
+        case "edges":
+          throw new Error("edge projection not yet supported");
+        case "ids":
+          if (lastSpec.type === "junction") {
+            throw new Error(
+              "id projection not yet supported on junction edges"
+            );
           }
-          return sql`${sql.ident(tableAliases[tableAliases.length - 1], lastSpec.primaryKey)}`;
-        case 'model':
+          return sql`${sql.ident(
+            tableAliases[tableAliases.length - 1],
+            lastSpec.primaryKey
+          )}`;
+        case "model":
           // TODO: explicitly name the fields so we get the right order!
           // we're ok for now since we force returns to be maps.
           return sql`${sql.ident(tableAliases[tableAliases.length - 1])}.*`;
@@ -42,24 +54,28 @@ export default function specAndOpsToQuery(
     const filterList = getFilters(spec, ops.hop, ops.filters, tableAliases, 0);
     const filters =
       filterList.length === 0
-        ? sql.__dangerous__rawValue('')
-        : sql`WHERE ${sql.join(filterList, ' AND ')}`;
+        ? sql.__dangerous__rawValue("")
+        : sql`WHERE ${sql.join(filterList, " AND ")}`;
     // should also grab before/afters from the hops
     const beforeAndAfter =
-      getBeforeAndAfter(ops.before, ops.after) || sql.__dangerous__rawValue('');
+      getBeforeAndAfter(ops.before, ops.after) || sql.__dangerous__rawValue("");
     // should also grab order bys from the hops and apply in-order of the hoisted hops
     const orderBy =
-      lastWhat === 'count'
-        ? sql.__dangerous__rawValue('')
-        : getOrderBy(spec, ops.hop, ops.orderBy, tableAliases, 0) || sql.__dangerous__rawValue('');
+      lastWhat === "count"
+        ? sql.__dangerous__rawValue("")
+        : getOrderBy(spec, ops.hop, ops.orderBy, tableAliases, 0) ||
+          sql.__dangerous__rawValue("");
     // `applyHops` takes limits into account given they change the nature of the join to a sub-select
-    const limit = getLimit(ops.limit) || sql.__dangerous__rawValue('');
+    const limit = getLimit(ops.limit) || sql.__dangerous__rawValue("");
 
     // nit: this doesn't take into account limits in between hops.
     // SELECT projection FROM table {hops} {filters} {before/after} {orderby} {limit}
-    const s = sql`SELECT ${projection} FROM ${sql.ident(spec.storage.tablish)} AS ${sql.ident(
-      tableAliases[0],
-    )} ${sql.join(hops, sql` `)} ${filters} ${beforeAndAfter} ${orderBy} ${limit}`;
+    const s = sql`SELECT ${projection} FROM ${sql.ident(
+      spec.storage.tablish
+    )} AS ${sql.ident(tableAliases[0])} ${sql.join(
+      hops,
+      sql` `
+    )} ${filters} ${beforeAndAfter} ${orderBy} ${limit}`;
     // console.log(s.format(formatters.sqlite));
     return s;
   });
@@ -68,16 +84,16 @@ export default function specAndOpsToQuery(
 function createTableAliases(
   spec: NodeSpec | JunctionEdgeSpec,
   hop: SQLHopExpression<any, any> | undefined,
-  aliases: string[],
+  aliases: string[]
 ): string[] {
-  aliases.push(spec.storage.tablish + '__' + aliases.length);
+  aliases.push(spec.storage.tablish + "__" + aliases.length);
   if (hop == null) {
     return aliases;
   }
 
   const edge = hop.edge;
-  if (edge.type === 'junction') {
-    aliases.push(edge.storage.tablish + '__' + aliases.length);
+  if (edge.type === "junction") {
+    aliases.push(edge.storage.tablish + "__" + aliases.length);
   }
 
   return createTableAliases(hop.destSpec, hop.ops.hop, aliases);
@@ -85,8 +101,8 @@ function createTableAliases(
 
 export function getLastSpecAndProjection(
   spec: NodeSpec | JunctionEdgeSpec,
-  ops: HoistedOperations,
-): [NodeSpec | JunctionEdgeSpec, HoistedOperations['what']] {
+  ops: HoistedOperations
+): [NodeSpec | JunctionEdgeSpec, HoistedOperations["what"]] {
   const hop = ops.hop;
   if (hop == null) {
     return [spec, ops.what];
@@ -100,7 +116,7 @@ function getFilters(
   hop: SQLHopExpression<any, any> | undefined,
   filters: readonly ReturnType<typeof filter>[] | undefined,
   tableAliases: string[],
-  aliasCursor: number,
+  aliasCursor: number
 ): SQLQuery[] {
   let hopFilters: SQLQuery[] = [];
   if (hop != null) {
@@ -109,109 +125,121 @@ function getFilters(
       hop.ops.hop,
       hop.ops.filters,
       tableAliases,
-      hop.edge.type === 'junction' ? aliasCursor + 2 : aliasCursor + 1,
+      hop.edge.type === "junction" ? aliasCursor + 2 : aliasCursor + 1
     );
   }
   if (!filters || filters.length === 0) {
     return hopFilters;
   }
 
-  return hopFilters.concat(filters.map(f => getFilter(spec, f, tableAliases, aliasCursor)));
+  return hopFilters.concat(
+    filters.map((f) => getFilter(spec, f, tableAliases, aliasCursor))
+  );
 }
 
 function getFilter(
   spec: NodeSpec | JunctionEdgeSpec,
   f: ReturnType<typeof filter>,
   tableAliases: string[],
-  aliasCursor: number,
+  aliasCursor: number
 ): SQLQuery {
   const getter = f.getter as ModelFieldGetter<any, any, any>;
   let op: string | null = null;
   const predicate = f.predicate;
   switch (predicate.type) {
-    case 'equal':
+    case "equal":
       if (predicate.value === null) {
-        return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} IS NULL`;
+        return sql`${sql.ident(
+          tableAliases[aliasCursor],
+          getter.fieldName
+        )} IS NULL`;
       }
-      op = '=';
+      op = "=";
       break;
-    case 'notEqual':
+    case "notEqual":
       if (predicate.value === null) {
-        return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} IS NOT NULL`;
+        return sql`${sql.ident(
+          tableAliases[aliasCursor],
+          getter.fieldName
+        )} IS NOT NULL`;
       }
-      op = '<>';
+      op = "<>";
       break;
-    case 'lessThan':
-      op = '<';
+    case "lessThan":
+      op = "<";
       break;
-    case 'greaterThan':
-      op = '>';
+    case "greaterThan":
+      op = ">";
       break;
-    case 'lessThanOrEqual':
-      op = '<=';
+    case "lessThanOrEqual":
+      op = "<=";
       break;
-    case 'greaterThanOrEqual':
-      op = '>=';
+    case "greaterThanOrEqual":
+      op = ">=";
       break;
-    case 'in': {
+    case "in": {
       const values: SQLQuery[] = [];
       for (const v of predicate.value) {
         values.push(sql.value(v));
       }
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} IN (${sql.join(
-        values,
-        ',',
-      )})`;
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} IN (${sql.join(values, ",")})`;
     }
-    case 'notIn': {
+    case "notIn": {
       const values: SQLQuery[] = [];
       for (const v of predicate.value) {
         values.push(sql.value(v));
       }
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} NOT IN (${sql.join(
-        values,
-        ',',
-      )})`;
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} NOT IN (${sql.join(values, ",")})`;
     }
-    case 'endsWith': {
+    case "endsWith": {
       // TODO: handle if string has % in it :/
       // can set an excape char: LIKE ? ESCAPE '\'
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} LIKE ${sql.value(
-        '%' + f.predicate.value,
-      )}`;
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} LIKE ${sql.value("%" + f.predicate.value)}`;
     }
-    case 'startsWith': {
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} LIKE ${sql.value(
-        f.predicate.value + '%',
-      )}`;
+    case "startsWith": {
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} LIKE ${sql.value(f.predicate.value + "%")}`;
     }
-    case 'containsString': {
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} LIKE ${sql.value(
-        '%' + f.predicate.value + '%',
-      )}`;
+    case "containsString": {
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} LIKE ${sql.value("%" + f.predicate.value + "%")}`;
     }
-    case 'excludesString': {
-      return sql`${sql.ident(tableAliases[aliasCursor], getter.fieldName)} NOT LIKE ${sql.value(
-        '%' + f.predicate.value + '%',
-      )}`;
+    case "excludesString": {
+      return sql`${sql.ident(
+        tableAliases[aliasCursor],
+        getter.fieldName
+      )} NOT LIKE ${sql.value("%" + f.predicate.value + "%")}`;
     }
-    case 'lambda':
-    case 'asyncLambda':
+    case "lambda":
+    case "asyncLambda":
       throw new Error(
-        `Lambdas cannot be optimized to SQL! This expression should not have been hoisted for ${spec.storage.tablish}, ${getter.fieldName}`,
+        `Lambdas cannot be optimized to SQL! This expression should not have been hoisted for ${spec.storage.tablish}, ${getter.fieldName}`
       );
   }
 
   const ret = sql`${sql.ident(
     tableAliases[aliasCursor],
-    getter.fieldName,
+    getter.fieldName
   )} ${sql.__dangerous__rawValue(op)} ${sql.value(f.predicate.value)}`;
   return ret;
 }
 
 function getBeforeAndAfter(
   b?: ReturnType<typeof before>,
-  a?: ReturnType<typeof after>,
+  a?: ReturnType<typeof after>
 ): SQLQuery | null {
   // TODO: we should figure this one out... e.g., unrolling the cursors and such.
   // should that concern be here tho?
@@ -227,13 +255,16 @@ function getOrderBy(
   hop: SQLHopExpression<any, any> | undefined,
   o: ReturnType<typeof orderBy> | undefined,
   tableAliases: string[],
-  aliasCursor: number,
+  aliasCursor: number
 ): SQLQuery | null {
   // TODO: make this mirror filter by returning an array of queries
   // to which we can add the filters from other hops
   if (o == null) {
-    if (spec.type == 'node') {
-      return sql`ORDER BY ${sql.ident(tableAliases[aliasCursor], spec.primaryKey)} DESC`;
+    if (spec.type == "node") {
+      return sql`ORDER BY ${sql.ident(
+        tableAliases[aliasCursor],
+        spec.primaryKey
+      )} DESC`;
     } else {
       return sql`ORDER BY id1 DESC, id2 DESC`;
     }
@@ -241,42 +272,48 @@ function getOrderBy(
 
   const getter = o.getter as ModelFieldGetter<any, any, any>;
 
-  if (spec.type === 'node' && getter.fieldName === spec.primaryKey) {
-    if (o.direction === 'asc') {
-      return sql`ORDER BY ${sql.ident(tableAliases[aliasCursor], spec.primaryKey)} ASC`;
+  if (spec.type === "node" && getter.fieldName === spec.primaryKey) {
+    if (o.direction === "asc") {
+      return sql`ORDER BY ${sql.ident(
+        tableAliases[aliasCursor],
+        spec.primaryKey
+      )} ASC`;
     } else {
-      return sql`ORDER BY ${sql.ident(tableAliases[aliasCursor], spec.primaryKey)} DESC`;
+      return sql`ORDER BY ${sql.ident(
+        tableAliases[aliasCursor],
+        spec.primaryKey
+      )} DESC`;
     }
   }
 
-  if (o.direction === 'asc') {
-    if (spec.type == 'node') {
+  if (o.direction === "asc") {
+    if (spec.type == "node") {
       return sql`ORDER BY ${sql.ident(
         tableAliases[aliasCursor],
-        getter.fieldName,
+        getter.fieldName
       )} ASC, ${sql.ident(tableAliases[aliasCursor], spec.primaryKey)} DESC`;
     } else {
       return sql`ORDER BY ${sql.ident(
         tableAliases[aliasCursor],
-        getter.fieldName,
-      )} ASC, ${sql.ident(tableAliases[aliasCursor], 'id1')} DESC, ${sql.ident(
+        getter.fieldName
+      )} ASC, ${sql.ident(tableAliases[aliasCursor], "id1")} DESC, ${sql.ident(
         tableAliases[aliasCursor],
-        'id2',
+        "id2"
       )} DESC`;
     }
   } else {
-    if (spec.type == 'node') {
+    if (spec.type == "node") {
       return sql`ORDER BY ${sql.ident(
         tableAliases[aliasCursor],
-        getter.fieldName,
+        getter.fieldName
       )} DESC, ${sql.ident(tableAliases[aliasCursor], spec.primaryKey)} DESC`;
     } else {
       return sql`ORDER BY ${sql.ident(
         tableAliases[aliasCursor],
-        getter.fieldName,
-      )} DESC, ${sql.ident(tableAliases[aliasCursor], 'id1')} DESC, ${sql.ident(
+        getter.fieldName
+      )} DESC, ${sql.ident(tableAliases[aliasCursor], "id1")} DESC, ${sql.ident(
         tableAliases[aliasCursor],
-        'id2',
+        "id2"
       )} DESC`;
     }
   }
@@ -349,45 +386,48 @@ function getHops(
   source: NodeSpec | JunctionEdgeSpec,
   hop: SQLHopExpression<any, any> | undefined,
   tableAliases: string[],
-  aliasCursor: number,
+  aliasCursor: number
 ): SQLQuery[] {
   if (!hop) {
     return hops;
   }
 
-  invariant(source === hop.edge.source, 'Edge source and provided source are mismatched!');
+  invariant(
+    source === hop.edge.source,
+    "Edge source and provided source are mismatched!"
+  );
 
   const ops = hop.ops;
   const edge = hop.edge;
 
   // TODO: handle if the hop has a limit applied.
   switch (edge.type) {
-    case 'field':
-    case 'foreignKey':
+    case "field":
+    case "foreignKey":
       hops.push(
         sql`JOIN ${sql.ident(edge.dest.storage.tablish)} AS ${sql.ident(
-          tableAliases[aliasCursor],
-        )} ON ${sql.ident(tableAliases[aliasCursor - 1], edge.sourceField)} = ${sql.ident(
-          tableAliases[aliasCursor],
-          edge.destField,
-        )}`,
+          tableAliases[aliasCursor]
+        )} ON ${sql.ident(
+          tableAliases[aliasCursor - 1],
+          edge.sourceField
+        )} = ${sql.ident(tableAliases[aliasCursor], edge.destField)}`
       );
       // Could be more hops to join in
       return getHops(hops, edge.dest, ops.hop, tableAliases, aliasCursor + 1);
-    case 'junction':
+    case "junction":
       // TODO: could be traversing the junction in the reverse direction
       hops.push(
         sql`JOIN ${sql.ident(edge.storage.tablish)} AS ${sql.ident(
+          tableAliases[aliasCursor]
+        )} ON ${sql.ident(
+          tableAliases[aliasCursor - 1],
+          edge.source.primaryKey
+        )} = ${sql.ident(tableAliases[aliasCursor], "id1")} JOIN ${sql.ident(
+          edge.dest.storage.tablish
+        )} AS ${sql.ident(tableAliases[aliasCursor + 1])} ON ${sql.ident(
           tableAliases[aliasCursor],
-        )} ON ${sql.ident(tableAliases[aliasCursor - 1], edge.source.primaryKey)} = ${sql.ident(
-          tableAliases[aliasCursor],
-          'id1',
-        )} JOIN ${sql.ident(edge.dest.storage.tablish)} AS ${sql.ident(
-          tableAliases[aliasCursor + 1],
-        )} ON ${sql.ident(tableAliases[aliasCursor], 'id2')} = ${sql.ident(
-          tableAliases[aliasCursor + 1],
-          edge.dest.primaryKey,
-        )}`,
+          "id2"
+        )} = ${sql.ident(tableAliases[aliasCursor + 1], edge.dest.primaryKey)}`
       );
       return getHops(hops, edge.dest, ops.hop, tableAliases, aliasCursor + 2);
   }

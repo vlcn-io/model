@@ -1,10 +1,10 @@
-import { Query, Context, UpdateType, INode } from '@aphro/runtime-ts';
-import counter from '@strut/counter';
-import { useRef, useEffect, useReducer } from 'react';
-import { suspend } from 'suspend-react';
-import { useLiveResult } from './hooks.js';
+import { Query, Context, UpdateType, INode } from "@vulcan.sh/runtime";
+import counter from "@strut/counter";
+import { useRef, useEffect, useReducer } from "react";
+import { suspend } from "suspend-react";
+import { useLiveResult } from "./hooks.js";
 
-const count = counter('model-infra/CreateHooks');
+const count = counter("model-infra/CreateHooks");
 
 export type ContextPromise = Promise<Context>;
 
@@ -29,7 +29,7 @@ export function createHooks(contextPromise: ContextPromise) {
   function suspendOnContext() {
     return suspend(() => {
       return contextPromise;
-    }, ['context']);
+    }, ["context"]);
   }
 
   function useQueryContext() {
@@ -39,7 +39,7 @@ export function createHooks(contextPromise: ContextPromise) {
 
   function useQuery<Q extends Query<QueryReturnType<Q>>>(
     queryProvider: (ctx: Context) => Q,
-    { on, key, deps = [] }: UseQueryOptions,
+    { on, key, deps = [] }: UseQueryOptions
   ) {
     const ctx = useQueryContext();
 
@@ -49,7 +49,7 @@ export function createHooks(contextPromise: ContextPromise) {
     // TODO: generate cache key from query
     const liveRef = useRef<any>();
     const liveResult = suspend(async () => {
-      count.bump('suspend.liveResult.initial');
+      count.bump("suspend.liveResult.initial");
       const q = queryProvider(ctx);
       const liveResult = q.live(on || UpdateType.ANY);
       // Keep a ref to `liveResult` since `liveResult` weakly subscribes to data sources.
@@ -63,7 +63,7 @@ export function createHooks(contextPromise: ContextPromise) {
 
   function useQueryOne<ResultType>(
     queryProvider: (ctx: Context) => Query<ResultType>,
-    { on, key, deps }: UseQueryOptions,
+    { on, key, deps }: UseQueryOptions
   ) {
     const result = useQuery(queryProvider, { on, key, deps });
     return result[0];
@@ -71,13 +71,13 @@ export function createHooks(contextPromise: ContextPromise) {
 
   function useBind<Node extends INode<Shape>, Shape extends {}>(
     node: Node,
-    keys?: (keyof Shape)[],
+    keys?: (keyof Shape)[]
   ) {
-    count.bump('useBind.' + node.constructor.name);
-    const [tick, forceUpdate] = useReducer(x => x + 1, 0);
+    count.bump("useBind." + node.constructor.name);
+    const [tick, forceUpdate] = useReducer((x) => x + 1, 0);
     useEffect(() => {
       if (keys != null) {
-        count.bump('keyed.subscription.' + node.constructor.name);
+        count.bump("keyed.subscription." + node.constructor.name);
         // subscribe returns a function which will dispose of the subscription
         return node.subscribeTo(keys, () => forceUpdate());
       } else {

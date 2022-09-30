@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/runtime-",
+  "name": "@vulcan.sh/runtime",
   "version": "0.3.8",
   "main": "lib/index.js",
   "type": "module",
@@ -9,13 +9,12 @@
     "directory": "ts/packages/runtime"
   },
   "dependencies": {
-    "@aphro/cache-runtime-ts": "workspace:*",
-    "@aphro/context-runtime-ts": "workspace:*",
-    "@aphro/migration-runtime-ts": "workspace:*",
-    "@aphro/model-runtime-ts": "workspace:*",
-    "@aphro/mutator-runtime-ts": "workspace:*",
-    "@aphro/query-runtime-ts": "workspace:*",
-    "@aphro/sql-ts": "workspace:*",
+    "@vulcan.sh/cache": "workspace:*",
+    "@vulcan.sh/config": "workspace:*",
+    "@vulcan.sh/migration-runtime-ts": "workspace:*",
+    "@vulcan.sh/model-persisted": "workspace:*",
+    "@vulcan.sh/query": "workspace:*",
+    "@vulcan.sh/sql": "workspace:*",
     "@strut/sid": "^0.1.2",
     "@strut/utils": "^0.1.1"
   },

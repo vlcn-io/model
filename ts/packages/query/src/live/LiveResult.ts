@@ -1,10 +1,10 @@
-import { Context, Transaction } from '@aphro/context-runtime-ts';
-import { observe, specToDatasetKey } from '@aphro/model-runtime-ts';
-import { assertUnreachable } from '@strut/utils';
-import { IPlan } from '../Plan.js';
-import { Query, UpdateType } from '../Query.js';
+import { Context, Transaction } from "@vulcan.sh/config";
+import { observe, specToDatasetKey } from "@vulcan.sh/model-persisted";
+import { assertUnreachable } from "@strut/utils";
+import { IPlan } from "../Plan.js";
+import { Query, UpdateType } from "../Query.js";
 
-type Status = 'pending' | 'resolved';
+type Status = "pending" | "resolved";
 
 /*
 How should we convert a query into a reactive plan?
@@ -35,7 +35,7 @@ We can listen to `persistor` or we can listen to a transaction log.
 export default class LiveResult<T> {
   #latest?: T[];
   #subscribers: Set<(data: T[]) => void> = new Set();
-  #status: Status = 'pending';
+  #status: Status = "pending";
   #optimizedQueryPlan: IPlan;
   #implicatedDatasets: Set<string>;
   #on: UpdateType;
@@ -72,17 +72,17 @@ export default class LiveResult<T> {
     for (const cs of tx.changes.values()) {
       const changesetType = cs.type;
       switch (changesetType) {
-        case 'create':
+        case "create":
           if ((this.#on & UpdateType.CREATE) === 0) {
             continue;
           }
           break;
-        case 'update':
+        case "update":
           if ((this.#on & UpdateType.UPDATE) === 0) {
             continue;
           }
           break;
-        case 'delete':
+        case "delete":
           if ((this.#on & UpdateType.DELETE) === 0) {
             continue;
           }
@@ -117,10 +117,10 @@ export default class LiveResult<T> {
   };
 
   generator(): Generator<Promise<T[]>, T[]> {
-    return observe<T[]>(change => {
+    return observe<T[]>((change) => {
       // start the generator with an initial value
       change(this.latest || []);
-      return this.subscribe(result => change(result));
+      return this.subscribe((result) => change(result));
     });
   }
 
@@ -134,7 +134,7 @@ export default class LiveResult<T> {
   }
 
   free() {
-    this.#disposables.forEach(c => c());
+    this.#disposables.forEach((c) => c());
     this.#disposables = [];
     this.#subscribers.clear();
   }

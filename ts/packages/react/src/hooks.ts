@@ -1,22 +1,28 @@
 // TODO: this should be in a separate package from the core model code.
-import { useEffect, useReducer, useRef, useState } from 'react';
-import { INode, Query, UpdateType, LiveResult } from '@aphro/runtime-ts';
-import counter from '@strut/counter';
+import { useEffect, useReducer, useRef, useState } from "react";
+import { INode, Query, UpdateType, LiveResult } from "@vulcan.sh/runtime";
+import counter from "@strut/counter";
 
-const count = counter('model-infra/Hooks');
+const count = counter("model-infra/Hooks");
 
 export function useBind<M extends INode<D>, D extends {}>(m: M): void;
-export function useBind<M extends INode<D>, D extends {}>(m: M, keys: (keyof D)[]): void;
+export function useBind<M extends INode<D>, D extends {}>(
+  m: M,
+  keys: (keyof D)[]
+): void;
 
 /**
  * @deprecated - use createHooks instead
  */
-export function useBind<M extends INode<D>, D extends {}>(m: M, keys?: (keyof D)[]): void {
-  count.bump('useBind.' + m.constructor.name);
-  const [tick, forceUpdate] = useReducer(x => x + 1, 0);
+export function useBind<M extends INode<D>, D extends {}>(
+  m: M,
+  keys?: (keyof D)[]
+): void {
+  count.bump("useBind." + m.constructor.name);
+  const [tick, forceUpdate] = useReducer((x) => x + 1, 0);
   useEffect(() => {
     if (keys != null) {
-      count.bump('keyed.subscription.' + m.constructor.name);
+      count.bump("keyed.subscription." + m.constructor.name);
       // subscribe returns a function which will dispose of the subscription
       return m.subscribeTo(keys, () => forceUpdate());
     } else {
@@ -37,7 +43,7 @@ export function useLiveResult<T>(result: LiveResult<T>) {
   const [data, setData] = useState<T[]>(result.latest || []);
   useEffect(() => {
     let isMounted = true;
-    const disposer = result.subscribe(newData => {
+    const disposer = result.subscribe((newData) => {
       if (!isMounted) {
         return;
       }
@@ -68,7 +74,7 @@ export type UseQueryOptions = {
 export function useQuery<Q extends Query<QueryReturnType<Q>>>(
   queryProvider: () => Q,
   deps: any[] = [],
-  { on, key }: UseQueryOptions = {},
+  { on, key }: UseQueryOptions = {}
 ): UseQueryData<QueryReturnType<Q>> {
   const currentLiveResult = useRef<LiveResult<QueryReturnType<Q>> | null>(null);
   let [result, setResult] = useState<UseQueryData<QueryReturnType<Q>>>(() => {
@@ -99,7 +105,7 @@ export function useQuery<Q extends Query<QueryReturnType<Q>>>(
   });
 
   useEffect(() => {
-    count.bump('useQuery.useEffect');
+    count.bump("useQuery.useEffect");
     const q = queryProvider();
     const liveResult = q.live(on || UpdateType.ANY);
     currentLiveResult.current = liveResult;
@@ -107,7 +113,7 @@ export function useQuery<Q extends Query<QueryReturnType<Q>>>(
       // this can mismatch if this is an old subscriber from a prior run
       // of `useEffect`. Theoretically this should not happen.
       if (liveResult !== currentLiveResult.current) {
-        count.bump('liveresult!==currentLiveResult');
+        count.bump("liveresult!==currentLiveResult");
         return;
       }
 
