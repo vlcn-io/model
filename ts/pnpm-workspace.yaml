@@ -27,3 +27,4 @@ packages:
   - connectors/sqlite3-connector
   - connectors/sqljs-connector
   - connectors/wa-sqlite-connector
+  - integration-tests/data-model

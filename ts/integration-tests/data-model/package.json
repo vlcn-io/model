@@ -1,0 +1,33 @@
+{
+  "name": "@vulcan.sh/integration-tests-data-model",
+  "private": true,
+  "version": "0.0.2",
+  "main": "lib/index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vulcan-sh/vulcan.git",
+    "directory": "integration-tests/data-model"
+  },
+  "dependencies": {
+    "@vulcan.sh/runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@vulcan.sh/codegen-cli": "workspace:*",
+    "typescript": "^4.8.2"
+  },
+  "scripts": {
+    "clean": "tsc --build --clean",
+    "build": "tsc --build",
+    "watch": "tsc --build -w",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "vlcn": "vlcn gen src/domain.vlcn -d src/domain && pnpm copy",
+    "copy": "cp src/domain/generated/*.sql lib/domain/generated",
+    "deep-clean": "rm -rf ./lib || true && rm tsconfig.tsbuildinfo || true"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ]
+  }
+}

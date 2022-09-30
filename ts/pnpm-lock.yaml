@@ -143,6 +143,17 @@ importers:
       jest: 29.0.3
       typescript: 4.8.3
 
+  integration-tests/data-model:
+    specifiers:
+      '@vulcan.sh/codegen-cli': workspace:*
+      '@vulcan.sh/runtime': workspace:*
+      typescript: ^4.8.2
+    dependencies:
+      '@vulcan.sh/runtime': link:../../packages/runtime
+    devDependencies:
+      '@vulcan.sh/codegen-cli': link:../../packages/codegen-cli
+      typescript: 4.8.3
+
   packages/cache:
     specifiers:
       '@babel/core': ^7.18.13

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig-lib.json",
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "rootDir": "./src"
+  },
+  "include": ["./src/"],
+  "references": [
+    { "path": "../../packages/runtime" },
+    { "path": "../../packages/codegen-cli" }
+  ]
+}

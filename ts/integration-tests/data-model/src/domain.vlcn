@@ -1,0 +1,11 @@
+engine: sqlite
+db: test
+
+User as Node {
+  1 id: ID<User>
+  2 name: NaturalLanguage # & UserGenerated -- fields filled by users
+  3 created: Timestamp # & Computed & Immutable
+  4 modified: Timestamp
+} & OutboundEdges {
+  decks: Edge<Deck.ownerId>
+}

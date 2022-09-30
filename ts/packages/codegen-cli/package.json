@@ -1,14 +1,14 @@
 {
-  "name": "@aphro/codegen-cli",
+  "name": "@vulcan.sh/codegen-cli",
   "version": "0.3.10",
   "main": "bin/cli.js",
   "type": "module",
   "bin": {
-    "aphro": "./bin/cli.js"
+    "vlcn": "./bin/cli.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tantaman/aphrodite.git",
+    "url": "https://github.com/vulcan-sh/vulcan.git",
     "directory": "packages/codegen-cli"
   },
   "dependencies": {
