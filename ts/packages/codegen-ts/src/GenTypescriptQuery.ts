@@ -49,20 +49,16 @@ export default class GenTypescriptQuery extends CodegenStep {
 export default class ${nodeFn.queryTypeName(
         this.schema.name
       )} extends DerivedQuery<${this.schema.name}> {
-  static create(ctx: Context) {
+  static create() {
     return new ${nodeFn.queryTypeName(this.schema.name)}(
-      ctx,
-      QueryFactory.createSourceQueryFor(ctx, ${nodeFn.specName(
-        this.schema.name
-      )}),
-      modelLoad(ctx, ${nodeFn.specName(this.schema.name)}.createFrom),
+      QueryFactory.createSourceQueryFor(${nodeFn.specName(this.schema.name)}),
+      modelLoad(${nodeFn.specName(this.schema.name)}.hydrate),
     );
   }
 
-  static empty(ctx: Context) {
+  static empty() {
     return new ${nodeFn.queryTypeName(this.schema.name)}(
-      ctx,
-      new EmptyQuery(ctx),
+      new EmptyQuery(),
     );
   }
 
@@ -70,7 +66,6 @@ export default class ${nodeFn.queryTypeName(
     this.schema.name
   )} {
     return new ${nodeFn.queryTypeName(this.schema.name)}(
-      this.ctx,
       this,
       expression,
     )
@@ -93,7 +88,6 @@ export default class ${nodeFn.queryTypeName(
 
   private collectImports(): Import[] {
     return [
-      tsImport("{Context}", null, "@vulcan.sh/runtime"),
       ...[
         "DerivedQuery",
         "QueryFactory",
@@ -134,7 +128,6 @@ export default class ${nodeFn.queryTypeName(
 
   private getFilterMethodBody(field: FieldDeclaration): string {
     return `return this.derive(
-      // @ts-ignore #43
       filter(
         new ModelFieldGetter<"${field.name}", Data, ${this.schema.name}>("${field.name}"),
         p,
@@ -168,8 +161,8 @@ export default class ${nodeFn.queryTypeName(
       return "";
     }
     return `
-static fromId(ctx: Context, id: ID_of<${this.schema.name}>) {
-  return this.create(ctx).whereId(P.equals(id));
+static fromId(id: ID_of<${this.schema.name}>) {
+  return this.create().whereId(P.equals(id));
 }
 `;
   }
@@ -206,8 +199,8 @@ static fromId(ctx: Context, id: ID_of<${this.schema.name}>) {
     }
 
     return `
-static from${upcaseAt(column, 0)}(ctx: Context, id: ID_of<${idParts[0].of}>) {
-  return this.create(ctx).where${upcaseAt(field.name, 0)}(P.equals(id));
+static from${upcaseAt(column, 0)}(id: ID_of<${idParts[0].of}>) {
+  return this.create().where${upcaseAt(field.name, 0)}(P.equals(id));
 }
 `;
   }
@@ -306,20 +299,16 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: ID_of<${idParts[0].of}>) {
     return `return new ${edgeFn.queryTypeName(
       this.schema,
       edge
-    )}(this.ctx, QueryFactory.createHopQueryFor(this.ctx, this, ${nodeFn.specName(
+    )}(QueryFactory.createHopQueryFor(this, ${nodeFn.specName(
       this.schema.name
     )}.outboundEdges.${ref.name}),
-      modelLoad(this.ctx, ${edgeFn.destModelSpecName(
-        this.schema,
-        edge
-      )}.createFrom),
+      modelLoad(${edgeFn.destModelSpecName(this.schema, edge)}.hydrate),
     );`;
   }
 
   private getTakeMethodCode(): string {
     return `take(n: number) {
       return new ${nodeFn.queryTypeName(this.schema.name)}(
-        this.ctx,
         this,
         take(n),
       );
@@ -344,32 +333,3 @@ static from${upcaseAt(column, 0)}(ctx: Context, id: ID_of<${idParts[0].of}>) {
   Maybe it is just src, dest, edge name?
   */
 }
-
-/*
-Codegening the query shouldn't care what the underlying storage impl is.
-Query layer is storage agnostic.
-
-Thus we should use the `schema` to call into a `factory` which will construct the
-`source query` / `source expression` based on the underlying storage type.
-*/
-
-/*
-Derived query example:
-SlideQuery extends DerivedQuery {
-  static create() {
-    return new SlideQuery(
-      Factory.createSourceQueryFor(schema) // e.g., new SQLSourceQuery(schema),
-      // convert raw db result into model load.
-      // we'd want to move this expression to the end in plan optimizaiton.
-      new ModelLoadExpression(Slide.createFromData)
-    );
-  }
-
-  whereName(predicate: Predicate) {
-    return new SlideQuery(
-      this, // the prior query
-      new ModelFilterExpression(field, predicate)
-    );
-  }
-}
-*/
