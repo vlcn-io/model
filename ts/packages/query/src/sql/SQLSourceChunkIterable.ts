@@ -8,7 +8,6 @@ import { ModelFieldGetter } from "../Field.js";
 import { ID_of } from "@vulcan.sh/id";
 import {
   BasePersistedModelData,
-  cache,
   IPersistedModel,
 } from "@vulcan.sh/model-persisted";
 
@@ -51,10 +50,10 @@ export default class SQLSourceChunkIterable<
     // 2. modelLoad checks the cache which can be checked wither either a `Model` or `Data` instance
     const directLoad = this.isDirectLoad();
     if (directLoad !== null) {
-      const cached = cache.get(
+      const cached = config.cache.get(
+        directLoad,
         this.spec.storage.db,
-        this.spec.storage.tablish,
-        directLoad
+        this.spec.storage.tablish
       );
       if (cached != null) {
         yield [cached as any];

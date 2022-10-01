@@ -58,7 +58,7 @@ test("does a direct load if possible and the thing is cached", async () => {
     ],
     what: "model",
   });
-  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
+  const m = SyncPersistedModel.createOrUpdate(TestModel, { id, x: "x" });
 
   // thing should not be in cache yet
   expect(cache.get(id, spec.storage.db, spec.storage.tablish)).toEqual(null);
@@ -84,7 +84,7 @@ test("does not direct load if possible but the thing is not cached", async () =>
     ],
     what: "model",
   });
-  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
+  const m = SyncPersistedModel.createOrUpdate(TestModel, { id, x: "x" });
 
   // thing should not be in cache
   expect(cache.get(id, spec.storage.db, spec.storage.tablish)).toEqual(null);
@@ -101,7 +101,7 @@ test("does not direct load if possible but the thing is not cached", async () =>
 
 test("does not direct load if not possible (but the thing is cached)", async () => {
   const id = "3" as ID_of<TestModel>;
-  const m = SyncPersistedModel.create(TestModel, { id, x: "x" });
+  const m = SyncPersistedModel.createOrUpdate(TestModel, { id, x: "x" });
 
   // thing should be in cache
   cache.set(id, m, spec.storage.db, spec.storage.tablish);

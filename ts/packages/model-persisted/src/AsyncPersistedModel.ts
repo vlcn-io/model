@@ -24,8 +24,11 @@ export abstract class AsyncPersistedModel<
       ctor.spec.storage.tablish
     );
 
+    // we add to the cache regardless of transaction outcome --
+    // so the thing could be in there from a failed tx.
+    // update it to final state if so.
     if (existing) {
-      existing.update(data as D);
+      await existing.update(data as D);
       return existing;
     }
 
