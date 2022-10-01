@@ -53,7 +53,7 @@ ${
 }
 // @Sealed(${this.schema.name})
 export default abstract class ${this.schema.name}Base
-  extends ${baseClass}<Data> {
+  extends AsyncPersistedModel<Data> implements I${baseClass}<Data> {
   readonly spec = s as unknown as ${baseClass}SpecWithCreate<this, Data>;
   ${this.getMutationsConvenienceCode()}
   ${this.getFieldCode()}
@@ -147,9 +147,10 @@ export default abstract class ${this.schema.name}Base
       ),
       tsImport("{P}", null, "@vulcan.sh/runtime"),
       tsImport("{modelGenMemo}", null, "@vulcan.sh/runtime"),
+      tsImport("{AsyncPersistedModel}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
-        ? tsImport("{Node}", null, "@vulcan.sh/runtime")
-        : tsImport("{Edge}", null, "@vulcan.sh/runtime"),
+        ? tsImport("{INode}", null, "@vulcan.sh/runtime")
+        : tsImport("{IEdge}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
         ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
         : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
@@ -163,7 +164,6 @@ export default abstract class ${this.schema.name}Base
             ),
           ]
         : []),
-      tsImport("{Context}", null, "@vulcan.sh/runtime"),
       ...(this.schema.type === "node"
         ? this.schema.extensions.module?.imports.values() || []
         : []),

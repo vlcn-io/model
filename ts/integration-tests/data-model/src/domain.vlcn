@@ -7,5 +7,5 @@ User as Node {
   3 created: Timestamp # & Computed & Immutable
   4 modified: Timestamp
 } & OutboundEdges {
-  decks: Edge<Deck.ownerId>
+  # decks: Edge<Deck.ownerId>
 }

@@ -1,4 +1,4 @@
-// SIGNED-SOURCE: <10bf6703c2775d73b41fedd62c031aa8>
+// SIGNED-SOURCE: <ac19975cd9ab38e097392f4d421244a6>
 /**
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
@@ -19,8 +19,6 @@ import { ID_of } from "@vulcan.sh/runtime";
 import User from "../User.js";
 import { Data } from "./UserBase.js";
 import UserSpec from "./UserSpec.js";
-import DeckSpec from "./DeckSpec.js";
-import DeckQuery from "./DeckQuery.js";
 
 export default class UserQuery extends DerivedQuery<User> {
   static create(ctx: Context) {
@@ -68,17 +66,6 @@ export default class UserQuery extends DerivedQuery<User> {
     return this.derive(
       // @ts-ignore #43
       filter(new ModelFieldGetter<"modified", Data, User>("modified"), p)
-    );
-  }
-  queryDecks(): DeckQuery {
-    return new DeckQuery(
-      this.ctx,
-      QueryFactory.createHopQueryFor(
-        this.ctx,
-        this,
-        UserSpec.outboundEdges.decks
-      ),
-      modelLoad(this.ctx, DeckSpec.createFrom)
     );
   }
 

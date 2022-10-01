@@ -1,4 +1,4 @@
-// SIGNED-SOURCE: <fd3bf45fcc4f99a1ed9464f1f8b62f2b>
+// SIGNED-SOURCE: <13397690d2362cf18cfc12cd2be79abf>
 /**
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
@@ -8,7 +8,6 @@ import { decodeModelData } from "@vulcan.sh/runtime";
 import { encodeModelData } from "@vulcan.sh/runtime";
 import { ID_of } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { default as DeckSpec } from "./DeckSpec.js";
 import User from "../User.js";
 import { Data } from "./UserBase.js";
 
@@ -50,19 +49,7 @@ const UserSpec: NodeSpecWithCreate<User, Data> = {
 
   fields,
 
-  outboundEdges: {
-    decks: {
-      type: "foreignKey",
-      sourceField: "id",
-      destField: "ownerId",
-      get source() {
-        return UserSpec;
-      },
-      get dest() {
-        return DeckSpec;
-      },
-    },
-  },
+  outboundEdges: {},
 };
 
 export default UserSpec;
