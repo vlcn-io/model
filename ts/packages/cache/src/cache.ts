@@ -131,6 +131,13 @@ export default class Cache {
     return thing as T;
   }
 
+  assertConsistent(m: { [key: string]: any }, d: { [key: string]: any }) {
+    return (
+      Object.keys(m).length === Object.keys(d).length &&
+      Object.entries(m).every((entry) => d[entry[0]] === entry[1])
+    );
+  }
+
   get size(): number {
     return this.#cache.size;
   }

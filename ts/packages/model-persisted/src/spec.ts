@@ -10,11 +10,13 @@ export type ModelCreate<
   M extends IPersistedModel<D>,
   D extends BasePersistedModelData
 > = {
-  createFrom(data: D, raw?: boolean): M;
+  create(data: D /*raw?: boolean*/): M;
+  hydrate(data: D): M;
 };
 
 export interface INode<T extends BasePersistedModelData>
   extends IPersistedModel<T> {
+  readonly id: ID_of<this>;
   readonly spec: NodeSpecWithCreate<this, T>;
 }
 

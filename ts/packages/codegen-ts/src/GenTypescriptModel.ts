@@ -67,11 +67,7 @@ export default abstract class ${this.schema.name}Base
 
   ${this.getGenMethodCode()}
 
-  ${this.getUpdateMethodCode()}
-
   ${this.getCreateMethodCode()}
-
-  ${this.getDeleteMethodCode()}
 }
 `
     );
@@ -123,30 +119,12 @@ export default abstract class ${this.schema.name}Base
     return values.some((v: any) => v.verb === verb);
   }
 
-  private getUpdateMethodCode(): string {
-    if (this.hasMutations("update")) {
-      return "";
-    }
-    return `update(data: Partial<Data>) {
-      return makeSavable(this.ctx, new UpdateMutationBuilder(this.ctx, this.spec, this).set(data).toChangesets()[0]);
-    }`;
-  }
-
   private getCreateMethodCode(): string {
     if (this.hasMutations("create")) {
       return "";
     }
-    return `static create(ctx: Context, data: Partial<Data>) {
-      return makeSavable(ctx, new CreateMutationBuilder(ctx, s).set(data).toChangesets()[0]);
-    }`;
-  }
-
-  private getDeleteMethodCode(): string {
-    if (this.hasMutations("delete")) {
-      return "";
-    }
-    return `delete() {
-      return makeSavable(this.ctx, new DeleteMutationBuilder(this.ctx, this.spec, this).toChangesets()[0]);
+    return `static create(data: Data) {
+      return ${this.schema.name}.spec.create(data);
     }`;
   }
 
@@ -168,10 +146,6 @@ export default abstract class ${this.schema.name}Base
         "./" + nodeFn.specName(this.schema.name) + ".js"
       ),
       tsImport("{P}", null, "@vulcan.sh/runtime"),
-      tsImport("{UpdateMutationBuilder}", null, "@vulcan.sh/runtime"),
-      tsImport("{CreateMutationBuilder}", null, "@vulcan.sh/runtime"),
-      tsImport("{DeleteMutationBuilder}", null, "@vulcan.sh/runtime"),
-      tsImport("{makeSavable}", null, "@vulcan.sh/runtime"),
       tsImport("{modelGenMemo}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
         ? tsImport("{Node}", null, "@vulcan.sh/runtime")
@@ -196,27 +170,7 @@ export default abstract class ${this.schema.name}Base
       ...this.getEdgeImports(),
       // ...this.getIdFieldImports(),
       ...this.getNestedTypeImports(),
-      ...this.getMutationsImports(),
     ].filter((i) => i.name !== this.schema.name + "Base");
-  }
-
-  private getMutationsImports(): Import[] {
-    if (!this.hasMutations()) {
-      return [];
-    }
-
-    return [
-      tsImport(
-        `${this.schema.name}Mutations`,
-        null,
-        `./${this.schema.name}Mutations.js`
-      ),
-      tsImport(
-        `{InstancedMutations}`,
-        null,
-        `./${this.schema.name}Mutations.js`
-      ),
-    ];
   }
 
   private getNestedTypeImports(): Import[] {
@@ -354,7 +308,7 @@ export default abstract class ${this.schema.name}Base
             fieldFn.isNullable(this.schema.fields[column])
           ) {
             emptyReturnCondition = `if (this.${column} == null) {
-              return ${edgeFn.queryTypeName(schema, edge)}.empty(this.ctx);
+              return ${edgeFn.queryTypeName(schema, edge)}.empty();
             }`;
           }
         }
@@ -368,10 +322,7 @@ export default abstract class ${this.schema.name}Base
           )} {
             return ${nodeFn.queryTypeName(
               schema.name
-            )}.fromId(this.ctx, this.id as any).query${upcaseAt(
-            edge.name,
-            0
-          )}();
+            )}.fromId(this.id as any).query${upcaseAt(edge.name, 0)}();
           }`;
         }
 
@@ -407,7 +358,7 @@ export default abstract class ${this.schema.name}Base
         // can't `modelGenMemo` this until we have a way to clear memoized results based
         // upon modifications of the id fields these reference.
         return `async gen${upcaseAt(e.name, 0)}(): Promise<${returnType}> {
-          const existing = this.ctx.cache.get(this.${
+          const existing = config.cache.get(this.${
             e.throughOrTo.column
           }, ${destTypeName}Spec.storage.db, ${destTypeName}Spec.storage.tablish);
           if (existing != null) {
@@ -449,20 +400,17 @@ export default abstract class ${this.schema.name}Base
         // through a field on self is a field edge
         // a field edge refers to the id of the destination type.
         if (edge.throughOrTo.type === this.schema.name) {
-          return `fromId(this.ctx, this.${column})`;
+          return `fromId(this.${column})`;
         }
 
         // through a field on some other type is a foreign key edge
         // we're thus qurying that type based on some column rather than its id
-        return `create(this.ctx).where${upcaseAt(
-          column,
-          0
-        )}(P.equals(this.id as any))`;
+        return `create().where${upcaseAt(column, 0)}(P.equals(this.id as any))`;
       case "edgeReference":
         // if (edge.inverted) {
         //   return "fromDst";
         // }
-        return "fromSrc(this.ctx, this.id as any)";
+        return "fromSrc(this.id as any)";
     }
   }
 
@@ -470,10 +418,8 @@ export default abstract class ${this.schema.name}Base
     if (this.schema.storage.type === "ephemeral") {
       return "";
     }
-    return `static queryAll(ctx: Context): ${nodeFn.queryTypeName(
-      this.schema.name
-    )} {
-      return ${nodeFn.queryTypeName(this.schema.name)}.create(ctx);
+    return `static queryAll(): ${nodeFn.queryTypeName(this.schema.name)} {
+      return ${nodeFn.queryTypeName(this.schema.name)}.create();
     }`;
   }
 
@@ -487,8 +433,8 @@ export default abstract class ${this.schema.name}Base
     return `static gen = modelGenMemo<${this.schema.name}, ${this.schema.name} | null>(
       "${this.schema.storage.db}",
       "${this.schema.storage.tablish}",
-      (ctx: Context, id: ID_of<${this.schema.name}>): Promise<${this.schema.name} | null> => this
-            .queryAll(ctx)
+      (id: ID_of<${this.schema.name}>): Promise<${this.schema.name} | null> => this
+            .queryAll()
             .whereId(P.equals(id)).genOnlyValue()
     );`;
   }
@@ -503,8 +449,8 @@ export default abstract class ${this.schema.name}Base
     return `static genx = modelGenMemo(
       "${this.schema.storage.db}",
       "${this.schema.storage.tablish}",
-      (ctx: Context, id: ID_of<${this.schema.name}>): Promise<${this.schema.name}> => this
-            .queryAll(ctx)
+      (id: ID_of<${this.schema.name}>): Promise<${this.schema.name}> => this
+            .queryAll()
             .whereId(P.equals(id)).genxOnlyValue(),
     );`;
   }

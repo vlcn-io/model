@@ -138,6 +138,7 @@ export class Connection {
 export default async function createConnection(
   dbName: string
 ): Promise<Connection> {
+  // TODO: don't re-create this every time!
   const sqlite3 = await getSqliteApi();
   const db = await sqlite3.open_v2(
     dbName,
