@@ -7,7 +7,9 @@ export type DBResolver = {
   storage(engine: StorageEngine, dbName: string): ResolvedDB;
 };
 
-export type ResolvedDB = SQLResolvedDB | MemoryResolvedDB;
+export type ResolvedDB = AsyncResolvedDB | SyncResolvedDB;
+export type AsyncResolvedDB = SQLResolvedDB;
+export type SyncResolvedDB = MemoryResolvedDB;
 
 export type MemoryReadQuery = {
   type: "read";
@@ -30,15 +32,21 @@ export type MemoryQuery = MemoryReadQuery | MemoryWriteQuery;
 export type MemoryResolvedDB = {
   read(q: MemoryReadQuery): any[];
   write(q: MemoryWriteQuery): void;
-  transact<T>(cb: (conn: MemoryResolvedDB) => T): T;
   dispose(): void;
+
+  begin(): void;
+  commit(): void;
+  rollback(): void;
 };
 
 export type SQLResolvedDB = {
   read(q: SQLQuery): Promise<any[]>;
   write(q: SQLQuery): Promise<void>;
-  transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>): Promise<T>;
   dispose(): void;
+
+  begin(): Promise<void>;
+  commit(): Promise<void>;
+  rollback(): Promise<void>;
 };
 
 export type Config = {

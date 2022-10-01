@@ -14,7 +14,8 @@
     "@vulcan.sh/id": "workspace:*",
     "@vulcan.sh/util": "workspace:*",
     "@vulcan.sh/value": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*"
+    "@vulcan.sh/schema-api": "workspace:*",
+    "@vulcan.sh/zone": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
