@@ -43,14 +43,11 @@ ${this.getSpecCode()}
 
   private getSpecCode(): string {
     let primaryKeyCode = "";
-    let cacheKey = "";
     let sourceDestFields = "";
     const nodeOrEdge = this.schema.type === "node" ? "Node" : "Edge";
     if (this.schema.type === "node") {
       primaryKeyCode = `primaryKey: '${this.schema.primaryKey}',`;
-      cacheKey = `data['${this.schema.primaryKey}']`;
     } else {
-      cacheKey = `(data.id1 + '-' + data.id2) as ID_of<${this.schema.name}>`;
       sourceDestFields = `
         sourceField: "id1",
         destField: "id2",
@@ -67,8 +64,13 @@ const ${nodeFn.specName(this.schema.name)}: ${nodeOrEdge}SpecWithCreate<${
       this.schema.name
     }, Data> = {
       type: '${this.schema.type === "node" ? "node" : "junction"}',
-  createFrom(ctx: Context, data: Data, raw: boolean = true) {
-    ${this.getCreateFromBody(cacheKey)}
+      
+  hydrate(data: Data) {
+    ${this.getHydrateBody()}
+  },
+
+  create(data: Data) {
+    ${this.getCreateBody()}
   },
 
   ${primaryKeyCode}
@@ -90,26 +92,26 @@ export default ${nodeFn.specName(this.schema.name)};
 `;
   }
 
-  private getCreateFromBody(cacheKey: string): string {
+  private getHydrateBody(): string {
     if (this.schema.storage.type === "ephemeral") {
-      return `return new ${this.schema.name}(ctx, data);`;
+      return `return new ${this.schema.name}(data);`;
     }
 
-    return `const existing = ctx.cache.get(${cacheKey}, "${this.schema.storage.db}", "${this.schema.storage.tablish}");
-    if (existing) {
-      return existing;
+    return `return PersistedModel.hydrate(${this.schema.name}, data)`;
+  }
+
+  private getCreateBody(): string {
+    if (this.schema.storage.type === "ephemeral") {
+      return `return new ${this.schema.name}(data);`;
     }
-    if (raw) data = decodeModelData(data, fields);
-    const result = new ${this.schema.name}(ctx, data);
-    ctx.cache.set(${cacheKey}, result, "${this.schema.storage.db}", "${this.schema.storage.tablish}");
-    return result;`;
+
+    return `return AsyncPersistedModel.createOrUpdate(${this.schema.name}, data)`;
   }
 
   private collectImports(): Import[] {
     return [
-      tsImport("{Context}", null, "@vulcan.sh/runtime"),
-      tsImport("{decodeModelData}", null, "@vulcan.sh/runtime"),
-      tsImport("{encodeModelData}", null, "@vulcan.sh/runtime"),
+      tsImport("{PersistedModel}", null, "@vulcan.sh/runtime"),
+      tsImport("{AsyncPersistedModel}", null, "@vulcan.sh/runtime"),
       tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
       this.schema.type === "node"
         ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")

@@ -10,7 +10,8 @@ export type ModelCreate<
   M extends IPersistedModel<D>,
   D extends BasePersistedModelData
 > = {
-  create(data: D /*raw?: boolean*/): M;
+  // TODO: differentiate between async and sync model create
+  create(data: D /*raw?: boolean*/): Promise<M>;
   hydrate(data: D): M;
 };
 

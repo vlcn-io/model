@@ -1,11 +1,10 @@
-// SIGNED-SOURCE: <13397690d2362cf18cfc12cd2be79abf>
+// SIGNED-SOURCE: <ce85f5bbae5f8300beea040e6c34ad4c>
 /**
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
  */
-import { Context } from "@vulcan.sh/runtime";
-import { decodeModelData } from "@vulcan.sh/runtime";
-import { encodeModelData } from "@vulcan.sh/runtime";
+import { PersistedModel } from "@vulcan.sh/runtime";
+import { AsyncPersistedModel } from "@vulcan.sh/runtime";
 import { ID_of } from "@vulcan.sh/runtime";
 import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
 import User from "../User.js";
@@ -27,15 +26,13 @@ const fields = {
 } as const;
 const UserSpec: NodeSpecWithCreate<User, Data> = {
   type: "node",
-  createFrom(ctx: Context, data: Data, raw: boolean = true) {
-    const existing = ctx.cache.get(data["id"], "test", "user");
-    if (existing) {
-      return existing;
-    }
-    if (raw) data = decodeModelData(data, fields);
-    const result = new User(ctx, data);
-    ctx.cache.set(data["id"], result, "test", "user");
-    return result;
+
+  hydrate(data: Data) {
+    return PersistedModel.hydrate(User, data);
+  },
+
+  create(data: Data) {
+    return AsyncPersistedModel.createOrUpdate(User, data);
   },
 
   primaryKey: "id",

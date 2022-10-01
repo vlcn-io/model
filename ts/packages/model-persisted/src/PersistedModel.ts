@@ -80,6 +80,8 @@ export abstract class PersistedModel<T extends BasePersistedModelData>
       return existing as M;
     }
 
+    // if (raw) data = decodeModelData(data, fields);
+
     const model = new ctor(data, "hydrate");
     config.cache.set(
       data.id,
