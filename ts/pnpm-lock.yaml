@@ -544,6 +544,7 @@ importers:
       '@vulcan.sh/query': workspace:*
       '@vulcan.sh/sql': workspace:*
       '@vulcan.sh/util': workspace:*
+      '@vulcan.sh/value': workspace:*
       typescript: ^4.8.2
     dependencies:
       '@vulcan.sh/cache': link:../cache
@@ -554,6 +555,7 @@ importers:
       '@vulcan.sh/query': link:../query
       '@vulcan.sh/sql': link:../sql
       '@vulcan.sh/util': link:../util
+      '@vulcan.sh/value': link:../value
     devDependencies:
       typescript: 4.8.3
 

@@ -42,9 +42,9 @@ beforeEach(() => {
       return data;
     },
     async write(q: SQLQuery): Promise<void> {},
-    async transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>) {
-      return await cb(db);
-    },
+    async begin() {},
+    async commit() {},
+    async rollback() {},
 
     dispose() {},
   };

@@ -16,7 +16,8 @@
     "@vulcan.sh/query": "workspace:*",
     "@vulcan.sh/sql": "workspace:*",
     "@vulcan.sh/id": "workspace:*",
-    "@vulcan.sh/util": "workspace:*"
+    "@vulcan.sh/util": "workspace:*",
+    "@vulcan.sh/value": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.8.2"

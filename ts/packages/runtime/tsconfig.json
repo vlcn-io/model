@@ -12,6 +12,7 @@
     { "path": "../model-persisted" },
     { "path": "../query" },
     { "path": "../migration" },
-    { "path": "../sql" }
+    { "path": "../sql" },
+    { "path": "../value" }
   ]
 }

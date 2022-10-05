@@ -49,6 +49,7 @@ export const asyncPersistor = {
     if (keeping == null) {
       return writeDelete(storage, m);
     }
+    return keeping.then(() => writeDelete(storage, m));
   },
 };
 
@@ -88,12 +89,16 @@ function doTransactionBookkeeping(
 function writeUpsert(
   storage: AsyncResolvedDB,
   m: IPersistedModel<any>
-): Promise<void> {}
+): Promise<void> {
+  throw new Error("unimplemented");
+}
 
 function writeDelete(
   storage: AsyncResolvedDB,
   m: IPersistedModel<any>
-): Promise<void> {}
+): Promise<void> {
+  throw new Error("unimplemented");
+}
 
 // TODO: sql persist will need to check id for hex only and use blob literal?
 // depending on byte length?
