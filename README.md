@@ -1,4 +1,4 @@
-`Vulcan.sh` is a collection of projects to simplify [aphrodite.sh](https://aphrodite.sh) and move the state of programming forward.
+A collection of projects to simplify [aphrodite.sh](https://aphrodite.sh) and move the state of programming forward.
 
 Hephaestus is too hard to say and spell [hence the name Vulcan](https://en.wikipedia.org/wiki/Hephaestus#:~:text=Hephaestus%27s%20Roman%20counterpart%20is%20Vulcan).
 
@@ -14,3 +14,6 @@ Other culprits are:
 - ddl? maybe? This is probably a necessary complexity and unlocks future simplicity
 
 The current most interesting part of vulcan [is transactional memory](https://github.com/aphrodite-sh/vulcan/tree/main/ts/packages/value/README.md).
+
+
+This repo will be merged into `vlcn-io/vlcn-orm` at a future date.
