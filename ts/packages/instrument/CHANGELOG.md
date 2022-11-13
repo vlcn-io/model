@@ -1,5 +1,11 @@
 # @aphro/instrument
 
+## 0.1.0
+
+### Minor Changes
+
+- publish for testing
+
 ## 0.0.6
 
 ### Patch Changes

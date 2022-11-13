@@ -1,5 +1,16 @@
 # @aphro/react
 
+## 2.0.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/runtime@0.4.0
+
 ## 1.2.3
 
 ### Patch Changes

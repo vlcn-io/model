@@ -1,5 +1,20 @@
 # @aphro/codegen-ts
 
+## 0.5.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/codegen-api@0.3.0
+  - @vlcn.io/feature-gates@0.1.0
+  - @vlcn.io/schema@0.4.0
+  - @vlcn.io/schema-api@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.4.2
 
 ### Patch Changes

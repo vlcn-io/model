@@ -1,5 +1,16 @@
 # @aphro/capacitro-sqlite-connector
 
+## 0.1.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/runtime@0.4.0
+
 ## 0.0.3
 
 ### Patch Changes

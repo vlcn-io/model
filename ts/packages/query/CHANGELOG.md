@@ -1,5 +1,23 @@
 # @aphro/query-runtime-ts
 
+## 0.4.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/cache@0.3.0
+  - @vlcn.io/config@0.3.0
+  - @vlcn.io/id@0.1.0
+  - @vlcn.io/instrument@0.1.0
+  - @vlcn.io/model-persisted@0.1.0
+  - @vlcn.io/schema-api@0.3.0
+  - @vlcn.io/sql@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.3.2
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @aphro/schema
 
+## 0.4.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/codegen-api@0.3.0
+  - @vlcn.io/grammar-extension-api@0.3.0
+  - @vlcn.io/schema-api@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.3.2
 
 ### Patch Changes

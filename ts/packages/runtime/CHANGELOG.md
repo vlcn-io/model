@@ -1,5 +1,24 @@
 # @aphro/runtime-ts
 
+## 0.4.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/cache@0.3.0
+  - @vlcn.io/config@0.3.0
+  - @vlcn.io/id@0.1.0
+  - @vlcn.io/migration@0.2.0
+  - @vlcn.io/model-persisted@0.1.0
+  - @vlcn.io/query@0.4.0
+  - @vlcn.io/sql@0.3.0
+  - @vlcn.io/util@0.1.0
+  - @vlcn.io/value@0.1.0
+
 ## 0.3.8
 
 ### Patch Changes

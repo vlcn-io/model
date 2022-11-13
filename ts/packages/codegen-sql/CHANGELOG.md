@@ -1,5 +1,20 @@
 # @aphro/codegen-sql
 
+## 0.3.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/codegen-api@0.3.0
+  - @vlcn.io/schema@0.4.0
+  - @vlcn.io/schema-api@0.3.0
+  - @vlcn.io/sql@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.2.8
 
 ### Patch Changes

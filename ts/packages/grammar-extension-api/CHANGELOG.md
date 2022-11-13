@@ -1,5 +1,16 @@
 # @aphro/grammar-extension-api
 
+## 0.3.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/schema-api@0.3.0
+
 ## 0.2.6
 
 ### Patch Changes

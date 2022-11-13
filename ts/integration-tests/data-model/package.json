@@ -1,7 +1,7 @@
 {
   "name": "@vlcn.io/integration-tests-data-model",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "type": "module",
   "repository": {

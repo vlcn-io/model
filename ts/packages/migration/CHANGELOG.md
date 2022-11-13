@@ -1,5 +1,18 @@
 # @aphro/migration-runtime-ts
 
+## 0.2.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/config@0.3.0
+  - @vlcn.io/sql@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.1.7
 
 ### Patch Changes

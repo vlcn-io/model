@@ -1,6 +1,6 @@
 {
   "name": "@vlcn.io/build-all",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "type": "module",
   "devDependencies": {

@@ -1,5 +1,11 @@
 # @aphro/schema-api
 
+## 0.3.0
+
+### Minor Changes
+
+- publish for testing
+
 ## 0.2.6
 
 ### Patch Changes

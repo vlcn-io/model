@@ -1,5 +1,21 @@
 # @aphro/codegen-cli
 
+## 0.4.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/codegen-api@0.3.0
+  - @vlcn.io/codegen-sql@0.3.0
+  - @vlcn.io/codegen-ts@0.5.0
+  - @vlcn.io/schema@0.4.0
+  - @vlcn.io/schema-api@0.3.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.3.10
 
 ### Patch Changes

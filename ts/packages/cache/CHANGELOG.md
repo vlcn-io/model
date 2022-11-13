@@ -1,5 +1,17 @@
 # @aphro/cache-runtime-ts
 
+## 0.3.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/id@0.1.0
+  - @vlcn.io/util@0.1.0
+
 ## 0.2.6
 
 ### Patch Changes

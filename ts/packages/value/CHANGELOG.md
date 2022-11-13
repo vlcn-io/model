@@ -1,5 +1,17 @@
 # @vlcn.io/value
 
+## 0.1.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/util@0.1.0
+  - @vlcn.io/zone@0.1.0
+
 ## 0.0.3
 
 ### Patch Changes

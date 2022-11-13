@@ -1,5 +1,17 @@
 # @aphro/wa-sqlite-connector
 
+## 0.4.0
+
+### Minor Changes
+
+- publish for testing
+
+### Patch Changes
+
+- Updated dependencies
+  - @vlcn.io/instrument@0.1.0
+  - @vlcn.io/runtime@0.4.0
+
 ## 0.3.3
 
 ### Patch Changes
