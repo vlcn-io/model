@@ -1,4 +1,4 @@
-import { DBResolver, basicSqliteResolver } from "@vulcan.sh/runtime";
+import { DBResolver, basicSqliteResolver } from "@vlcn.io/runtime";
 import createPool from "./ConnectionPool.js";
 
 /**

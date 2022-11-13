@@ -4,7 +4,7 @@ export { default as CodegenPipeline } from "./CodegenPipeline.js";
 export { default as uniqueImports } from "./uniqueImports.js";
 
 import CodegenStep from "./CodegenStep.js";
-import { SchemaNode, SchemaEdge, SchemaFile } from "@vulcan.sh/schema-api";
+import { SchemaNode, SchemaEdge, SchemaFile } from "@vlcn.io/schema-api";
 
 export type Step = {
   new (opts: {

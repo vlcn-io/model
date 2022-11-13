@@ -1,16 +1,16 @@
-import { IModel, Model } from "@vulcan.sh/model";
-import { ID_of, newId, uuidv7 } from "@vulcan.sh/id";
+import { IModel, Model } from "@vlcn.io/model";
+import { ID_of, newId, uuidv7 } from "@vlcn.io/id";
 import {
   Event,
   hydratePersistedValue_UNSAFE,
   IObservableValue,
   newPersistedValue_UNSAFE,
-} from "@vulcan.sh/value";
-import { invariant } from "@vulcan.sh/util";
+} from "@vlcn.io/value";
+import { invariant } from "@vlcn.io/util";
 import { syncPersistor, asyncPersistor } from "./persistor.js";
-import { NodeSpec, JunctionEdgeSpec } from "@vulcan.sh/schema-api";
+import { NodeSpec, JunctionEdgeSpec } from "@vlcn.io/schema-api";
 import { BasePersistedModelData, INode, ModelSpecWithCreate } from "./spec.js";
-import { config } from "@vulcan.sh/config";
+import { config } from "@vlcn.io/config";
 
 type Cause = "create" | "hydrate" | "sync";
 

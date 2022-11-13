@@ -1,4 +1,4 @@
-import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 import { SQLite, SQLiteObject } from "@awesome-cordova-plugins/sqlite";
 
 class Connection {

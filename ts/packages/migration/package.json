@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/migration",
+  "name": "@vlcn.io/migration",
   "version": "0.1.7",
   "main": "lib/index.js",
   "type": "module",
@@ -9,10 +9,10 @@
     "directory": "ts/packages/migration"
   },
   "dependencies": {
-    "@vulcan.sh/config": "workspace:*",
-    "@vulcan.sh/sql": "workspace:*",
+    "@vlcn.io/config": "workspace:*",
+    "@vlcn.io/sql": "workspace:*",
     "@databases/sqlite": "^4.0.1",
-    "@vulcan.sh/util": "workspace:*"
+    "@vlcn.io/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

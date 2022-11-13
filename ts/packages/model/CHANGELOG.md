@@ -1,4 +1,4 @@
-# @vulcan.sh/model
+# @vlcn.io/model
 
 ## 0.0.3
 
@@ -6,11 +6,11 @@
 
 - retryable transactions, serializable transactions, conflict detection
 - Updated dependencies
-  - @vulcan.sh/value@0.0.3
+  - @vlcn.io/value@0.0.3
 
 ## 0.0.2
 
 ### Patch Changes
 
 - Updated dependencies
-  - @vulcan.sh/value@0.0.2
+  - @vlcn.io/value@0.0.2

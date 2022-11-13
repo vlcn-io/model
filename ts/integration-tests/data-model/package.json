@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/integration-tests-data-model",
+  "name": "@vlcn.io/integration-tests-data-model",
   "private": true,
   "version": "0.0.2",
   "main": "lib/index.js",
@@ -10,10 +10,10 @@
     "directory": "integration-tests/data-model"
   },
   "dependencies": {
-    "@vulcan.sh/runtime": "workspace:*"
+    "@vlcn.io/runtime": "workspace:*"
   },
   "devDependencies": {
-    "@vulcan.sh/codegen-cli": "workspace:*",
+    "@vlcn.io/codegen-cli": "workspace:*",
     "typescript": "^4.8.2"
   },
   "scripts": {

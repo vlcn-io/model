@@ -1,4 +1,4 @@
-import { sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 import createConnection, { Connection } from "./Connection.js";
 
 // we should remove the connection pool for wa-sqlite

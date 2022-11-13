@@ -1,4 +1,4 @@
-import { FieldDeclaration, ID, TypeAtom } from "@vulcan.sh/schema-api";
+import { FieldDeclaration, ID, TypeAtom } from "@vlcn.io/schema-api";
 
 export default {
   decorate(f: FieldDeclaration, decoration: string) {

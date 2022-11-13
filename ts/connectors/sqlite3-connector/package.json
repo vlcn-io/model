@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/sqlite3-connector",
+  "name": "@vlcn.io/sqlite3-connector",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/connectors/sqlite3-connector"
   },
   "dependencies": {
-    "@vulcan.sh/runtime": "workspace:*",
+    "@vlcn.io/runtime": "workspace:*",
     "@types/sqlite3": "^3.1.8",
     "sqlite3": "^5.0.11"
   },

@@ -15,8 +15,8 @@ import {
   ValidationError,
   StorageConfig,
   FieldDeclaration,
-} from "@vulcan.sh/schema-api";
-import { assertUnreachable } from "@vulcan.sh/util";
+} from "@vlcn.io/schema-api";
+import { assertUnreachable } from "@vlcn.io/util";
 
 /**
  * The AST returned by the parser gives us lists of items.

@@ -5,12 +5,12 @@
  */
 import User from "../User.js";
 import { default as s } from "./UserSpec.js";
-import { P } from "@vulcan.sh/runtime";
-import { modelGenMemo } from "@vulcan.sh/runtime";
-import { AsyncPersistedModel } from "@vulcan.sh/runtime";
-import { INode } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { P } from "@vlcn.io/runtime";
+import { modelGenMemo } from "@vlcn.io/runtime";
+import { AsyncPersistedModel } from "@vlcn.io/runtime";
+import { INode } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import UserQuery from "./UserQuery.js";
 
 export type Data = {

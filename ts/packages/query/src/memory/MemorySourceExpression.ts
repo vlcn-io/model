@@ -6,8 +6,8 @@ import {
   BasePersistedModelData,
   IPersistedModel,
   specToDatasetKey,
-} from "@vulcan.sh/model-persisted";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+} from "@vlcn.io/model-persisted";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
 import MemorySourceChunkIterable from "./MemorySourceChunkIterable.js";
 
 export interface SQLResult {}

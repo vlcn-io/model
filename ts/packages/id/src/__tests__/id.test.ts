@@ -1,4 +1,4 @@
-import { isHex } from "@vulcan.sh/util";
+import { isHex } from "@vlcn.io/util";
 import { newId } from "../id.js";
 
 test("Requires hex device id", () => {

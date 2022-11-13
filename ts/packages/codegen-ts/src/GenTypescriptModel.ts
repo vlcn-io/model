@@ -1,6 +1,6 @@
-import { asPropertyAccessor, upcaseAt } from "@vulcan.sh/util";
+import { asPropertyAccessor, upcaseAt } from "@vlcn.io/util";
 import { fieldToTsType, importsToString } from "./tsUtils.js";
-import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
+import { CodegenFile, CodegenStep, generatedDir } from "@vlcn.io/codegen-api";
 import TypescriptFile from "./TypescriptFile.js";
 import {
   SchemaEdge,
@@ -13,10 +13,10 @@ import {
   Field,
   FieldDeclaration,
   TypeAtom,
-} from "@vulcan.sh/schema-api";
-import { nodeFn, edgeFn, tsImport, fieldFn } from "@vulcan.sh/schema";
+} from "@vlcn.io/schema-api";
+import { nodeFn, edgeFn, tsImport, fieldFn } from "@vlcn.io/schema";
 import * as path from "path";
-import featureGates from "@vulcan.sh/feature-gates";
+import featureGates from "@vlcn.io/feature-gates";
 
 export default class GenTypescriptModel extends CodegenStep {
   static accepts(schema: SchemaNode | SchemaEdge): boolean {
@@ -145,16 +145,16 @@ export default abstract class ${this.schema.name}Base
         "s",
         "./" + nodeFn.specName(this.schema.name) + ".js"
       ),
-      tsImport("{P}", null, "@vulcan.sh/runtime"),
-      tsImport("{modelGenMemo}", null, "@vulcan.sh/runtime"),
-      tsImport("{AsyncPersistedModel}", null, "@vulcan.sh/runtime"),
+      tsImport("{P}", null, "@vlcn.io/runtime"),
+      tsImport("{modelGenMemo}", null, "@vlcn.io/runtime"),
+      tsImport("{AsyncPersistedModel}", null, "@vlcn.io/runtime"),
       this.schema.type === "node"
-        ? tsImport("{INode}", null, "@vulcan.sh/runtime")
-        : tsImport("{IEdge}", null, "@vulcan.sh/runtime"),
+        ? tsImport("{INode}", null, "@vlcn.io/runtime")
+        : tsImport("{IEdge}", null, "@vlcn.io/runtime"),
       this.schema.type === "node"
-        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
-        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
-      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
+        ? tsImport("{NodeSpecWithCreate}", null, "@vlcn.io/runtime")
+        : tsImport("{EdgeSpecWithCreate}", null, "@vlcn.io/runtime"),
+      tsImport("{ID_of}", null, "@vlcn.io/runtime"),
       ...(this.schema.storage.type !== "ephemeral"
         ? [
             tsImport(

@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/codegen-api",
+  "name": "@vlcn.io/codegen-api",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/packages/codegen-api"
   },
   "dependencies": {
-    "@vulcan.sh/schema-api": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
     "md5": "^2.3.0"
   },
   "devDependencies": {

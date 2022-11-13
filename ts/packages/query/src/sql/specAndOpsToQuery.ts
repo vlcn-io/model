@@ -9,9 +9,9 @@ import {
 } from "../Expression.js";
 import SQLHopExpression from "./SQLHopExpression.js";
 import { ModelFieldGetter } from "../Field.js";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
-import { invariant } from "@vulcan.sh/util";
-import { formatters, sql, SQLQuery } from "@vulcan.sh/sql";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
+import { invariant } from "@vlcn.io/util";
+import { formatters, sql, SQLQuery } from "@vlcn.io/sql";
 import tracer from "../trace.js";
 
 // given a model spec and hoisted operations, return the SQL query

@@ -1,4 +1,4 @@
-import { observe } from "@vulcan.sh/util";
+import { observe } from "@vlcn.io/util";
 import { IPlan } from "../Plan.js";
 import { Query, UpdateType } from "../Query.js";
 

@@ -1,5 +1,5 @@
-import { config } from "@vulcan.sh/config";
-import { ID_of } from "@vulcan.sh/id";
+import { config } from "@vlcn.io/config";
+import { ID_of } from "@vlcn.io/id";
 import {
   IPersistedModel,
   IPersistedModelCtor,

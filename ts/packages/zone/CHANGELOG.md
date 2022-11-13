@@ -1,4 +1,4 @@
-# @vulcan.sh/context-provider
+# @vlcn.io/context-provider
 
 ## 0.0.2
 

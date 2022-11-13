@@ -1,6 +1,6 @@
 import * as SQLite from "wa-sqlite";
 // import { OriginPrivateFileSystemVFS } from 'wa-sqlite/src/examples/OriginPrivateFileSystemVFS.js';
-import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 import tracer from "./trace.js";
 import { Span } from "@opentelemetry/api";
 import getSqliteApi from "./sqliteInit.js";

@@ -1,7 +1,7 @@
 import { HopExpression } from "../Expression.js";
 import { HopQuery, Query } from "../Query.js";
-import { EdgeSpec } from "@vulcan.sh/schema-api";
-import { IPersistedModel } from "@vulcan.sh/model-persisted";
+import { EdgeSpec } from "@vlcn.io/schema-api";
+import { IPersistedModel } from "@vlcn.io/model-persisted";
 import MemoryHopExpression from "./MemoryHopExpression.js";
 
 export default class MemoryHopQuery<

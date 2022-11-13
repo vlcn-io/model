@@ -7,9 +7,9 @@ import {
   BasePersistedModelData,
   IPersistedModel,
   specToDatasetKey,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 import SQLExpression, { HoistedOperations } from "./SQLExpression.js";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
 
 export interface SQLResult {}
 

@@ -1,5 +1,5 @@
-import { DBResolver, SQLResolvedDB, StorageEngine } from "@vulcan.sh/config";
-import { sql } from "@vulcan.sh/sql";
+import { DBResolver, SQLResolvedDB, StorageEngine } from "@vlcn.io/config";
+import { sql } from "@vlcn.io/sql";
 import { autoMigrate, CreateError } from "./autoMigrate.js";
 
 export type SQLExports = { sqlite: DBs };

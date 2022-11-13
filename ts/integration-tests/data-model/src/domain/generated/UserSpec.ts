@@ -3,10 +3,10 @@
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
  */
-import { PersistedModel } from "@vulcan.sh/runtime";
-import { AsyncPersistedModel } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
+import { PersistedModel } from "@vlcn.io/runtime";
+import { AsyncPersistedModel } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
 import User from "../User.js";
 import { Data } from "./UserBase.js";
 

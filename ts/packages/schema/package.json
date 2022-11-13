@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/schema",
+  "name": "@vlcn.io/schema",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,10 +9,10 @@
     "directory": "ts/packages/schema"
   },
   "dependencies": {
-    "@vulcan.sh/codegen-api": "workspace:*",
-    "@vulcan.sh/grammar-extension-api": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/util": "workspace:*"
+    "@vlcn.io/codegen-api": "workspace:*",
+    "@vlcn.io/grammar-extension-api": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/cache",
+  "name": "@vlcn.io/cache",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
@@ -9,8 +9,8 @@
     "directory": "ts/packages/cache"
   },
   "dependencies": {
-    "@vulcan.sh/util": "workspace:*",
-    "@vulcan.sh/id": "workspace:*"
+    "@vlcn.io/util": "workspace:*",
+    "@vlcn.io/id": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/runtime",
+  "name": "@vlcn.io/runtime",
   "version": "0.3.8",
   "main": "lib/index.js",
   "type": "module",
@@ -9,15 +9,15 @@
     "directory": "ts/packages/runtime"
   },
   "dependencies": {
-    "@vulcan.sh/cache": "workspace:*",
-    "@vulcan.sh/config": "workspace:*",
-    "@vulcan.sh/migration": "workspace:*",
-    "@vulcan.sh/model-persisted": "workspace:*",
-    "@vulcan.sh/query": "workspace:*",
-    "@vulcan.sh/sql": "workspace:*",
-    "@vulcan.sh/id": "workspace:*",
-    "@vulcan.sh/util": "workspace:*",
-    "@vulcan.sh/value": "workspace:*"
+    "@vlcn.io/cache": "workspace:*",
+    "@vlcn.io/config": "workspace:*",
+    "@vlcn.io/migration": "workspace:*",
+    "@vlcn.io/model-persisted": "workspace:*",
+    "@vlcn.io/query": "workspace:*",
+    "@vlcn.io/sql": "workspace:*",
+    "@vlcn.io/id": "workspace:*",
+    "@vlcn.io/util": "workspace:*",
+    "@vlcn.io/value": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.8.2"

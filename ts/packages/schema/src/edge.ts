@@ -8,7 +8,7 @@ import {
   SchemaEdge,
   StorageConfig,
   FieldDeclaration,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 import nodeFn from "./node.js";
 import fieldFn from "./field.js";
 

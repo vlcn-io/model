@@ -1,4 +1,4 @@
-import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 
 export class Connection {
   constructor(private db: any) {}

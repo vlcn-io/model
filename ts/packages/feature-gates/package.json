@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/feature-gates",
+  "name": "@vlcn.io/feature-gates",
   "version": "0.0.1",
   "main": "lib/index.js",
   "type": "module",

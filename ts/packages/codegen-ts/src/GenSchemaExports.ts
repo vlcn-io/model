@@ -1,6 +1,6 @@
-import { CodegenStep, CodegenFile, generatedDir } from "@vulcan.sh/codegen-api";
-import { nodeFn } from "@vulcan.sh/schema";
-import { SchemaEdge, SchemaNode } from "@vulcan.sh/schema-api";
+import { CodegenStep, CodegenFile, generatedDir } from "@vlcn.io/codegen-api";
+import { nodeFn } from "@vlcn.io/schema";
+import { SchemaEdge, SchemaNode } from "@vlcn.io/schema-api";
 import * as path from "path";
 import GenTypescriptQuery from "./GenTypescriptQuery.js";
 import GenTypescriptSpec from "./GenTypescriptSpec.js";

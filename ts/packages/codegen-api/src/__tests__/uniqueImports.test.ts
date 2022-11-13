@@ -1,5 +1,5 @@
 import uniqueImports from "../uniqueImports.js";
-import { Import } from "@vulcan.sh/schema-api";
+import { Import } from "@vlcn.io/schema-api";
 import fc from "fast-check";
 
 test("matching imports are de-duplicated", () => {

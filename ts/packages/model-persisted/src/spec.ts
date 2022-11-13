@@ -1,5 +1,5 @@
-import { NodeSpec, JunctionEdgeSpec } from "@vulcan.sh/schema-api";
-import { ID_of } from "@vulcan.sh/id";
+import { NodeSpec, JunctionEdgeSpec } from "@vlcn.io/schema-api";
+import { ID_of } from "@vlcn.io/id";
 import { IPersistedModel } from "./PersistedModel";
 
 // TODO: update this to not require id. edges don't have a single id field for example.

@@ -1,6 +1,6 @@
-import { MemoryResolvedDB, config } from "@vulcan.sh/config";
-import { IPersistedModel } from "@vulcan.sh/model-persisted";
-import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { MemoryResolvedDB, config } from "@vlcn.io/config";
+import { IPersistedModel } from "@vlcn.io/model-persisted";
+import { EdgeSpec } from "@vlcn.io/schema-api";
 import { BaseChunkIterable, ChunkIterable } from "../ChunkIterable.js";
 import { HoistedOperations } from "./MemorySourceExpression.js";
 

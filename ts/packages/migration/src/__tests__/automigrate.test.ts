@@ -9,8 +9,8 @@ import {
   setDifference,
 } from "../autoMigrate.js";
 import connect from "@databases/sqlite";
-import { sql, SQLQuery } from "@vulcan.sh/sql";
-import { SQLResolvedDB } from "@vulcan.sh/config";
+import { sql, SQLQuery } from "@vlcn.io/sql";
+import { SQLResolvedDB } from "@vlcn.io/config";
 
 const conn = connect();
 

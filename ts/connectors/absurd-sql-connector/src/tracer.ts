@@ -1,4 +1,4 @@
-import { tracer, Tracer } from "@vulcan.sh/instrument";
+import { tracer, Tracer } from "@vlcn.io/instrument";
 
-const t: Tracer = tracer("@vulcan.sh/absurd-sql-connector", "0.2.1");
+const t: Tracer = tracer("@vlcn.io/absurd-sql-connector", "0.2.1");
 export default t;

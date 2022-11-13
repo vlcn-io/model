@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/instrument",
+  "name": "@vlcn.io/instrument",
   "version": "0.0.6",
   "main": "lib/index.js",
   "type": "module",

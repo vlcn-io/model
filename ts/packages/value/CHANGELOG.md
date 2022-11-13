@@ -1,4 +1,4 @@
-# @vulcan.sh/value
+# @vlcn.io/value
 
 ## 0.0.3
 
@@ -6,8 +6,8 @@
 
 - retryable transactions, serializable transactions, conflict detection
 - Updated dependencies
-  - @vulcan.sh/context-provider@0.0.2
-  - @vulcan.sh/util@0.0.2
+  - @vlcn.io/context-provider@0.0.2
+  - @vlcn.io/util@0.0.2
 
 ## 0.0.2
 

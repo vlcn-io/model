@@ -1,4 +1,4 @@
-# @vulcan.sh/util
+# @vlcn.io/util
 
 ## 0.0.2
 

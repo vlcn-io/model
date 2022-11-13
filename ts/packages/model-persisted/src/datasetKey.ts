@@ -1,4 +1,4 @@
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
 
 export type DatasetKey = string;
 

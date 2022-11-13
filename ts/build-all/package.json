@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/build-all",
+  "name": "@vlcn.io/build-all",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",

@@ -1,4 +1,4 @@
-import { Import } from "@vulcan.sh/schema-api";
+import { Import } from "@vlcn.io/schema-api";
 
 export default function uniqueImports(imports: readonly Import[]): Import[] {
   const seen = new Set();

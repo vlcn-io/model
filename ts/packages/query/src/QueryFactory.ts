@@ -1,5 +1,5 @@
-import { EdgeSpec } from "@vulcan.sh/schema-api";
-import { assertUnreachable } from "@vulcan.sh/util";
+import { EdgeSpec } from "@vlcn.io/schema-api";
+import { assertUnreachable } from "@vlcn.io/util";
 import MemorySourceQuery from "./memory/MemorySourceQuery.js";
 import MemoryHopQuery from "./memory/MemoryHopQuery.js";
 import { DerivedQuery, HopQuery, Query } from "./Query.js";
@@ -9,7 +9,7 @@ import {
   BasePersistedModelData,
   IPersistedModel,
   ModelSpecWithCreate,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 
 // Runtime factory so we can swap to `Wire` when running on a client vs
 // the native platform.

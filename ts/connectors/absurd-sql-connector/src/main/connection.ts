@@ -2,7 +2,7 @@ import count from "@strut/counter";
 import thisPackage from "../pkg.js";
 // @ts-ignore -- no type on imported pkg
 import { initBackend } from "@aphro/absurd-sql/dist/indexeddb-main-thread.js";
-import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 import tracer from "../tracer.js";
 import Mutex from "./Mutex.js";
 

@@ -10,8 +10,8 @@
 // Changing cache config would then need to change return type of `persist` via mapped types.
 //
 
-import { invariant } from "@vulcan.sh/util";
-import { ID_of } from "@vulcan.sh/id";
+import { invariant } from "@vlcn.io/util";
+import { ID_of } from "@vlcn.io/id";
 
 /**
  * Caching deserves an entire blog post.

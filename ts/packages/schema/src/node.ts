@@ -6,7 +6,7 @@ import {
   Import,
   SchemaEdge,
   SchemaNode,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 import fieldFn from "./field.js";
 
 const inboundEdges = {

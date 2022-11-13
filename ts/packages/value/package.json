@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/value",
+  "name": "@vlcn.io/value",
   "version": "0.0.3",
   "main": "lib/index.js",
   "type": "module",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "typescript": "^4.8.2",
-    "@vulcan.sh/zone": "workspace:*",
-    "@vulcan.sh/util": "workspace:*"
+    "@vlcn.io/zone": "workspace:*",
+    "@vlcn.io/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

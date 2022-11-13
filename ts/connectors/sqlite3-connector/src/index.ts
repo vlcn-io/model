@@ -1,5 +1,5 @@
-import { DBResolver } from "@vulcan.sh/runtime";
-import { basicSqliteResolver } from "@vulcan.sh/runtime";
+import { DBResolver } from "@vlcn.io/runtime";
+import { basicSqliteResolver } from "@vlcn.io/runtime";
 import { createConnection } from "./Connection.js";
 export { createConnection } from "./Connection.js";
 

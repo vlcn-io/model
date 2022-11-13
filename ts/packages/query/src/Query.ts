@@ -1,4 +1,4 @@
-import { invariant } from "@vulcan.sh/util";
+import { invariant } from "@vlcn.io/util";
 import {
   count,
   EmptySourceExpression,

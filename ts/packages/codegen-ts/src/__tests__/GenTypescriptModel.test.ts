@@ -1,6 +1,6 @@
 import GenTypescriptModel from "../GenTypescriptModel.js";
-import { SchemaNode } from "@vulcan.sh/schema-api";
-import { createCompiler } from "@vulcan.sh/schema";
+import { SchemaNode } from "@vlcn.io/schema-api";
+import { createCompiler } from "@vlcn.io/schema";
 
 const { compileFromString } = createCompiler();
 
@@ -61,16 +61,16 @@ test("Generating an ID only model", async () => {
  */
 import IDOnly from "../IDOnly.js";
 import { default as s } from "./IDOnlySpec.js";
-import { P } from "@vulcan.sh/runtime";
-import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
-import { CreateMutationBuilder } from "@vulcan.sh/runtime";
-import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
-import { modelGenMemo } from "@vulcan.sh/runtime";
-import { Node } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { P } from "@vlcn.io/runtime";
+import { UpdateMutationBuilder } from "@vlcn.io/runtime";
+import { CreateMutationBuilder } from "@vlcn.io/runtime";
+import { DeleteMutationBuilder } from "@vlcn.io/runtime";
+import { modelGenMemo } from "@vlcn.io/runtime";
+import { Node } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import IDOnlyQuery from "./IDOnlyQuery.js";
-import { Context } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
 
 export type Data = {
   id: ID_of<IDOnly>;
@@ -133,16 +133,16 @@ test("Generating all primitive fields", async () => {
  */
 import PrimitiveFields from "../PrimitiveFields.js";
 import { default as s } from "./PrimitiveFieldsSpec.js";
-import { P } from "@vulcan.sh/runtime";
-import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
-import { CreateMutationBuilder } from "@vulcan.sh/runtime";
-import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
-import { modelGenMemo } from "@vulcan.sh/runtime";
-import { Node } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { P } from "@vlcn.io/runtime";
+import { UpdateMutationBuilder } from "@vlcn.io/runtime";
+import { CreateMutationBuilder } from "@vlcn.io/runtime";
+import { DeleteMutationBuilder } from "@vlcn.io/runtime";
+import { modelGenMemo } from "@vlcn.io/runtime";
+import { Node } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import PrimitiveFieldsQuery from "./PrimitiveFieldsQuery.js";
-import { Context } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
 
 export type Data = {
   id: ID_of<PrimitiveFields>;
@@ -235,16 +235,16 @@ test("Outbound field edge", async () => {
  */
 import Foo from "../Foo.js";
 import { default as s } from "./FooSpec.js";
-import { P } from "@vulcan.sh/runtime";
-import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
-import { CreateMutationBuilder } from "@vulcan.sh/runtime";
-import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
-import { modelGenMemo } from "@vulcan.sh/runtime";
-import { Node } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { P } from "@vlcn.io/runtime";
+import { UpdateMutationBuilder } from "@vlcn.io/runtime";
+import { CreateMutationBuilder } from "@vlcn.io/runtime";
+import { DeleteMutationBuilder } from "@vlcn.io/runtime";
+import { modelGenMemo } from "@vlcn.io/runtime";
+import { Node } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import FooQuery from "./FooQuery.js";
-import { Context } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
 import FooSpec from "./FooSpec.js";
 
 export type Data = {
@@ -321,16 +321,16 @@ test("Outbound foreign key edge", async () => {
  */
 import Bar from "../Bar.js";
 import { default as s } from "./BarSpec.js";
-import { P } from "@vulcan.sh/runtime";
-import { UpdateMutationBuilder } from "@vulcan.sh/runtime";
-import { CreateMutationBuilder } from "@vulcan.sh/runtime";
-import { DeleteMutationBuilder } from "@vulcan.sh/runtime";
-import { modelGenMemo } from "@vulcan.sh/runtime";
-import { Node } from "@vulcan.sh/runtime";
-import { NodeSpecWithCreate } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { P } from "@vlcn.io/runtime";
+import { UpdateMutationBuilder } from "@vlcn.io/runtime";
+import { CreateMutationBuilder } from "@vlcn.io/runtime";
+import { DeleteMutationBuilder } from "@vlcn.io/runtime";
+import { modelGenMemo } from "@vlcn.io/runtime";
+import { Node } from "@vlcn.io/runtime";
+import { NodeSpecWithCreate } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import BarQuery from "./BarQuery.js";
-import { Context } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
 import FooQuery from "./FooQuery.js";
 import Foo from "../Foo.js";
 

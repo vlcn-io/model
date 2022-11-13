@@ -1,4 +1,4 @@
-import { DBResolver, basicSqliteResolver } from "@vulcan.sh/runtime";
+import { DBResolver, basicSqliteResolver } from "@vlcn.io/runtime";
 // @ts-ignore
 import initSqlJs from "@aphro/sql.js";
 import { Connection, createConnection } from "./Connection.js";

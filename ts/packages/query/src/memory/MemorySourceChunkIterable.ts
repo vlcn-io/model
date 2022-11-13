@@ -1,8 +1,8 @@
 import { BaseChunkIterable } from "../ChunkIterable.js";
-import { invariant } from "@vulcan.sh/util";
-import { config, MemoryReadQuery, MemoryResolvedDB } from "@vulcan.sh/config";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
-import { IPersistedModel } from "@vulcan.sh/model-persisted";
+import { invariant } from "@vlcn.io/util";
+import { config, MemoryReadQuery, MemoryResolvedDB } from "@vlcn.io/config";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
+import { IPersistedModel } from "@vlcn.io/model-persisted";
 
 export default class MemorySourceChunkIterable<
   T extends IPersistedModel<any>

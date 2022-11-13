@@ -1,4 +1,4 @@
-import { CodegenFile, sqlTemplates, sign } from "@vulcan.sh/codegen-api";
+import { CodegenFile, sqlTemplates, sign } from "@vlcn.io/codegen-api";
 import { format } from "sql-formatter";
 
 export default class SqlFile implements CodegenFile {

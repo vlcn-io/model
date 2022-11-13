@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/capacitor-sqlite-connector",
+  "name": "@vlcn.io/capacitor-sqlite-connector",
   "version": "0.0.3",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/connectors/capacitor-sqlite-connector"
   },
   "dependencies": {
-    "@vulcan.sh/runtime": "workspace:*",
+    "@vlcn.io/runtime": "workspace:*",
     "@awesome-cordova-plugins/sqlite": "^5.44.0"
   },
   "devDependencies": {

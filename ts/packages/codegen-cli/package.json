@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/codegen-cli",
+  "name": "@vlcn.io/codegen-cli",
   "version": "0.3.10",
   "main": "bin/cli.js",
   "type": "module",
@@ -12,12 +12,12 @@
     "directory": "packages/codegen-cli"
   },
   "dependencies": {
-    "@vulcan.sh/codegen-ts": "workspace:*",
-    "@vulcan.sh/codegen-api": "workspace:*",
-    "@vulcan.sh/codegen-sql": "workspace:*",
-    "@vulcan.sh/schema": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/util": "workspace:*",
+    "@vlcn.io/codegen-ts": "workspace:*",
+    "@vlcn.io/codegen-api": "workspace:*",
+    "@vlcn.io/codegen-sql": "workspace:*",
+    "@vlcn.io/schema": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/util": "workspace:*",
     "@strut/counter": "^0.0.11",
     "chalk": "^5.0.1",
     "command-line-args": "^5.2.1",

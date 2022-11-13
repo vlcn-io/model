@@ -1,5 +1,5 @@
-import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
-import { edgeFn, fieldFn, nodeFn, tsImport } from "@vulcan.sh/schema";
+import { CodegenFile, CodegenStep, generatedDir } from "@vlcn.io/codegen-api";
+import { edgeFn, fieldFn, nodeFn, tsImport } from "@vlcn.io/schema";
 import {
   SchemaEdge,
   EdgeDeclaration,
@@ -8,7 +8,7 @@ import {
   SchemaNode,
   Field,
   FieldDeclaration,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 import * as path from "path";
 import { importsToString } from "./tsUtils.js";
 import TypescriptFile from "./TypescriptFile.js";
@@ -110,12 +110,12 @@ export default ${nodeFn.specName(this.schema.name)};
 
   private collectImports(): Import[] {
     return [
-      tsImport("{PersistedModel}", null, "@vulcan.sh/runtime"),
-      tsImport("{AsyncPersistedModel}", null, "@vulcan.sh/runtime"),
-      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
+      tsImport("{PersistedModel}", null, "@vlcn.io/runtime"),
+      tsImport("{AsyncPersistedModel}", null, "@vlcn.io/runtime"),
+      tsImport("{ID_of}", null, "@vlcn.io/runtime"),
       this.schema.type === "node"
-        ? tsImport("{NodeSpecWithCreate}", null, "@vulcan.sh/runtime")
-        : tsImport("{EdgeSpecWithCreate}", null, "@vulcan.sh/runtime"),
+        ? tsImport("{NodeSpecWithCreate}", null, "@vlcn.io/runtime")
+        : tsImport("{EdgeSpecWithCreate}", null, "@vlcn.io/runtime"),
       ...this.getEdgeImports(),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
       tsImport("{Data}", null, `./${this.schema.name}Base.js`),

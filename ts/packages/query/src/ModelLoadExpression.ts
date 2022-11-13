@@ -1,7 +1,7 @@
 import {
   BasePersistedModelData,
   IPersistedModel,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 import { ChunkIterable, SyncMappedChunkIterable } from "./ChunkIterable";
 import { DerivedExpression } from "./Expression";
 

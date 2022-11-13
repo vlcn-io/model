@@ -1,4 +1,4 @@
-import { ValidationError } from "@vulcan.sh/schema-api";
+import { ValidationError } from "@vlcn.io/schema-api";
 import { ActionDict } from "ohm-js";
 
 type RuleName = string;

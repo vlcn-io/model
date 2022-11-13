@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/sql",
+  "name": "@vlcn.io/sql",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",

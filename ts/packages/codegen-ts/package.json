@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/codegen-ts",
+  "name": "@vlcn.io/codegen-ts",
   "version": "0.4.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,11 +9,11 @@
     "directory": "ts/packages/codegen-ts"
   },
   "dependencies": {
-    "@vulcan.sh/codegen-api": "workspace:*",
-    "@vulcan.sh/schema": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/feature-gates": "workspace:*",
-    "@vulcan.sh/util": "workspace:*",
+    "@vlcn.io/codegen-api": "workspace:*",
+    "@vlcn.io/schema": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/feature-gates": "workspace:*",
+    "@vlcn.io/util": "workspace:*",
     "md5": "^2.3.0",
     "prettier": "^2.7.1"
   },

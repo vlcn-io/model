@@ -35,7 +35,7 @@ import { Query } from "./Query.js";
 import {
   BasePersistedModelData,
   IPersistedModel,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 
 export type ExpressionType =
   | "take"

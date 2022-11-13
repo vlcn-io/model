@@ -1,15 +1,15 @@
 import { BaseChunkIterable } from "../ChunkIterable.js";
 import specAndOpsToQuery from "./specAndOpsToQuery.js";
 import { HoistedOperations } from "./SQLExpression.js";
-import { invariant } from "@vulcan.sh/util";
-import { SQLResolvedDB, config } from "@vulcan.sh/config";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { invariant } from "@vlcn.io/util";
+import { SQLResolvedDB, config } from "@vlcn.io/config";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
 import { ModelFieldGetter } from "../Field.js";
-import { ID_of } from "@vulcan.sh/id";
+import { ID_of } from "@vlcn.io/id";
 import {
   BasePersistedModelData,
   IPersistedModel,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 
 export default class SQLSourceChunkIterable<
   T extends IPersistedModel<BasePersistedModelData>

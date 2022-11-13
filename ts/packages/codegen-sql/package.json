@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/codegen-sql",
+  "name": "@vlcn.io/codegen-sql",
   "version": "0.2.8",
   "main": "lib/index.js",
   "type": "module",
@@ -9,11 +9,11 @@
     "directory": "ts/packages/codegen-sql"
   },
   "dependencies": {
-    "@vulcan.sh/codegen-api": "workspace:*",
-    "@vulcan.sh/schema": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/sql": "workspace:*",
-    "@vulcan.sh/util": "workspace:*",
+    "@vlcn.io/codegen-api": "workspace:*",
+    "@vlcn.io/schema": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/sql": "workspace:*",
+    "@vlcn.io/util": "workspace:*",
     "sql-formatter": "10.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
-import { specToDatasetKey } from "@vulcan.sh/model-persisted";
-import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { specToDatasetKey } from "@vlcn.io/model-persisted";
+import { EdgeSpec } from "@vlcn.io/schema-api";
 import { ChunkIterable } from "../ChunkIterable.js";
 import { HopExpression } from "../Expression.js";
 import HopPlan from "../HopPlan.js";

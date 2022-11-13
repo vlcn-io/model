@@ -1,6 +1,6 @@
 // @ts-ignore -- @types/sqlite3 is all wrong when it comes to import structure.
 import sqlite3 from "sqlite3";
-import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vulcan.sh/runtime";
+import { formatters, sql, SQLQuery, SQLResolvedDB } from "@vlcn.io/runtime";
 import Mutex from "./Mutex";
 
 const Database = sqlite3.Database;

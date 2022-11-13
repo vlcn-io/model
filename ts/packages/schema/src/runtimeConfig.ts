@@ -1,5 +1,5 @@
-import { GrammarExtension } from "@vulcan.sh/grammar-extension-api";
-import { Step } from "@vulcan.sh/codegen-api";
+import { GrammarExtension } from "@vlcn.io/grammar-extension-api";
+import { Step } from "@vlcn.io/codegen-api";
 
 export type Config = {
   grammarExtensions?: GrammarExtension<any, any>[];

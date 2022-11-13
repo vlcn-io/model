@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/id",
+  "name": "@vlcn.io/id",
   "version": "0.0.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/packages/id"
   },
   "dependencies": {
-    "@vulcan.sh/util": "workspace:*"
+    "@vlcn.io/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

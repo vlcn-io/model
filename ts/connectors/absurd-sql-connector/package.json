@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/absurd-sql-connector",
+  "name": "@vlcn.io/absurd-sql-connector",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@aphro/absurd-sql": "^0.0.53",
-    "@vulcan.sh/instrument": "workspace:*",
-    "@vulcan.sh/runtime": "workspace:*",
+    "@vlcn.io/instrument": "workspace:*",
+    "@vlcn.io/runtime": "workspace:*",
     "@aphro/sql.js": "^1.7.0",
     "@opentelemetry/api": "^1.1.0",
     "@strut/counter": "^0.0.11"

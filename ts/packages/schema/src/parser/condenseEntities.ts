@@ -2,7 +2,7 @@ import {
   NodeReference,
   SchemaFileAst,
   ValidationError,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 
 export default function condenseEntities<Tc, Ta>(
   entities: {

@@ -2,7 +2,7 @@ import {
   BasePersistedModelData,
   IPersistedModel,
   ModelSpecWithCreate,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 import { SourceQuery } from "../Query.js";
 import MemorySourceExpression from "./MemorySourceExpression.js";
 

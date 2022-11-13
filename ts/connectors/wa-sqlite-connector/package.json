@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/wa-sqlite-connector",
+  "name": "@vlcn.io/wa-sqlite-connector",
   "version": "0.3.3",
   "main": "lib/index.js",
   "type": "module",
@@ -9,8 +9,8 @@
     "directory": "ts/connectors/wa-sqlite-connector"
   },
   "dependencies": {
-    "@vulcan.sh/instrument": "workspace:*",
-    "@vulcan.sh/runtime": "workspace:*",
+    "@vlcn.io/instrument": "workspace:*",
+    "@vlcn.io/runtime": "workspace:*",
     "@opentelemetry/api": "^1.1.0",
     "@strut/counter": "^0.0.11",
     "wa-sqlite": "github:rhashimoto/wa-sqlite#buildless"

@@ -1,5 +1,5 @@
-import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
-import { SchemaEdge, SchemaNode } from "@vulcan.sh/schema-api";
+import { CodegenFile, CodegenStep, generatedDir } from "@vlcn.io/codegen-api";
+import { SchemaEdge, SchemaNode } from "@vlcn.io/schema-api";
 import TypescriptFile from "./TypescriptFile.js";
 import * as fs from "fs";
 import * as path from "path";

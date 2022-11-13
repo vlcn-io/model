@@ -1,4 +1,4 @@
-import { Query, Context, UpdateType, INode } from "@vulcan.sh/runtime";
+import { Query, Context, UpdateType, INode } from "@vlcn.io/runtime";
 import counter from "@strut/counter";
 import { useRef, useEffect, useReducer } from "react";
 import { suspend } from "suspend-react";

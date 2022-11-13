@@ -1,6 +1,6 @@
 // TODO: this should be in a separate package from the core model code.
 import { useEffect, useReducer, useRef, useState } from "react";
-import { INode, Query, UpdateType, LiveResult } from "@vulcan.sh/runtime";
+import { INode, Query, UpdateType, LiveResult } from "@vlcn.io/runtime";
 import counter from "@strut/counter";
 
 const count = counter("model-infra/Hooks");

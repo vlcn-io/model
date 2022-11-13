@@ -1,5 +1,5 @@
-import Cache from "@vulcan.sh/cache";
-import { SQLQuery } from "@vulcan.sh/sql";
+import Cache from "@vlcn.io/cache";
+import { SQLQuery } from "@vlcn.io/sql";
 
 export type StorageEngine = "ephemeral" | "memory" | "sqlite";
 

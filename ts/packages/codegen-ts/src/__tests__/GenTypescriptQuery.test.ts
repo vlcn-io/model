@@ -1,5 +1,5 @@
-import { SchemaNode } from "@vulcan.sh/schema-api";
-import { createCompiler } from "@vulcan.sh/schema";
+import { SchemaNode } from "@vlcn.io/schema-api";
+import { createCompiler } from "@vlcn.io/schema";
 import GenTypescriptQuery from "../GenTypescriptQuery";
 
 const { compileFromString } = createCompiler();
@@ -98,19 +98,19 @@ test("NoEdgesSchema", async () => {
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
  */
-import { Context } from "@vulcan.sh/runtime";
-import { DerivedQuery } from "@vulcan.sh/runtime";
-import { QueryFactory } from "@vulcan.sh/runtime";
-import { modelLoad } from "@vulcan.sh/runtime";
-import { filter } from "@vulcan.sh/runtime";
-import { Predicate } from "@vulcan.sh/runtime";
-import { take } from "@vulcan.sh/runtime";
-import { orderBy } from "@vulcan.sh/runtime";
-import { P } from "@vulcan.sh/runtime";
-import { ModelFieldGetter } from "@vulcan.sh/runtime";
-import { Expression } from "@vulcan.sh/runtime";
-import { EmptyQuery } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
+import { DerivedQuery } from "@vlcn.io/runtime";
+import { QueryFactory } from "@vlcn.io/runtime";
+import { modelLoad } from "@vlcn.io/runtime";
+import { filter } from "@vlcn.io/runtime";
+import { Predicate } from "@vlcn.io/runtime";
+import { take } from "@vlcn.io/runtime";
+import { orderBy } from "@vlcn.io/runtime";
+import { P } from "@vlcn.io/runtime";
+import { ModelFieldGetter } from "@vlcn.io/runtime";
+import { Expression } from "@vlcn.io/runtime";
+import { EmptyQuery } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";
@@ -153,19 +153,19 @@ test("OutboundEdgeViaFieldSchema", async () => {
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
  */
-import { Context } from "@vulcan.sh/runtime";
-import { DerivedQuery } from "@vulcan.sh/runtime";
-import { QueryFactory } from "@vulcan.sh/runtime";
-import { modelLoad } from "@vulcan.sh/runtime";
-import { filter } from "@vulcan.sh/runtime";
-import { Predicate } from "@vulcan.sh/runtime";
-import { take } from "@vulcan.sh/runtime";
-import { orderBy } from "@vulcan.sh/runtime";
-import { P } from "@vulcan.sh/runtime";
-import { ModelFieldGetter } from "@vulcan.sh/runtime";
-import { Expression } from "@vulcan.sh/runtime";
-import { EmptyQuery } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
+import { DerivedQuery } from "@vlcn.io/runtime";
+import { QueryFactory } from "@vlcn.io/runtime";
+import { modelLoad } from "@vlcn.io/runtime";
+import { filter } from "@vlcn.io/runtime";
+import { Predicate } from "@vlcn.io/runtime";
+import { take } from "@vlcn.io/runtime";
+import { orderBy } from "@vlcn.io/runtime";
+import { P } from "@vlcn.io/runtime";
+import { ModelFieldGetter } from "@vlcn.io/runtime";
+import { Expression } from "@vlcn.io/runtime";
+import { EmptyQuery } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";
@@ -232,19 +232,19 @@ test("OutboundThroughForeignFieldSchema", async () => {
  * AUTO-GENERATED FILE
  * Do not modify. Update your schema and re-generate for changes.
  */
-import { Context } from "@vulcan.sh/runtime";
-import { DerivedQuery } from "@vulcan.sh/runtime";
-import { QueryFactory } from "@vulcan.sh/runtime";
-import { modelLoad } from "@vulcan.sh/runtime";
-import { filter } from "@vulcan.sh/runtime";
-import { Predicate } from "@vulcan.sh/runtime";
-import { take } from "@vulcan.sh/runtime";
-import { orderBy } from "@vulcan.sh/runtime";
-import { P } from "@vulcan.sh/runtime";
-import { ModelFieldGetter } from "@vulcan.sh/runtime";
-import { Expression } from "@vulcan.sh/runtime";
-import { EmptyQuery } from "@vulcan.sh/runtime";
-import { ID_of } from "@vulcan.sh/runtime";
+import { Context } from "@vlcn.io/runtime";
+import { DerivedQuery } from "@vlcn.io/runtime";
+import { QueryFactory } from "@vlcn.io/runtime";
+import { modelLoad } from "@vlcn.io/runtime";
+import { filter } from "@vlcn.io/runtime";
+import { Predicate } from "@vlcn.io/runtime";
+import { take } from "@vlcn.io/runtime";
+import { orderBy } from "@vlcn.io/runtime";
+import { P } from "@vlcn.io/runtime";
+import { ModelFieldGetter } from "@vlcn.io/runtime";
+import { Expression } from "@vlcn.io/runtime";
+import { EmptyQuery } from "@vlcn.io/runtime";
+import { ID_of } from "@vlcn.io/runtime";
 import Foo from "../Foo.js";
 import { Data } from "./FooBase.js";
 import FooSpec from "./FooSpec.js";

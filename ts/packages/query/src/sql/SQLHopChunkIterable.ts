@@ -21,7 +21,7 @@
  * - Non followed inverse jx edges
  */
 
-import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { EdgeSpec } from "@vlcn.io/schema-api";
 import { BaseChunkIterable } from "../ChunkIterable.js";
 import { HoistedOperations } from "./SQLExpression.js";
 

@@ -1,6 +1,6 @@
 import Connection from "./main/connection.js";
 export { default as Connection } from "./main/connection.js";
-import { basicSqliteResolver, DBResolver } from "@vulcan.sh/runtime";
+import { basicSqliteResolver, DBResolver } from "@vlcn.io/runtime";
 
 /**
  * Convenience function to create a connection to absurd-sql and return

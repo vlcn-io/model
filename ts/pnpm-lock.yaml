@@ -31,8 +31,8 @@ importers:
       '@opentelemetry/api': ^1.1.0
       '@strut/counter': ^0.0.11
       '@types/jest': ^28.1.8
-      '@vulcan.sh/instrument': workspace:*
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/instrument': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
@@ -40,8 +40,8 @@ importers:
       '@aphro/sql.js': 1.7.0
       '@opentelemetry/api': 1.2.0
       '@strut/counter': 0.0.11
-      '@vulcan.sh/instrument': link:../../packages/instrument
-      '@vulcan.sh/runtime': link:../../packages/runtime
+      '@vlcn.io/instrument': link:../../packages/instrument
+      '@vlcn.io/runtime': link:../../packages/runtime
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -56,13 +56,13 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       rxjs: ^7.5.6
       typescript: ^4.8.2
     dependencies:
       '@awesome-cordova-plugins/sqlite': 5.45.0_3mymmdsm47jacez6kcrdthjc5e
-      '@vulcan.sh/runtime': link:../../packages/runtime
+      '@vlcn.io/runtime': link:../../packages/runtime
     devDependencies:
       '@awesome-cordova-plugins/core': 5.45.0_rxjs@7.5.7
       '@babel/core': 7.19.1
@@ -79,13 +79,13 @@ importers:
       '@types/jest': ^28.1.8
       '@types/node': ^18.7.13
       '@types/sqlite3': ^3.1.8
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       sqlite3: ^5.0.11
       typescript: ^4.8.2
     dependencies:
       '@types/sqlite3': 3.1.8
-      '@vulcan.sh/runtime': link:../../packages/runtime
+      '@vlcn.io/runtime': link:../../packages/runtime
       sqlite3: 5.1.1
     devDependencies:
       '@babel/core': 7.19.1
@@ -103,13 +103,13 @@ importers:
       '@strut/counter': ^0.0.11
       '@types/jest': ^28.1.8
       '@types/node': ^18.7.13
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
       '@aphro/sql.js': 1.7.0
       '@strut/counter': 0.0.11
-      '@vulcan.sh/runtime': link:../../packages/runtime
+      '@vlcn.io/runtime': link:../../packages/runtime
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -125,17 +125,17 @@ importers:
       '@opentelemetry/api': ^1.1.0
       '@strut/counter': ^0.0.11
       '@types/jest': ^28.1.8
-      '@vulcan.sh/instrument': workspace:*
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/instrument': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       typescript: ^4.8.2
       wa-sqlite: github:rhashimoto/wa-sqlite#buildless
     dependencies:
       '@opentelemetry/api': 1.2.0
       '@strut/counter': 0.0.11
-      '@vulcan.sh/instrument': link:../../packages/instrument
-      '@vulcan.sh/runtime': link:../../packages/runtime
-      wa-sqlite: github.com/rhashimoto/wa-sqlite/5fdc80ff1c153aeb0dab65a5e23ca22938c827a3
+      '@vlcn.io/instrument': link:../../packages/instrument
+      '@vlcn.io/runtime': link:../../packages/runtime
+      wa-sqlite: github.com/rhashimoto/wa-sqlite/88de61aca72a15a8bc3fd9e894a060fd17985ee8
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -145,13 +145,13 @@ importers:
 
   integration-tests/data-model:
     specifiers:
-      '@vulcan.sh/codegen-cli': workspace:*
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/codegen-cli': workspace:*
+      '@vlcn.io/runtime': workspace:*
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/runtime': link:../../packages/runtime
+      '@vlcn.io/runtime': link:../../packages/runtime
     devDependencies:
-      '@vulcan.sh/codegen-cli': link:../../packages/codegen-cli
+      '@vlcn.io/codegen-cli': link:../../packages/codegen-cli
       typescript: 4.8.3
 
   packages/cache:
@@ -159,14 +159,14 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/id': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/id': workspace:*
+      '@vlcn.io/util': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/id': link:../id
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/id': link:../id
+      '@vlcn.io/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -183,13 +183,13 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/schema-api': workspace:*
+      '@vlcn.io/schema-api': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       md5: ^2.3.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/schema-api': link:../schema-api
+      '@vlcn.io/schema-api': link:../schema-api
       md5: 2.3.0
     devDependencies:
       '@babel/core': 7.19.1
@@ -211,12 +211,12 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen-api': workspace:*
-      '@vulcan.sh/codegen-sql': workspace:*
-      '@vulcan.sh/codegen-ts': workspace:*
-      '@vulcan.sh/schema': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/codegen-api': workspace:*
+      '@vlcn.io/codegen-sql': workspace:*
+      '@vlcn.io/codegen-ts': workspace:*
+      '@vlcn.io/schema': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/util': workspace:*
       chalk: ^5.0.1
       command-line-args: ^5.2.1
       command-line-usage: ^6.1.3
@@ -226,12 +226,12 @@ importers:
       typescript: ^4.8.2
     dependencies:
       '@strut/counter': 0.0.11
-      '@vulcan.sh/codegen-api': link:../codegen-api
-      '@vulcan.sh/codegen-sql': link:../codegen-sql
-      '@vulcan.sh/codegen-ts': link:../codegen-ts
-      '@vulcan.sh/schema': link:../schema
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/codegen-api': link:../codegen-api
+      '@vlcn.io/codegen-sql': link:../codegen-sql
+      '@vlcn.io/codegen-ts': link:../codegen-ts
+      '@vlcn.io/schema': link:../schema
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/util': link:../util
       chalk: 5.0.1
       command-line-args: 5.2.1
       command-line-usage: 6.1.3
@@ -255,20 +255,20 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen-api': workspace:*
-      '@vulcan.sh/schema': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/sql': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/codegen-api': workspace:*
+      '@vlcn.io/schema': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/sql': workspace:*
+      '@vlcn.io/util': workspace:*
       jest: ^29.0.1
       sql-formatter: 10.0.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/codegen-api': link:../codegen-api
-      '@vulcan.sh/schema': link:../schema
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/sql': link:../sql
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/codegen-api': link:../codegen-api
+      '@vlcn.io/schema': link:../schema
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/sql': link:../sql
+      '@vlcn.io/util': link:../util
       sql-formatter: 10.0.0
     devDependencies:
       '@babel/core': 7.19.1
@@ -288,21 +288,21 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen-api': workspace:*
-      '@vulcan.sh/feature-gates': workspace:*
-      '@vulcan.sh/schema': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/codegen-api': workspace:*
+      '@vlcn.io/feature-gates': workspace:*
+      '@vlcn.io/schema': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/util': workspace:*
       jest: ^29.0.1
       md5: ^2.3.0
       prettier: ^2.7.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/codegen-api': link:../codegen-api
-      '@vulcan.sh/feature-gates': link:../feature-gates
-      '@vulcan.sh/schema': link:../schema
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/codegen-api': link:../codegen-api
+      '@vlcn.io/feature-gates': link:../feature-gates
+      '@vlcn.io/schema': link:../schema
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/util': link:../util
       md5: 2.3.0
       prettier: 2.7.1
     devDependencies:
@@ -320,14 +320,14 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/cache': workspace:*
-      '@vulcan.sh/sql': workspace:*
+      '@vlcn.io/cache': workspace:*
+      '@vlcn.io/sql': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/cache': link:../cache
-      '@vulcan.sh/sql': link:../sql
+      '@vlcn.io/cache': link:../cache
+      '@vlcn.io/sql': link:../sql
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -344,11 +344,11 @@ importers:
 
   packages/grammar-extension-api:
     specifiers:
-      '@vulcan.sh/schema-api': workspace:*
+      '@vlcn.io/schema-api': workspace:*
       ohm-js: ^16.4.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/schema-api': link:../schema-api
+      '@vlcn.io/schema-api': link:../schema-api
       ohm-js: 16.4.0
     devDependencies:
       typescript: 4.8.3
@@ -358,12 +358,12 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/util': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -397,9 +397,9 @@ importers:
       '@types/jest': ^28.1.8
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/config': workspace:*
-      '@vulcan.sh/sql': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/config': workspace:*
+      '@vlcn.io/sql': workspace:*
+      '@vlcn.io/util': workspace:*
       jest: ^29.0.1
       md5: ^2.3.0
       prettier: ^2.7.1
@@ -407,9 +407,9 @@ importers:
       typescript: ^4.8.2
     dependencies:
       '@databases/sqlite': 4.0.1
-      '@vulcan.sh/config': link:../config
-      '@vulcan.sh/sql': link:../sql
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/config': link:../config
+      '@vlcn.io/sql': link:../sql
+      '@vlcn.io/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -427,12 +427,12 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/value': workspace:*
+      '@vlcn.io/value': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/value': link:../value
+      '@vlcn.io/value': link:../value
       typescript: 4.8.3
     devDependencies:
       '@babel/core': 7.19.1
@@ -446,24 +446,24 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/config': workspace:*
-      '@vulcan.sh/id': workspace:*
-      '@vulcan.sh/model': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/util': workspace:*
-      '@vulcan.sh/value': workspace:*
-      '@vulcan.sh/zone': workspace:*
+      '@vlcn.io/config': workspace:*
+      '@vlcn.io/id': workspace:*
+      '@vlcn.io/model': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/util': workspace:*
+      '@vlcn.io/value': workspace:*
+      '@vlcn.io/zone': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/config': link:../config
-      '@vulcan.sh/id': link:../id
-      '@vulcan.sh/model': link:../model
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/util': link:../util
-      '@vulcan.sh/value': link:../value
-      '@vulcan.sh/zone': link:../zone
+      '@vlcn.io/config': link:../config
+      '@vlcn.io/id': link:../id
+      '@vlcn.io/model': link:../model
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/util': link:../util
+      '@vlcn.io/value': link:../value
+      '@vlcn.io/zone': link:../zone
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -478,26 +478,26 @@ importers:
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/cache': workspace:*
-      '@vulcan.sh/config': workspace:*
-      '@vulcan.sh/id': workspace:*
-      '@vulcan.sh/instrument': workspace:*
-      '@vulcan.sh/model-persisted': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/sql': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/cache': workspace:*
+      '@vlcn.io/config': workspace:*
+      '@vlcn.io/id': workspace:*
+      '@vlcn.io/instrument': workspace:*
+      '@vlcn.io/model-persisted': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/sql': workspace:*
+      '@vlcn.io/util': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/cache': link:../cache
-      '@vulcan.sh/config': link:../config
-      '@vulcan.sh/id': link:../id
-      '@vulcan.sh/instrument': link:../instrument
-      '@vulcan.sh/model-persisted': link:../model-persisted
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/sql': link:../sql
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/cache': link:../cache
+      '@vlcn.io/config': link:../config
+      '@vlcn.io/id': link:../id
+      '@vlcn.io/instrument': link:../instrument
+      '@vlcn.io/model-persisted': link:../model-persisted
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/sql': link:../sql
+      '@vlcn.io/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -515,7 +515,7 @@ importers:
       '@types/jest': ^28.1.8
       '@types/react': ^18.0.17
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/runtime': workspace:*
+      '@vlcn.io/runtime': workspace:*
       jest: ^29.0.1
       react: ^18.2.0
       suspend-react: ^0.0.8
@@ -529,33 +529,33 @@ importers:
       '@types/jest': 28.1.8
       '@types/react': 18.0.21
       '@typescript-eslint/typescript-estree': 5.38.1_typescript@4.8.3
-      '@vulcan.sh/runtime': link:../runtime
+      '@vlcn.io/runtime': link:../runtime
       jest: 29.0.3
       react: 18.2.0
       typescript: 4.8.3
 
   packages/runtime:
     specifiers:
-      '@vulcan.sh/cache': workspace:*
-      '@vulcan.sh/config': workspace:*
-      '@vulcan.sh/id': workspace:*
-      '@vulcan.sh/migration': workspace:*
-      '@vulcan.sh/model-persisted': workspace:*
-      '@vulcan.sh/query': workspace:*
-      '@vulcan.sh/sql': workspace:*
-      '@vulcan.sh/util': workspace:*
-      '@vulcan.sh/value': workspace:*
+      '@vlcn.io/cache': workspace:*
+      '@vlcn.io/config': workspace:*
+      '@vlcn.io/id': workspace:*
+      '@vlcn.io/migration': workspace:*
+      '@vlcn.io/model-persisted': workspace:*
+      '@vlcn.io/query': workspace:*
+      '@vlcn.io/sql': workspace:*
+      '@vlcn.io/util': workspace:*
+      '@vlcn.io/value': workspace:*
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/cache': link:../cache
-      '@vulcan.sh/config': link:../config
-      '@vulcan.sh/id': link:../id
-      '@vulcan.sh/migration': link:../migration
-      '@vulcan.sh/model-persisted': link:../model-persisted
-      '@vulcan.sh/query': link:../query
-      '@vulcan.sh/sql': link:../sql
-      '@vulcan.sh/util': link:../util
-      '@vulcan.sh/value': link:../value
+      '@vlcn.io/cache': link:../cache
+      '@vlcn.io/config': link:../config
+      '@vlcn.io/id': link:../id
+      '@vlcn.io/migration': link:../migration
+      '@vlcn.io/model-persisted': link:../model-persisted
+      '@vlcn.io/query': link:../query
+      '@vlcn.io/sql': link:../sql
+      '@vlcn.io/util': link:../util
+      '@vlcn.io/value': link:../value
     devDependencies:
       typescript: 4.8.3
 
@@ -567,10 +567,10 @@ importers:
       '@types/node': ^18.7.13
       '@types/prettier': ^2.7.0
       '@typescript-eslint/typescript-estree': ^5.35.1
-      '@vulcan.sh/codegen-api': workspace:*
-      '@vulcan.sh/grammar-extension-api': workspace:*
-      '@vulcan.sh/schema-api': workspace:*
-      '@vulcan.sh/util': workspace:*
+      '@vlcn.io/codegen-api': workspace:*
+      '@vlcn.io/grammar-extension-api': workspace:*
+      '@vlcn.io/schema-api': workspace:*
+      '@vlcn.io/util': workspace:*
       chalk: ^5.0.1
       command-line-args: ^5.2.1
       command-line-usage: ^6.1.3
@@ -581,10 +581,10 @@ importers:
       sql-formatter: ^10.0.0
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/codegen-api': link:../codegen-api
-      '@vulcan.sh/grammar-extension-api': link:../grammar-extension-api
-      '@vulcan.sh/schema-api': link:../schema-api
-      '@vulcan.sh/util': link:../util
+      '@vlcn.io/codegen-api': link:../codegen-api
+      '@vlcn.io/grammar-extension-api': link:../grammar-extension-api
+      '@vlcn.io/schema-api': link:../schema-api
+      '@vlcn.io/util': link:../util
     devDependencies:
       '@babel/core': 7.19.1
       '@babel/preset-env': 7.19.1_@babel+core@7.19.1
@@ -650,14 +650,14 @@ importers:
       '@babel/core': ^7.18.13
       '@babel/preset-env': ^7.18.10
       '@types/jest': ^28.1.8
-      '@vulcan.sh/util': workspace:*
-      '@vulcan.sh/zone': workspace:*
+      '@vlcn.io/util': workspace:*
+      '@vlcn.io/zone': workspace:*
       fast-check: ^3.1.2
       jest: ^29.0.1
       typescript: ^4.8.2
     dependencies:
-      '@vulcan.sh/util': link:../util
-      '@vulcan.sh/zone': link:../zone
+      '@vlcn.io/util': link:../util
+      '@vlcn.io/zone': link:../zone
       typescript: 4.8.3
     devDependencies:
       '@babel/core': 7.19.1
@@ -6452,8 +6452,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/rhashimoto/wa-sqlite/5fdc80ff1c153aeb0dab65a5e23ca22938c827a3:
-    resolution: {tarball: https://codeload.github.com/rhashimoto/wa-sqlite/tar.gz/5fdc80ff1c153aeb0dab65a5e23ca22938c827a3}
+  github.com/rhashimoto/wa-sqlite/88de61aca72a15a8bc3fd9e894a060fd17985ee8:
+    resolution: {tarball: https://codeload.github.com/rhashimoto/wa-sqlite/tar.gz/88de61aca72a15a8bc3fd9e894a060fd17985ee8}
     name: wa-sqlite
-    version: 0.8.2
+    version: 0.8.3
     dev: false

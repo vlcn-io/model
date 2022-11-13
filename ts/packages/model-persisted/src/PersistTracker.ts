@@ -19,7 +19,7 @@
  * Post-facto relational lets people encode edges directly via pointer.
  */
 
-import { invariant } from "@vulcan.sh/util";
+import { invariant } from "@vlcn.io/util";
 import { IPersistedModel } from "./PersistedModel.js";
 
 export type Listener = (

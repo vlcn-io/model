@@ -1,4 +1,4 @@
-import { SchemaEdge, SchemaNode } from "@vulcan.sh/schema-api";
+import { SchemaEdge, SchemaNode } from "@vlcn.io/schema-api";
 import { GenSQLExports } from "./GenSQLExports.js";
 
 export class GenSQLExports_node extends GenSQLExports {

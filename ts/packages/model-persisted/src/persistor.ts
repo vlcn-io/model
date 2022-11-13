@@ -4,9 +4,9 @@
  * -
  */
 
-import { AsyncResolvedDB, config, ResolvedDB } from "@vulcan.sh/config";
+import { AsyncResolvedDB, config, ResolvedDB } from "@vlcn.io/config";
 import { IPersistedModel } from "./PersistedModel";
-import { PSD } from "@vulcan.sh/zone";
+import { PSD } from "@vlcn.io/zone";
 
 // mem db must use transactional values then?
 export const syncPersistor = {

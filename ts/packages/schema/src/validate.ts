@@ -1,4 +1,4 @@
-import { SchemaFile, ValidationError } from "@vulcan.sh/schema-api";
+import { SchemaFile, ValidationError } from "@vlcn.io/schema-api";
 
 export default function validate(schemaFile: SchemaFile): ValidationError[] {
   return [];

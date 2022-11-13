@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/query",
+  "name": "@vlcn.io/query",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,14 +9,14 @@
     "directory": "ts/packages/query"
   },
   "dependencies": {
-    "@vulcan.sh/cache": "workspace:*",
-    "@vulcan.sh/config": "workspace:*",
-    "@vulcan.sh/instrument": "workspace:*",
-    "@vulcan.sh/model-persisted": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/sql": "workspace:*",
-    "@vulcan.sh/id": "workspace:*",
-    "@vulcan.sh/util": "workspace:*"
+    "@vlcn.io/cache": "workspace:*",
+    "@vlcn.io/config": "workspace:*",
+    "@vlcn.io/instrument": "workspace:*",
+    "@vlcn.io/model-persisted": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/sql": "workspace:*",
+    "@vlcn.io/id": "workspace:*",
+    "@vlcn.io/util": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

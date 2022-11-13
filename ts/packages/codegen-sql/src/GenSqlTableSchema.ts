@@ -1,14 +1,14 @@
-import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
+import { CodegenFile, CodegenStep, generatedDir } from "@vlcn.io/codegen-api";
 import {
   FieldDeclaration,
   SchemaEdge,
   SchemaNode,
   TypeAtom,
-} from "@vulcan.sh/schema-api";
-import { assertUnreachable } from "@vulcan.sh/util";
+} from "@vlcn.io/schema-api";
+import { assertUnreachable } from "@vlcn.io/util";
 import SqlFile from "./SqlFile.js";
-import { sql, formatters, SQLQuery } from "@vulcan.sh/sql";
-import { fieldFn, nodeFn } from "@vulcan.sh/schema";
+import { sql, formatters, SQLQuery } from "@vlcn.io/sql";
+import { fieldFn, nodeFn } from "@vlcn.io/schema";
 import * as path from "path";
 
 export default class GenSqlTableSchema extends CodegenStep {

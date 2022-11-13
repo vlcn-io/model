@@ -1,13 +1,13 @@
-import { DBResolver, SQLResolvedDB } from "@vulcan.sh/config";
+import { DBResolver, SQLResolvedDB } from "@vlcn.io/config";
 
-export * from "@vulcan.sh/config";
-export * from "@vulcan.sh/model-persisted";
-export * from "@vulcan.sh/query";
-export * from "@vulcan.sh/id";
-export * from "@vulcan.sh/migration";
-export { newId } from "@vulcan.sh/id";
-export { default as Cache } from "@vulcan.sh/cache";
-export * from "@vulcan.sh/sql";
+export * from "@vlcn.io/config";
+export * from "@vlcn.io/model-persisted";
+export * from "@vlcn.io/query";
+export * from "@vlcn.io/id";
+export * from "@vlcn.io/migration";
+export { newId } from "@vlcn.io/id";
+export { default as Cache } from "@vlcn.io/cache";
+export * from "@vlcn.io/sql";
 
 export function basicSqliteResolver(
   dbName: string,

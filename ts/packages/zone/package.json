@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/zone",
+  "name": "@vlcn.io/zone",
   "version": "0.0.2",
   "main": "lib/index.js",
   "type": "module",

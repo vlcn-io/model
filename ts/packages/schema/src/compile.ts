@@ -5,7 +5,7 @@ import {
   SchemaFile,
   SchemaFileAst,
   ValidationError,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 import { Config } from "./runtimeConfig.js";
 
 export function createCompiler(config: Config = {}) {

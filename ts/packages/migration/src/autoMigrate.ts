@@ -1,5 +1,5 @@
-import { SQLResolvedDB } from "@vulcan.sh/config";
-import { sql, SQLQuery } from "@vulcan.sh/sql";
+import { SQLResolvedDB } from "@vlcn.io/config";
+import { sql, SQLQuery } from "@vlcn.io/sql";
 
 export type CreateError = {
   cause: any;

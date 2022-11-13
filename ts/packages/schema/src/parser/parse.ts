@@ -1,6 +1,6 @@
 import { compileGrammar } from "./ohm/grammar.js";
 import * as fs from "fs";
-import { SchemaFileAst } from "@vulcan.sh/schema-api";
+import { SchemaFileAst } from "@vlcn.io/schema-api";
 import { Config } from "../runtimeConfig.js";
 import { ActionDict, Node } from "ohm-js";
 

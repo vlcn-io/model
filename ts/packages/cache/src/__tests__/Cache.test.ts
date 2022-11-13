@@ -1,5 +1,5 @@
 import Cache from "../cache.js";
-import { asId, ID_of } from "@vulcan.sh/id";
+import { asId, ID_of } from "@vlcn.io/id";
 import fc from "fast-check";
 
 declare const global: {

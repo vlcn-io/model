@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/grammar-extension-api",
+  "name": "@vlcn.io/grammar-extension-api",
   "version": "0.2.6",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "packages/grammar-extension-api"
   },
   "dependencies": {
-    "@vulcan.sh/schema-api": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
     "ohm-js": "^16.4.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/model",
+  "name": "@vlcn.io/model",
   "version": "0.0.3",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/packages/model"
   },
   "dependencies": {
-    "@vulcan.sh/value": "workspace:*",
+    "@vlcn.io/value": "workspace:*",
     "typescript": "^4.8.2"
   },
   "devDependencies": {

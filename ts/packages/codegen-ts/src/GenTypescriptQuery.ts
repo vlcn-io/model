@@ -1,5 +1,5 @@
-import { upcaseAt } from "@vulcan.sh/util";
-import { CodegenFile, CodegenStep, generatedDir } from "@vulcan.sh/codegen-api";
+import { upcaseAt } from "@vlcn.io/util";
+import { CodegenFile, CodegenStep, generatedDir } from "@vlcn.io/codegen-api";
 import TypescriptFile from "./TypescriptFile.js";
 import {
   Field,
@@ -10,8 +10,8 @@ import {
   Import,
   SchemaEdge,
   FieldDeclaration,
-} from "@vulcan.sh/schema-api";
-import { nodeFn, edgeFn, tsImport } from "@vulcan.sh/schema";
+} from "@vlcn.io/schema-api";
+import { nodeFn, edgeFn, tsImport } from "@vlcn.io/schema";
 import { importsToString } from "./tsUtils.js";
 import * as path from "path";
 
@@ -100,8 +100,8 @@ export default class ${nodeFn.queryTypeName(
         "ModelFieldGetter",
         "Expression",
         "EmptyQuery",
-      ].map((i) => tsImport(`{${i}}`, null, "@vulcan.sh/runtime")),
-      tsImport("{ID_of}", null, "@vulcan.sh/runtime"),
+      ].map((i) => tsImport(`{${i}}`, null, "@vlcn.io/runtime")),
+      tsImport("{ID_of}", null, "@vlcn.io/runtime"),
       tsImport(this.schema.name, null, `../${this.schema.name}.js`),
       tsImport("{Data}", null, `./${this.schema.name}Base.js`),
       tsImport(

@@ -1,5 +1,5 @@
-import { createCompiler } from "@vulcan.sh/schema";
-import { SchemaNode } from "@vulcan.sh/schema-api";
+import { createCompiler } from "@vlcn.io/schema";
+import { SchemaNode } from "@vlcn.io/schema-api";
 import GenSqlTableSchema from "../GenSqlTableSchema";
 
 const { compileFromString } = createCompiler();

@@ -5,22 +5,22 @@ import commandLineArgs from "command-line-args";
 // @ts-ignore
 import commandLineUsage from "command-line-usage";
 
-import { CodegenPipeline } from "@vulcan.sh/codegen-api";
+import { CodegenPipeline } from "@vlcn.io/codegen-api";
 import * as process from "process";
 import * as path from "path";
-import { createCompiler, stopsCodegen } from "@vulcan.sh/schema";
+import { createCompiler, stopsCodegen } from "@vlcn.io/schema";
 import {
   SchemaEdge,
   SchemaNode,
   SchemaFile,
   ValidationError,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 import chalk from "chalk";
 
 // TODO: core codegen should not depend on plugins!
-// import mutationExtension from "@vulcan.sh/mutation-grammar";
-// import graphqlExtension from "@vulcan.sh/graphql-grammar";
-import { GlobalStep, Step } from "@vulcan.sh/codegen-api";
+// import mutationExtension from "@vlcn.io/mutation-grammar";
+// import graphqlExtension from "@vlcn.io/graphql-grammar";
+import { GlobalStep, Step } from "@vlcn.io/codegen-api";
 
 import {
   GenSchemaExports,
@@ -31,8 +31,8 @@ import {
   GenTypescriptQuery,
   GenTypescriptSpec,
   GenTypes_d_ts,
-} from "@vulcan.sh/codegen-ts";
-import { GenSqlTableSchema } from "@vulcan.sh/codegen-sql";
+} from "@vlcn.io/codegen-ts";
+import { GenSqlTableSchema } from "@vlcn.io/codegen-sql";
 
 const grammarExtensions: any[] = [];
 

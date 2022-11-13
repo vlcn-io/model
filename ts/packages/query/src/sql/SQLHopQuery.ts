@@ -1,7 +1,7 @@
-import { invariant } from "@vulcan.sh/util";
+import { invariant } from "@vlcn.io/util";
 import { HopExpression } from "../Expression.js";
 import { HopQuery, Query } from "../Query.js";
-import { EdgeSpec } from "@vulcan.sh/schema-api";
+import { EdgeSpec } from "@vlcn.io/schema-api";
 import SQLHopExpression from "./SQLHopExpression.js";
 
 export default class SQLHopQuery<TIn, TOut> extends HopQuery<TIn, TOut> {

@@ -279,7 +279,7 @@
 
 - graphql support, 'create table if not exists' for easier bootstrapping, @databases connection support
 - Updated dependencies
-  - @vulcan.sh/id@0.0.9
+  - @vlcn.io/id@0.0.9
   - @aphro/cache-runtime-ts@0.0.9
   - @aphro/context-runtime-ts@0.0.9
   - @aphro/model-runtime-ts@0.0.9
@@ -293,7 +293,7 @@
 
 - full todomvc example, no partiall generated mutators, removal of knexjs
 - Updated dependencies
-  - @vulcan.sh/id@0.0.8
+  - @vlcn.io/id@0.0.8
   - @aphro/cache-runtime-ts@0.0.8
   - @aphro/context-runtime-ts@0.0.8
   - @aphro/model-runtime-ts@0.0.8
@@ -314,7 +314,7 @@
 
 - enable running in the browser, implement reactive queries
 - Updated dependencies
-  - @vulcan.sh/id@0.0.7
+  - @vlcn.io/id@0.0.7
   - @aphro/cache-runtime-ts@0.0.7
   - @aphro/context-runtime-ts@0.0.7
   - @aphro/model-runtime-ts@0.0.7
@@ -332,4 +332,4 @@
   - @aphro/model-runtime-ts@0.0.6
   - @aphro/mutator-runtime-ts@0.0.6
   - @aphro/query-runtime-ts@0.0.6
-  - @vulcan.sh/id@0.0.6
+  - @vlcn.io/id@0.0.6

@@ -1,4 +1,4 @@
-import { observableValue, IObservableValue, Event } from "@vulcan.sh/value";
+import { observableValue, IObservableValue, Event } from "@vlcn.io/value";
 
 export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;

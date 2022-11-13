@@ -13,7 +13,7 @@ import SQLHopExpression from "./SQLHopExpression.js";
 import { ModelFieldGetter } from "../Field.js";
 import CountLoadExpression from "../CountLoadExpression.js";
 import { getLastSpecAndProjection } from "./specAndOpsToQuery.js";
-import { JunctionEdgeSpec, NodeSpec } from "@vulcan.sh/schema-api";
+import { JunctionEdgeSpec, NodeSpec } from "@vlcn.io/schema-api";
 
 export type HoistedOperations = {
   filters?: readonly ReturnType<typeof filter<any, any>>[];

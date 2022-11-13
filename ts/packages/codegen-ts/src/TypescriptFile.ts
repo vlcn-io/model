@@ -1,5 +1,5 @@
-import { sign } from "@vulcan.sh/codegen-api";
-import { CodegenFile, algolTemplates } from "@vulcan.sh/codegen-api";
+import { sign } from "@vlcn.io/codegen-api";
+import { CodegenFile, algolTemplates } from "@vlcn.io/codegen-api";
 // @ts-ignore
 import prettier from "prettier";
 

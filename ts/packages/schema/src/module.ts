@@ -1,4 +1,4 @@
-import { Import } from "@vulcan.sh/schema-api";
+import { Import } from "@vlcn.io/schema-api";
 
 export function tsImport(
   name: string | null,

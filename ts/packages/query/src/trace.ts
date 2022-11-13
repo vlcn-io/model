@@ -1,5 +1,5 @@
-import { tracer, Tracer } from "@vulcan.sh/instrument";
+import { tracer, Tracer } from "@vlcn.io/instrument";
 
-const t: Tracer = tracer("@vulcan.sh/query", "0.2.3");
+const t: Tracer = tracer("@vlcn.io/query", "0.2.3");
 
 export default t;

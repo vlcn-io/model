@@ -3,7 +3,7 @@
 // Triggers being run pre-commit
 // Observers being run post-commit
 import { Event, IValue, Value } from "./Value.js";
-import { PSD } from "@vulcan.sh/zone";
+import { PSD } from "@vlcn.io/zone";
 import { Transaction } from "./transaction.js";
 
 type OnTxComplete<T> = (v: T, e: Event) => void;

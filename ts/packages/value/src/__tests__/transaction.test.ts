@@ -1,4 +1,4 @@
-import { PSD } from "@vulcan.sh/zone";
+import { PSD } from "@vlcn.io/zone";
 import { inflight, tx, txAsync, txSerializedAsync } from "../transaction";
 import { value } from "../Value.js";
 

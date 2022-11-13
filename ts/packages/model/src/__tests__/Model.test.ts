@@ -1,4 +1,4 @@
-import { tx } from "@vulcan.sh/value";
+import { tx } from "@vlcn.io/value";
 import { Model } from "../Model.js";
 
 class TestModel extends Model<{ a: string; b: string }> {}

@@ -1,6 +1,6 @@
 import { IValue } from "../Value";
 import { tx, txAsync } from "../transaction.js";
-import { PSD } from "@vulcan.sh/zone";
+import { PSD } from "@vlcn.io/zone";
 
 async function nativePromiseDelay(n: number) {
   await new Promise((resolve) => setTimeout(resolve, n));

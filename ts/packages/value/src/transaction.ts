@@ -5,7 +5,7 @@ import {
   newScope,
   PSD,
   ZonedPromise,
-} from "@vulcan.sh/zone";
+} from "@vlcn.io/zone";
 import { memory, MemoryVersion } from "./memory.js";
 import { Event, IValue } from "./Value.js";
 

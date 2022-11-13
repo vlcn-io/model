@@ -28,7 +28,7 @@
   },
   "2 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/authorization-grammar",
+      "name": "@vlcn.io/authorization-grammar",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -81,12 +81,12 @@
   },
   "5 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/grammar-extension-api",
+      "name": "@vlcn.io/grammar-extension-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workapsace*",
+        "@vlcn.io/schema-api": "workapsace*",
         "ohm-js": "^16.3.4"
       },
       "devDependencies": {
@@ -107,7 +107,7 @@
   },
   "6 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -182,7 +182,7 @@
   },
   "9 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -199,12 +199,12 @@
   },
   "10 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "typescript": "^4.6.4"
@@ -239,12 +239,12 @@
   },
   "12 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/config-runtime-ts",
+      "name": "@vlcn.io/config-runtime-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -266,17 +266,17 @@
   },
   "13 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/grammar-extension-api": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/grammar-extension-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -311,15 +311,15 @@
   },
   "14 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -351,14 +351,14 @@
   },
   "15 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/mutation-grammar",
+      "name": "@vlcn.io/mutation-grammar",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/grammar-extension-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/grammar-extension-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "@babel/core": "^7.17.10",
@@ -384,17 +384,17 @@
   },
   "16 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/codegen",
+      "name": "@vlcn.io/codegen",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "md5": "^2.3.0"
       },
@@ -424,17 +424,17 @@
   },
   "17 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/integrations",
+      "name": "@vlcn.io/integrations",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -461,14 +461,14 @@
   },
   "18 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/mutator-runtime-ts",
+      "name": "@vlcn.io/mutator-runtime-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -489,17 +489,17 @@
   },
   "19 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/query",
+      "name": "@vlcn.io/query",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -528,15 +528,15 @@
   },
   "20 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/react",
+      "name": "@vlcn.io/react",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/model-persisted": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "react": "^18.1.0"
       },
@@ -564,15 +564,15 @@
   },
   "21 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/codegen-sql",
+      "name": "@vlcn.io/codegen-sql",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/utils": "workspace:*",
         "sql-formatter": "^4.0.2"
@@ -603,18 +603,18 @@
   },
   "22 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/codegen-ts",
+      "name": "@vlcn.io/codegen-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0",
         "md5": "^2.3.0",
@@ -646,16 +646,16 @@
   },
   "23 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/mutation-codegen",
+      "name": "@vlcn.io/mutation-codegen",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/codegen-ts": "workspace:*",
-        "@vulcan.sh/mutation-grammar": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/codegen-ts": "workspace:*",
+        "@vlcn.io/mutation-grammar": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "@babel/core": "^7.17.10",
@@ -681,22 +681,22 @@
   },
   "24 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/codegen-cli",
+      "name": "@vlcn.io/codegen-cli",
       "version": "0.0.1",
       "main": "bin/cli.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/codegen-sql": "workspace:*",
-        "@vulcan.sh/codegen-ts": "workspace:*",
-        "@vulcan.sh/mutation-codegen": "workspace:*",
-        "@vulcan.sh/mutation-grammar": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/codegen-sql": "workspace:*",
+        "@vlcn.io/codegen-ts": "workspace:*",
+        "@vlcn.io/mutation-codegen": "workspace:*",
+        "@vlcn.io/mutation-grammar": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "chalk": "^5.0.1",
         "command-line-args": "^5.2.1",
@@ -732,15 +732,15 @@
   },
   "25 debug pnpm:package-manifest": {
     "initial": {
-      "name": "@vulcan.sh/model-usage-ts",
+      "name": "@vlcn.io/model-usage-ts",
       "version": "0.0.1",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/mutator-runtime-ts": "workspace:*",
-        "@vulcan.sh/query": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/mutator-runtime-ts": "workspace:*",
+        "@vlcn.io/query": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@vscode/sqlite3": "^5.0.8",
         "class-validator": "^0.13.2",
         "graphql": "^16.4.0",
@@ -749,7 +749,7 @@
         "type-graphql": "^1.1.1"
       },
       "devDependencies": {
-        "@vulcan.sh/codegen-cli": "workspace:*",
+        "@vlcn.io/codegen-cli": "workspace:*",
         "@babel/core": "^7.17.10",
         "@babel/preset-env": "^7.17.10",
         "@types/jest": "^27.4.1",
@@ -795,7 +795,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/codegen-api",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -811,7 +811,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/config-runtime-ts",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -827,7 +827,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/schema",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -835,7 +835,7 @@
     "resolution": "link:../grammar-extension-api",
     "wanted": {
       "dependentId": "packages/schema",
-      "name": "@vulcan.sh/grammar-extension-api",
+      "name": "@vlcn.io/grammar-extension-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -843,7 +843,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/schema",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -867,7 +867,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/schema",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -883,7 +883,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/model-runtime-ts",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -907,7 +907,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/model-runtime-ts",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -923,7 +923,7 @@
     "resolution": "link:../../packages/grammar-extension-api",
     "wanted": {
       "dependentId": "extensions/mutation-grammar",
-      "name": "@vulcan.sh/grammar-extension-api",
+      "name": "@vlcn.io/grammar-extension-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -931,7 +931,7 @@
     "resolution": "link:../../packages/schema",
     "wanted": {
       "dependentId": "extensions/mutation-grammar",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -939,7 +939,7 @@
     "resolution": "link:../../packages/schema-api",
     "wanted": {
       "dependentId": "extensions/mutation-grammar",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -947,7 +947,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/codegen",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -955,7 +955,7 @@
     "resolution": "link:../schema",
     "wanted": {
       "dependentId": "packages/codegen",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -963,7 +963,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/codegen",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -987,7 +987,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1003,7 +1003,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/integrations",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1011,7 +1011,7 @@
     "resolution": "link:../schema",
     "wanted": {
       "dependentId": "packages/integrations",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -1019,7 +1019,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/integrations",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1043,7 +1043,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/integrations",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1059,7 +1059,7 @@
     "resolution": "link:../config-runtime-ts",
     "wanted": {
       "dependentId": "packages/mutator-runtime-ts",
-      "name": "@vulcan.sh/config-runtime-ts",
+      "name": "@vlcn.io/config-runtime-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1067,7 +1067,7 @@
     "resolution": "link:../model-runtime-ts",
     "wanted": {
       "dependentId": "packages/mutator-runtime-ts",
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "rawSpec": "workspace:*"
     }
   },
@@ -1075,7 +1075,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/mutator-runtime-ts",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1091,7 +1091,7 @@
     "resolution": "link:../config-runtime-ts",
     "wanted": {
       "dependentId": "packages/query-runtime-ts",
-      "name": "@vulcan.sh/config-runtime-ts",
+      "name": "@vlcn.io/config-runtime-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1099,7 +1099,7 @@
     "resolution": "link:../model-runtime-ts",
     "wanted": {
       "dependentId": "packages/query-runtime-ts",
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "rawSpec": "workspace:*"
     }
   },
@@ -1107,7 +1107,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/query-runtime-ts",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1131,7 +1131,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/query-runtime-ts",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1147,7 +1147,7 @@
     "resolution": "link:../model-runtime-ts",
     "wanted": {
       "dependentId": "packages/react",
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "rawSpec": "workspace:*"
     }
   },
@@ -1171,7 +1171,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/react",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1187,7 +1187,7 @@
     "resolution": "link:../codegen",
     "wanted": {
       "dependentId": "packages/codegen-sql",
-      "name": "@vulcan.sh/codegen",
+      "name": "@vlcn.io/codegen",
       "rawSpec": "workspace:*"
     }
   },
@@ -1195,7 +1195,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/codegen-sql",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1203,7 +1203,7 @@
     "resolution": "link:../schema",
     "wanted": {
       "dependentId": "packages/codegen-sql",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -1211,7 +1211,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/codegen-sql",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1235,7 +1235,7 @@
     "resolution": "link:../codegen",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@vulcan.sh/codegen",
+      "name": "@vlcn.io/codegen",
       "rawSpec": "workspace:*"
     }
   },
@@ -1243,7 +1243,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1251,7 +1251,7 @@
     "resolution": "link:../schema",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -1259,7 +1259,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1283,7 +1283,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen-ts",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1299,7 +1299,7 @@
     "resolution": "link:../../packages/codegen-api",
     "wanted": {
       "dependentId": "extensions/mutation-codegen",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1307,7 +1307,7 @@
     "resolution": "link:../../packages/codegen-ts",
     "wanted": {
       "dependentId": "extensions/mutation-codegen",
-      "name": "@vulcan.sh/codegen-ts",
+      "name": "@vlcn.io/codegen-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1315,7 +1315,7 @@
     "resolution": "link:../mutation-grammar",
     "wanted": {
       "dependentId": "extensions/mutation-codegen",
-      "name": "@vulcan.sh/mutation-grammar",
+      "name": "@vlcn.io/mutation-grammar",
       "rawSpec": "workspace:*"
     }
   },
@@ -1323,7 +1323,7 @@
     "resolution": "link:../../packages/schema",
     "wanted": {
       "dependentId": "extensions/mutation-codegen",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -1331,7 +1331,7 @@
     "resolution": "link:../../packages/schema-api",
     "wanted": {
       "dependentId": "extensions/mutation-codegen",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1339,7 +1339,7 @@
     "resolution": "link:../codegen",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/codegen",
+      "name": "@vlcn.io/codegen",
       "rawSpec": "workspace:*"
     }
   },
@@ -1347,7 +1347,7 @@
     "resolution": "link:../codegen-api",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1355,7 +1355,7 @@
     "resolution": "link:../codegen-sql",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/codegen-sql",
+      "name": "@vlcn.io/codegen-sql",
       "rawSpec": "workspace:*"
     }
   },
@@ -1363,7 +1363,7 @@
     "resolution": "link:../codegen-ts",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/codegen-ts",
+      "name": "@vlcn.io/codegen-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1371,7 +1371,7 @@
     "resolution": "link:../../extensions/mutation-codegen",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/mutation-codegen",
+      "name": "@vlcn.io/mutation-codegen",
       "rawSpec": "workspace:*"
     }
   },
@@ -1379,7 +1379,7 @@
     "resolution": "link:../../extensions/mutation-grammar",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/mutation-grammar",
+      "name": "@vlcn.io/mutation-grammar",
       "rawSpec": "workspace:*"
     }
   },
@@ -1387,7 +1387,7 @@
     "resolution": "link:../schema",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "rawSpec": "workspace:*"
     }
   },
@@ -1395,7 +1395,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workspace:*"
     }
   },
@@ -1419,7 +1419,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "packages/codegen-cli",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -1435,7 +1435,7 @@
     "resolution": "link:../../packages/codegen-cli",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/codegen-cli",
+      "name": "@vlcn.io/codegen-cli",
       "rawSpec": "workspace:*"
     }
   },
@@ -1443,7 +1443,7 @@
     "resolution": "link:../../packages/config-runtime-ts",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/config-runtime-ts",
+      "name": "@vlcn.io/config-runtime-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1451,7 +1451,7 @@
     "resolution": "link:../../packages/model-runtime-ts",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "rawSpec": "workspace:*"
     }
   },
@@ -1459,7 +1459,7 @@
     "resolution": "link:../../packages/mutator-runtime-ts",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/mutator-runtime-ts",
+      "name": "@vlcn.io/mutator-runtime-ts",
       "rawSpec": "workspace:*"
     }
   },
@@ -1467,7 +1467,7 @@
     "resolution": "link:../../packages/query-runtime-ts",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/query",
+      "name": "@vlcn.io/query",
       "rawSpec": "workspace:*"
     }
   },
@@ -1475,7 +1475,7 @@
     "resolution": "link:../../mono/typescript/packages/sid",
     "wanted": {
       "dependentId": "examples/model-usage-ts",
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "rawSpec": "workspace:*"
     }
   },
@@ -12551,7 +12551,7 @@
     "resolution": "link:../schema-api",
     "wanted": {
       "dependentId": "packages/grammar-extension-api",
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "rawSpec": "workapsace*"
     }
   },
@@ -15076,7 +15076,7 @@
   "2168 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/extensions/authorization-grammar",
     "updated": {
-      "name": "@vulcan.sh/authorization-grammar",
+      "name": "@vlcn.io/authorization-grammar",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -15129,12 +15129,12 @@
   "2171 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/grammar-extension-api",
     "updated": {
-      "name": "@vulcan.sh/grammar-extension-api",
+      "name": "@vlcn.io/grammar-extension-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workapsace*",
+        "@vlcn.io/schema-api": "workapsace*",
         "ohm-js": "^16.3.4"
       },
       "devDependencies": {
@@ -15155,7 +15155,7 @@
   "2172 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/schema-api",
     "updated": {
-      "name": "@vulcan.sh/schema-api",
+      "name": "@vlcn.io/schema-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -15230,7 +15230,7 @@
   "2175 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/mono/typescript/packages/sid",
     "updated": {
-      "name": "@vulcan.sh/id",
+      "name": "@vlcn.io/id",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
@@ -15247,12 +15247,12 @@
   "2176 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/codegen-api",
     "updated": {
-      "name": "@vulcan.sh/codegen-api",
+      "name": "@vlcn.io/codegen-api",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "typescript": "^4.6.4"
@@ -15287,12 +15287,12 @@
   "2178 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/config-runtime-ts",
     "updated": {
-      "name": "@vulcan.sh/config-runtime-ts",
+      "name": "@vlcn.io/config-runtime-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -15314,17 +15314,17 @@
   "2179 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/schema",
     "updated": {
-      "name": "@vulcan.sh/schema",
+      "name": "@vlcn.io/schema",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/grammar-extension-api": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/grammar-extension-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15359,15 +15359,15 @@
   "2180 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/model-runtime-ts",
     "updated": {
-      "name": "@vulcan.sh/model-persisted",
+      "name": "@vlcn.io/model-persisted",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15399,14 +15399,14 @@
   "2181 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/extensions/mutation-grammar",
     "updated": {
-      "name": "@vulcan.sh/mutation-grammar",
+      "name": "@vlcn.io/mutation-grammar",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/grammar-extension-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/grammar-extension-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "@babel/core": "^7.17.10",
@@ -15432,17 +15432,17 @@
   "2182 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/codegen",
     "updated": {
-      "name": "@vulcan.sh/codegen",
+      "name": "@vlcn.io/codegen",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "md5": "^2.3.0"
       },
@@ -15472,17 +15472,17 @@
   "2183 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/integrations",
     "updated": {
-      "name": "@vulcan.sh/integrations",
+      "name": "@vlcn.io/integrations",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15509,14 +15509,14 @@
   "2184 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/mutator-runtime-ts",
     "updated": {
-      "name": "@vulcan.sh/mutator-runtime-ts",
+      "name": "@vlcn.io/mutator-runtime-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/utils": "workspace:*"
       },
       "devDependencies": {
@@ -15537,17 +15537,17 @@
   "2185 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/query-runtime-ts",
     "updated": {
-      "name": "@vulcan.sh/query",
+      "name": "@vlcn.io/query",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0"
       },
@@ -15576,15 +15576,15 @@
   "2186 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/react",
     "updated": {
-      "name": "@vulcan.sh/react",
+      "name": "@vlcn.io/react",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/model-persisted": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "react": "^18.1.0"
       },
@@ -15612,15 +15612,15 @@
   "2187 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/codegen-sql",
     "updated": {
-      "name": "@vulcan.sh/codegen-sql",
+      "name": "@vlcn.io/codegen-sql",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/utils": "workspace:*",
         "sql-formatter": "^4.0.2"
@@ -15651,18 +15651,18 @@
   "2188 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/codegen-ts",
     "updated": {
-      "name": "@vulcan.sh/codegen-ts",
+      "name": "@vlcn.io/codegen-ts",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "knex": "^2.0.0",
         "md5": "^2.3.0",
@@ -15694,16 +15694,16 @@
   "2189 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/extensions/mutation-codegen",
     "updated": {
-      "name": "@vulcan.sh/mutation-codegen",
+      "name": "@vlcn.io/mutation-codegen",
       "version": "0.0.1",
       "main": "lib/index.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/codegen-ts": "workspace:*",
-        "@vulcan.sh/mutation-grammar": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*"
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/codegen-ts": "workspace:*",
+        "@vlcn.io/mutation-grammar": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*"
       },
       "devDependencies": {
         "@babel/core": "^7.17.10",
@@ -15729,22 +15729,22 @@
   "2190 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/packages/codegen-cli",
     "updated": {
-      "name": "@vulcan.sh/codegen-cli",
+      "name": "@vlcn.io/codegen-cli",
       "version": "0.0.1",
       "main": "bin/cli.js",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/codegen": "workspace:*",
-        "@vulcan.sh/codegen-api": "workspace:*",
-        "@vulcan.sh/codegen-sql": "workspace:*",
-        "@vulcan.sh/codegen-ts": "workspace:*",
-        "@vulcan.sh/mutation-codegen": "workspace:*",
-        "@vulcan.sh/mutation-grammar": "workspace:*",
-        "@vulcan.sh/schema": "workspace:*",
-        "@vulcan.sh/schema-api": "workspace:*",
+        "@vlcn.io/codegen": "workspace:*",
+        "@vlcn.io/codegen-api": "workspace:*",
+        "@vlcn.io/codegen-sql": "workspace:*",
+        "@vlcn.io/codegen-ts": "workspace:*",
+        "@vlcn.io/mutation-codegen": "workspace:*",
+        "@vlcn.io/mutation-grammar": "workspace:*",
+        "@vlcn.io/schema": "workspace:*",
+        "@vlcn.io/schema-api": "workspace:*",
         "@strut/counter": "workspace:*",
         "@strut/events": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@strut/utils": "workspace:*",
         "chalk": "^5.0.1",
         "command-line-args": "^5.2.1",
@@ -15780,15 +15780,15 @@
   "2191 debug pnpm:package-manifest": {
     "prefix": "/Users/tantaman/workspace/aphrodite/examples/model-usage-ts",
     "updated": {
-      "name": "@vulcan.sh/model-usage-ts",
+      "name": "@vlcn.io/model-usage-ts",
       "version": "0.0.1",
       "type": "module",
       "dependencies": {
-        "@vulcan.sh/config-runtime-ts": "workspace:*",
-        "@vulcan.sh/model-persisted": "workspace:*",
-        "@vulcan.sh/mutator-runtime-ts": "workspace:*",
-        "@vulcan.sh/query": "workspace:*",
-        "@vulcan.sh/id": "workspace:*",
+        "@vlcn.io/config-runtime-ts": "workspace:*",
+        "@vlcn.io/model-persisted": "workspace:*",
+        "@vlcn.io/mutator-runtime-ts": "workspace:*",
+        "@vlcn.io/query": "workspace:*",
+        "@vlcn.io/id": "workspace:*",
         "@vscode/sqlite3": "^5.0.8",
         "class-validator": "^0.13.2",
         "graphql": "^16.4.0",
@@ -15797,7 +15797,7 @@
         "type-graphql": "^1.1.1"
       },
       "devDependencies": {
-        "@vulcan.sh/codegen-cli": "workspace:*",
+        "@vlcn.io/codegen-cli": "workspace:*",
         "@babel/core": "^7.17.10",
         "@babel/preset-env": "^7.17.10",
         "@types/jest": "^27.4.1",

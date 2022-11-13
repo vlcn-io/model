@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/model-persisted",
+  "name": "@vlcn.io/model-persisted",
   "version": "0.0.3",
   "main": "lib/index.js",
   "type": "module",
@@ -9,13 +9,13 @@
     "directory": "ts/packages/model-persisted"
   },
   "dependencies": {
-    "@vulcan.sh/config": "workspace:*",
-    "@vulcan.sh/model": "workspace:*",
-    "@vulcan.sh/id": "workspace:*",
-    "@vulcan.sh/util": "workspace:*",
-    "@vulcan.sh/value": "workspace:*",
-    "@vulcan.sh/schema-api": "workspace:*",
-    "@vulcan.sh/zone": "workspace:*"
+    "@vlcn.io/config": "workspace:*",
+    "@vlcn.io/model": "workspace:*",
+    "@vlcn.io/id": "workspace:*",
+    "@vlcn.io/util": "workspace:*",
+    "@vlcn.io/value": "workspace:*",
+    "@vlcn.io/schema-api": "workspace:*",
+    "@vlcn.io/zone": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

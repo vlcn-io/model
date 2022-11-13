@@ -2,7 +2,7 @@ import {
   InboundEdgesAst,
   SchemaFile,
   SchemaFileAst,
-} from "@vulcan.sh/schema-api";
+} from "@vlcn.io/schema-api";
 
 export const contents = `
 engine: sqlite

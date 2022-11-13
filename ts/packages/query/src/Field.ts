@@ -1,7 +1,7 @@
 import {
   BasePersistedModelData,
   IPersistedModel,
-} from "@vulcan.sh/model-persisted";
+} from "@vlcn.io/model-persisted";
 
 export interface FieldGetter<Tm, Tv> {
   readonly get: (m: Tm) => Tv;

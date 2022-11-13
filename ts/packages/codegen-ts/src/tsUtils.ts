@@ -4,9 +4,9 @@ import {
   Import,
   RemoveNameField,
   TypeAtom,
-} from "@vulcan.sh/schema-api";
-import { uniqueImports } from "@vulcan.sh/codegen-api";
-import { assertUnreachable } from "@vulcan.sh/util";
+} from "@vlcn.io/schema-api";
+import { uniqueImports } from "@vlcn.io/codegen-api";
+import { assertUnreachable } from "@vlcn.io/util";
 
 export function fieldToTsType(
   field: RemoveNameField<FieldDeclaration>

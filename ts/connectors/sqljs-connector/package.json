@@ -1,5 +1,5 @@
 {
-  "name": "@vulcan.sh/sqljs-connector",
+  "name": "@vlcn.io/sqljs-connector",
   "version": "0.3.2",
   "main": "lib/index.js",
   "type": "module",
@@ -9,7 +9,7 @@
     "directory": "ts/connectors/sqljs-connector"
   },
   "dependencies": {
-    "@vulcan.sh/runtime": "workspace:*",
+    "@vlcn.io/runtime": "workspace:*",
     "@aphro/sql.js": "^1.7.0",
     "@strut/counter": "^0.0.11"
   },

@@ -1,4 +1,4 @@
-# @vulcan.sh/id
+# @vlcn.io/id
 
 ## 0.0.2
 
@@ -6,4 +6,4 @@
 
 - retryable transactions, serializable transactions, conflict detection
 - Updated dependencies
-  - @vulcan.sh/util@0.0.2
+  - @vlcn.io/util@0.0.2
