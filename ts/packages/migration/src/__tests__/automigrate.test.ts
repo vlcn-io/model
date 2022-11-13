@@ -27,6 +27,10 @@ const memdb = {
     throw new Error();
   },
 
+  async begin(): Promise<void> {},
+  async commit(): Promise<void> {},
+  async rollback(): Promise<void> {},
+
   dispose() {
     conn.dispose();
   },

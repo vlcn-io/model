@@ -41,9 +41,10 @@ export async function autoMigrate(migrationTasks: MigrationTask[]) {
 
 async function migrateAllTasksForDB(db: SQLResolvedDB, tasks: MigrationTask[]) {
   try {
-    await db.transact(async (conn: SQLResolvedDB) => {
-      await Promise.all(tasks.map((task) => migrateOne(conn, task)));
-    });
+    // TODO: transact...
+    // await db.transact(async (conn: SQLResolvedDB) => {
+      await Promise.all(tasks.map((task) => migrateOne(db, task)));
+    // });
   } catch (e) {
     throw {
       cause: e,
