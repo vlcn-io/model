@@ -28,6 +28,15 @@ export class Connection {
     );
   }
 
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
+
   #readImpl(sql: SQLQuery, lock: <T>(fn: () => Promise<T>) => Promise<T>) {
     return lock(() => {
       const formatted = sql.format(formatters["sqlite"]);
@@ -104,6 +113,14 @@ export class Connection {
         throw new Error(
           "Nested transactions are not yet supported for sqlite3 connector."
         );
+      },
+      async begin(): Promise<void> {
+      },
+    
+      async commit(): Promise<void> {
+      },
+    
+      async rollback(): Promise<void> {
       },
       dispose() {
         throw new Error(

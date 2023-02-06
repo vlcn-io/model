@@ -11,6 +11,15 @@ export class Connection {
     return this.#query(sql);
   }
 
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
+
   async transact<T>(cb: (conn: SQLResolvedDB) => Promise<T>): Promise<T> {
     this.#query(sql`BEGIN`);
     try {

@@ -24,6 +24,15 @@ class ConnectionPool {
     return conn.read(q);
   }
 
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
+
   write(q: SQLQuery): Promise<void> {
     return this.#writeConnection.write(q);
   }

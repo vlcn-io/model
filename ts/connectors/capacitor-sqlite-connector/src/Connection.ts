@@ -31,6 +31,14 @@ class Connection {
       throw e;
     }
   }
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
 
   dispose() {
     this.db.close();

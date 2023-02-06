@@ -67,6 +67,15 @@ export default class Connection {
     });
   }
 
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
+
   read(sql: SQLQuery): Promise<any[]> {
     return this.#query(sql);
   }
@@ -113,6 +122,9 @@ export default class Connection {
           "Nested transactions are not yet supported for absurd-sql."
         );
       },
+      async begin(): Promise<void> {},
+      async commit(): Promise<void> {},
+      async rollback(): Promise<void> {},
       dispose() {
         throw new Error(
           "You should not dispose a connection from within a transaction. Dispose the top level connection object."

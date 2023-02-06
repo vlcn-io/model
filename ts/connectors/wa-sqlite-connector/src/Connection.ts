@@ -32,6 +32,15 @@ export class Connection {
     return this.#query(sql);
   }
 
+  async begin(): Promise<void> {
+  }
+
+  async commit(): Promise<void> {
+  }
+
+  async rollback(): Promise<void> {
+  }
+
   /**
    * `transact` is expected to be called from the connection pool.
    *

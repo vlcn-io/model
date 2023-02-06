@@ -4,6 +4,7 @@ export interface IModel<T extends {} = {}> {
   update(updates: Partial<T>): void;
   subscribe(c: () => void): () => void;
   subscribeTo(keys: (keyof T)[], c: () => void): () => void;
+  dispose(): void;
 
   readonly data: T;
 }
@@ -31,6 +32,14 @@ export class Model<T extends {}> implements IModel<T> {
     if (txComplete) {
       this.onTransactionComplete("create");
     }
+  }
+
+  dispose() {
+    this.disposers.forEach(d => d());
+    this.disposers = [];
+    this.#subscriptions.clear();
+    this.#keyedSubscriptions.clear();
+    this.value.dispose();
   }
 
   get data(): T {

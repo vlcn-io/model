@@ -11,6 +11,7 @@ type Disposer = () => void;
 
 export interface IObservableValue<T> extends IValue<T> {
   onTransactionComplete(fn: OnTxComplete<T>): Disposer;
+  dispose(): void;
   // TODO: add an `onValueChange` that filters events if the value was set to the same value?
 }
 
@@ -23,6 +24,10 @@ export class ObservableValue<T>
   onTransactionComplete(fn: OnTxComplete<T>): Disposer {
     this.#observers.add(fn);
     return () => this.#observers.delete(fn);
+  }
+
+  dispose() {
+    this.#observers.clear();
   }
 
   __transactionComplete(e: Event) {
