@@ -67,16 +67,7 @@
       "path": "../packages/zone"
     },
     {
-      "path": "../connectors/absurd-sql-connector"
-    },
-    {
-      "path": "../connectors/capacitor-sqlite-connector"
-    },
-    {
       "path": "../connectors/sqlite3-connector"
-    },
-    {
-      "path": "../connectors/sqljs-connector"
     },
     {
       "path": "../connectors/wa-sqlite-connector"
