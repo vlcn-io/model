@@ -1,5 +1,5 @@
 {
-  "name": "@vlcn.io/react",
+  "name": "@vlcn.io/model-react",
   "version": "2.0.0",
   "main": "lib/index.js",
   "type": "module",
