@@ -7,7 +7,6 @@ import {
   tryCatch,
   props,
   setProp,
-  _global,
   getPropertyDescriptor,
   getArrayOf,
   extend,
